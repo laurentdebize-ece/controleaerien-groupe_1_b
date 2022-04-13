@@ -1,0 +1,14 @@
+//
+// Created by Jojo on 4/13/22.
+//
+
+#ifndef CONTROLEAERIEN_GROUPE_1_B_AIRPORT_H
+#define CONTROLEAERIEN_GROUPE_1_B_AIRPORT_H
+
+
+class Airport {
+
+};
+
+
+#endif //CONTROLEAERIEN_GROUPE_1_B_AIRPORT_H
