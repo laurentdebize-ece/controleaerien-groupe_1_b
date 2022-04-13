@@ -1,0 +1,14 @@
+//
+// Created by Jojo on 4/13/22.
+//
+
+#ifndef CONTROLEAERIEN_GROUPE_1_B_AIPORT_NETWORK_H
+#define CONTROLEAERIEN_GROUPE_1_B_AIPORT_NETWORK_H
+
+
+class Aiport_network {
+
+};
+
+
+#endif //CONTROLEAERIEN_GROUPE_1_B_AIPORT_NETWORK_H
