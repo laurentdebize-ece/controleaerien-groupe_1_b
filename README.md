@@ -23,7 +23,7 @@ Le groupe est composé de 3 étudiants ING2 de l'ECE Lyon <br />
 </table></center>
 
 ## Bienvenue sur AIRPORT CONTROL SIMULATOR
-<p align="justify">Une soirée entre amis et personne ne sait quoi faire ? Un après-midi en famille et tout le monde s’ennuie ? Pourquoi ne pas tenter une partie d' ELYSEDO ? Ce serait un bon moyen de passer le temps tout en s’assurant de passer un bon moment ensemble !</p><br />
+<p align="justify">Lol</p>
 
 ## Sous-fichiers, dossiers et utilités
 Dans ce dossier vous trouverez les sous-dossiers suivants :
