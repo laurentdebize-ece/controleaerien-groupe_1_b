@@ -16,7 +16,7 @@ ENDIF(APPLE)
 IF(WIN32)
     set(CMAKE_CXX_STANDARD 14)
 
-    add_executable(controleaerien-groupe_1_b main.cpp src/Menu/Menu.cpp src/Menu/Menu.h src/Airport/Airport.cpp src/Airport/Airport.h src/Plane/Plane.cpp src/Plane/Plane.h src/Airport_network/Aiport_network.cpp src/Airport_network/Aiport_network.h src/Case/Case.cpp src/Case/Case.h src/Flight/Flight.cpp src/Flight/Flight.h src/Flying_time/Flying_time.cpp src/Flying_time/Flying_time.h)
+    add_executable(controleaerien-groupe_1_b main.cpp )
     set  (SFML_STATIC_LIBRARIES TRUE)
     set  (SFML_DIR C:/SFML/lib/cmake/SFML)
     find_package ( SFML COMPONENTS system window graphics audio network REQUIRED)
