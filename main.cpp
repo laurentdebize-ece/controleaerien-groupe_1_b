@@ -12,7 +12,7 @@
      //Initialisation Cartes Map
      sf::Texture Menu_principal;
 
-     Menu_principal.loadFromFile("../Graphic_content/Map/Sim_Map.png");
+     Menu_principal.loadFromFile("Sim_Map.png");
 
      sf::Sprite Sprite(Menu_principal);
      sf::Vector2f targetSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
