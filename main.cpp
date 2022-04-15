@@ -1,10 +1,11 @@
-#include <SFML/Graphics.hpp>
-#include "src/Menu/Menu.h"
+#include "src/Airport/Airport.h"
+
 
 
  int main() {
      unsigned int choix(0);
      bool fin(false), back_menu(true);
+
 
      //Initialisation Cartes Fenetre
      sf::RenderWindow window(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "AIRPORT CONTROL SIMULATOR");
@@ -15,27 +16,25 @@
      Menu_principal.loadFromFile("../Graphic_content/Map/Sim_Map.png");
 
      sf::Sprite Sprite(Menu_principal);
+
      sf::Vector2f targetSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
 
-         do {
-             if(choix >= 6){
-                 std::cout<<"Choix inconnu\n"
-                            "Veuillez retaper\n";
-                 choix=0;
-             }
+     Plane p{"../Text_files/Airplane"};
+     do {
              Game_Menu(choix);
              switch (choix) {
                  case 1 :
                      Sprite.setScale(
                              targetSize.x / Sprite.getLocalBounds().width,
                              targetSize.y / Sprite.getLocalBounds().height);
+
                      window.clear(sf::Color::Black);
-                     window.draw(Sprite);
-                     window.display();
                      while (!fin) {
                          sf::Event event{};
                          while (window.pollEvent(event)) {
-                             if (event.type == sf::Event::Closed) {
+                             show_airport_on_screen( event, window, Sprite);
+                             if (event.type == sf::Event::Closed ||
+                                 (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)){
                                  fin = true;
                                  window.close();
                                  choix = 0;
@@ -46,14 +45,11 @@
                      break;
                  case 2 :
                      //toutes les fonctions du simulateur
-                     airplane_information(choix);
-                     if(choix==1){
-                         choix=0;
-                     }
                      break;
                  case 3:
-                     //toutes les fonctions du simulateur
-                     std::cout <<"Info avion";
+                     //toutes les fonctions affichage avion
+                     airplane_information(choix,p);
+                     choix=0;
                      break;
                  case 4 :
                      back_menu= false;
@@ -62,6 +58,11 @@
                      break;
                  case 5 :
                      std::cout <<"Good bye HAVE A NICE DAY";
+                     break;
+                 default:
+                     std::cout<<"Choix inconnu\n"
+                                "Veuillez retaper\n";
+                     choix=0;
                      break;
              }
 
