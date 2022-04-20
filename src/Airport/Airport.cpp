@@ -37,10 +37,6 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     sf::Sprite Sprite_Rio_De_Janeiro(Rio_De_Janeiro);
     sf::Sprite Sprite_West_Indies(West_Indies);
 
-    bool fin(false);
-
-    sf::Vector2f targetSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
-
         Sprite_Sydney.setPosition(sf::Vector2f(952,18));
         window.clear(sf::Color::Black);
         window.draw(Sprite);
@@ -90,7 +86,6 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
                 event.mouseMove.y >= 375 && event.mouseMove.y <= 405) {
                 window.draw(Sprite_West_Indies);
             }
-            //window.display();
         }
     window.display();
 

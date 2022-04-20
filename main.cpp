@@ -6,8 +6,7 @@
      unsigned int choix(0);
      bool fin(false), back_menu(true);
 
-
-     //Initialisation Cartes Fenetre
+//Initialisation  Fenetre
      sf::RenderWindow window(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "AIRPORT CONTROL SIMULATOR");
 
      //Initialisation Cartes Map
@@ -21,8 +20,9 @@
 
      Plane p{"../Text_files/Airplane"};
      do {
-             Game_Menu(choix);
-             switch (choix) {
+         Game_Menu(choix);
+
+         switch (choix) {
                  case 1 :
                      Sprite.setScale(
                              targetSize.x / Sprite.getLocalBounds().width,
