@@ -1,0 +1,75 @@
+
+
+//AirportName, Runways, Ground_Seats, Ground_waiting_time, acces_runway_time, manticollision_time, mlanding_time, mtakeoff_time, in_flight_loop
+10 // nbre aiport
+
+
+Sydney 3 10 2.5 2.6 2.7 2.8 2.9 3
+Pékin 3 10 3.5 3.6 3.7 3.8 3.9 4 
+Moscou 3 10 2.5 2.6 2.7 2.8 2.9 3
+Dubai 3 10 3.5 3.6 3.7 3.8 3.9 4 
+londres 3 10 3.5 3.6 3.7 3.8 3.9 4 
+Pretoria 3 10 3.5 3.6 3.7 3.8 3.9 4 
+Algérie 3 10 3.5 3.6 3.7 3.8 3.9 4 
+Los Angeles 3 10 3.5 3.6 3.7 3.8 3.9 4 
+New York 3 10 3.5 3.6 3.7 3.8 3.9 4 
+Rio de Janeiro 3 10 3.5 3.6 3.7 3.8 3.9 4 
+Martinique 3 10 3.5 3.6 3.7 3.8 3.9 4 
+
+
+
+22
+
+
+Sydney Londres
+Sydney New York
+Sydney Martinique
+
+Pékin Rio de Janeiro
+
+Moscou Dubai
+Moscou Pretoria
+Moscou Algérie
+
+
+Dubai New York 
+
+Londres Pretoria 
+Londres Los Angeles
+Londres Martinique
+
+Pretoria Rio de Janeiro
+
+Algérie Los Angeles
+Algérie New York
+Algérie Rio de Janeiro
+Algérie Martinique
+
+Los Angeles New york
+Los Angeles Rio de Janeiro
+Los Angeles Martinique
+
+New York Rio de Janeiro
+New York Martinique
+
+Rio de Janeiro Martinique
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

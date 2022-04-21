@@ -1,5 +1,7 @@
 #include "src/Airport/Airport.h"
 
+#include "src/Plane/Plane.h"
+
 
 
  int main() {
@@ -7,8 +9,7 @@
      bool fin(false), back_menu(true);
 
 
-     //Initialisation Cartes Fenetre
-     sf::RenderWindow window(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "AIRPORT CONTROL SIMULATOR");
+
 
      //Initialisation Cartes Map
      sf::Texture Menu_principal;
@@ -22,6 +23,13 @@
      Plane p{"../Text_files/Airplane"};
      do {
              Game_Menu(choix);
+
+         //Initialisation Cartes Fenetre
+         sf::RenderWindow window(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "AIRPORT CONTROL SIMULATOR");
+
+         window.setPosition(sf::Vector2i(0,10));
+
+
              switch (choix) {
                  case 1 :
                      Sprite.setScale(
@@ -41,6 +49,7 @@
                              }
                          }
                      }
+                     fin = false;
                      //toutes les fonctions du simulateur
                      break;
                  case 2 :

@@ -1,5 +1,14 @@
 #include "Airport.h"
 
+
+
+
+Airport::Airport(int id) : m_id{id} {}
+
+void Airport::afficher() const {
+    std::cout << "   Aéroport " << m_AirportName << " ";
+}
+
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite){
     sf::Texture Sydney;
     sf::Texture Pekin;
@@ -96,3 +105,5 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
 
 
 }
+
+
