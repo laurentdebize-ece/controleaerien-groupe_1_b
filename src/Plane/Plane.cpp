@@ -1,15 +1,17 @@
 #include "Plane.h"
 
 Plane::Plane(std::string cheminFichierGraphe) {
+
     int num(0);
-    bool ok(false);
+    bool ok;
     std::ifstream ifs{cheminFichierGraphe};
     if (!ifs) {
         throw std::runtime_error("Impossible d'ouvrir " + cheminFichierGraphe);
     }
     std::string ligne;
     while (std::getline(ifs, ligne)) {
-        int number = (rand() % 10) + 1;
+        std::srand(std::time(nullptr));
+        int number = rand() % 10 + 1;
         std::stringstream ss;
         size_t posit = ligne.find(" ");
         std::string nmodel = ligne.substr(0, posit);
@@ -19,21 +21,20 @@ Plane::Plane(std::string cheminFichierGraphe) {
         double ncomsuption, nspeed, nlanding_speed, ntakeoff_speed, nfuel_capacity;
         ss >> ntype >> nstate >> ncomsuption >> nspeed >> nlanding_speed >> ntakeoff_speed >> nfuel_capacity;
         for (int i = 0; i < number; ++i) {
+            ok=false;
             do {
-                std::srand(std::time(nullptr));
                 num = rand() % 9999 + 1000;
                     if (i!=0) {
                         for (int j(0); j < i; j++) {
                             if (num == m_airplane[j]->get_id()) {
                                 ok = false;
-                                j=i;
-                            } else if (num != m_airplane[j]->get_id() && j == i) {
+                            } else if (num != m_airplane[j]->get_id() && (num<10000 && num>999)) {
                                 ok = true;
                                 j=i;
                             }
                         }
                     }
-                    else {
+                    else if(num < 10000 && num > 999) {
                         ok = true;
                     }
             } while (!ok);
@@ -67,6 +68,7 @@ void Plane::afficher() const {
     }
     std::cout << "\n";
 }
+
 
 
 

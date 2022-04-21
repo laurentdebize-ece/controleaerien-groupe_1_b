@@ -52,8 +52,8 @@ void airplane_information(unsigned int &choix, Plane &p) {
             case 2:
                 break;
             default:
-                std::cout << "Choix inconnu\n"
-                             "Veuillez retaper\n";
+                std::cout << "UNKNOWN CHOICE\n"
+                             "PLEASE RE-TYPE\n";
                 choix = 0;
                 break;
         }

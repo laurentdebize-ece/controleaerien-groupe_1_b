@@ -57,3 +57,7 @@ void Airplane::afficher() const {
     << "                   Take off Speed : " << takeoff_speed << std::endl
     << "                   Fuel Capacity : " << speed << "\n" << std::endl;
 }
+
+void Airplane::put_state(bool plane_state) {
+    state=plane_state;
+}

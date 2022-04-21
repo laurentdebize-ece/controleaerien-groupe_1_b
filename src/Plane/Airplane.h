@@ -34,6 +34,8 @@ public:
 
     double get_fuel_capacity() const;
 
+    void put_state(bool plane_state);
+
     void afficher() const;
 };
 

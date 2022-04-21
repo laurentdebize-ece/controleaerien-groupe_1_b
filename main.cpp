@@ -6,9 +6,6 @@
      unsigned int choix(0);
      bool fin(false), back_menu(true);
 
-//Initialisation  Fenetre
-     sf::RenderWindow window(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "AIRPORT CONTROL SIMULATOR");
-
      //Initialisation Cartes Map
      sf::Texture Menu_principal;
 
@@ -21,6 +18,9 @@
      Plane p{"../Text_files/Airplane"};
      do {
          Game_Menu(choix);
+
+         //Initialisation  Fenetre
+         sf::RenderWindow window(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "AIRPORT CONTROL SIMULATOR");
 
          switch (choix) {
                  case 1 :
