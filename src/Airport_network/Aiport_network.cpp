@@ -19,20 +19,19 @@ Aiport_network::Aiport_network(std::string FichieraiportNetwork) {
     }
 
     std::string AirportName;
+    int Xmin,  Xmax, Xcentre,  Ymin,  Ymax, Ycentre;
     int NbrRunways, Ground_seats;
     double Ground_waiting_time, acces_runway_time,  anticollision_time, landing_time,  takeoff_time,  in_flight_loop;
 
     for (int i = 0; i < nbrAirport; ++i) {
-        ifs >> AirportName >> NbrRunways >> Ground_seats >> Ground_waiting_time >> acces_runway_time >> anticollision_time >> landing_time >> takeoff_time >> in_flight_loop ;
+        ifs >> AirportName >> Xmin >> Xmax >> Xcentre >> Ymin >> Ymax >> Ycentre >> NbrRunways >> Ground_seats >> Ground_waiting_time >> acces_runway_time >> anticollision_time >> landing_time >> takeoff_time >> in_flight_loop ;
         if (ifs.fail()) {
             throw std::runtime_error("Probleme de lecture des donnees d'un aeroport.");
         }
 
-        /*ifs >> AirportName;
-        if (ifs.fail()) {
-            throw std::runtime_error("Probleme du nom.");
-        }
-        m_Airport.push_back(new Airport(AirportName));*/
+        m_Airport.push_back(new Airport(i,AirportName, Xmin, Xmax, Xcentre, Ymin, Ymax, Ycentre, NbrRunways, Ground_seats, Ground_waiting_time,
+                                        acces_runway_time,  anticollision_time, landing_time,  takeoff_time,  in_flight_loop));
+
 
 
     }
@@ -57,9 +56,9 @@ Aiport_network::Aiport_network(std::string FichieraiportNetwork) {
     if (ifs.fail()) {
         throw std::runtime_error("Probleme de lecture de la taille du graphe.");
     }
-    /*for (int i = 0; i < nbrAirport; ++i) {
+    for (int i = 0; i < nbrAirport; ++i) {
         m_Airport.push_back(new Airport(i));
-    }*/
+    }
     int num1, num2, poids;//remplacer par string si on change l'id
     for (int i = 0; i < taille; ++i) {
         ifs >> num1 >> num2 >> poids;
