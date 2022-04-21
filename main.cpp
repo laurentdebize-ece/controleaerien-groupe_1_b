@@ -41,6 +41,7 @@
                              }
                          }
                      }
+                    fin = false;
                      //toutes les fonctions du simulateur
                      break;
                  case 2 :

@@ -1,5 +1,46 @@
 #include "Airport.h"
 
+
+
+
+Airport::Airport(int id, std::string AirportName,int Xmin, int Xmax,int Xcentre, int Ymin, int Ymax,int Ycentre,int NbrRunways,
+                 int Ground_seats,double Ground_waiting_time, double acces_runway_time, double anticollision_time, double landing_time,
+                 double takeoff_time,double in_flight_loop ) : m_id{id}, m_AirportName{AirportName},  m_Xmin{Xmin}, m_Xmax{Xmax}, m_Ymin{Ymin},
+                 m_Ymax{Ymax}, m_Ycentre{Ycentre}, m_NbrRunways{NbrRunways}, m_Ground_seats{Ground_seats}, m_Ground_waiting_time{Ground_waiting_time},
+                 m_acces_runway_time{acces_runway_time}, m_anticollision_time{anticollision_time}, m_landing_time{landing_time}, m_takeoff_time{takeoff_time},
+                 m_in_flight_loop {in_flight_loop} {}
+
+void Airport::afficher() const {
+    std::cout << "   Aéroport " << m_AirportName << " ";
+}
+
+int Airport::getXmin() const {
+    return m_Xmin;
+
+}
+
+int Airport::getXmax() const {
+    return m_Xmax;
+
+}
+
+int Airport::getXcentre() const {
+    return m_Xcentre;
+
+}
+
+int Airport::getYmin() const {
+    return m_Ymin;
+}
+
+int Airport::getYmax() const {
+    return m_Ymax;
+}
+
+int Airport::getYcentre() const {
+    return m_Ycentre;
+}
+
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite){
     sf::Texture Sydney;
     sf::Texture Pekin;
@@ -91,3 +132,5 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
 
 
 }
+
+
