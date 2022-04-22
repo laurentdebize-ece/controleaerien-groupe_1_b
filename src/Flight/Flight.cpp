@@ -1,6 +1,6 @@
 #include "Flight.h"
 
-Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list_of_airport) : m_list_of_plane{list_of_plane}, m_list_of_airport{list_of_airport} {
+Flight::Flight(std::vector<Airplane *> &list_of_plane,std::vector<Airport *> &list_of_airport) : m_list_of_plane{list_of_plane}, m_list_of_airport{list_of_airport} {
 //on recup direct les vecteur qu'on aura creer dans le main
     std::srand(std::time(nullptr));
     int choice(0), number(0);
@@ -13,13 +13,13 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
         number = rand() % 9999 + 1000;
         letter1 = rand() % 90 + 65;
         letter2 = rand() % 90 + 65;
-    } while (number < 10000 && number > 999 && letter1 < 91 && letter1 > 64 && letter2 < 91 && letter2 > 64);
+    } while ((number < 10000 && number > 999) && letter1 < 91 && letter1 > 64 && letter2 < 91 && letter2 > 64);
     flight_id.push_back((char) letter1);
     flight_id.push_back((char) letter2);
     flight_id += tiret;
     flight_id += std::to_string(number);
 
-    //Pick a plane
+    //Pick a random plane
     do {
         choice = rand() % m_list_of_plane.size();
         if (!m_list_of_plane[choice]->get_state()) {
@@ -32,21 +32,24 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
 
 
     //Random between Airport List for choose a Departure
-    do {
+    /*do {
         choice = rand() % m_list_of_airport.size();
-        if () {//condition pour le départ d'un vol flemme d'aller rdg le sujet d'ailleurs on devrait faire une fonction directement dans aiport qui renvoie directement un bool en fonction des conditions julia peut faire ça carre
+        if () {//condition pour le départ d'un vol flemme d'aller rdg le sujet d'ailleurs on devrait faire une fonction
+            // directement dans aiport qui renvoie directement un bool en fonction des conditions julia peut faire ça carre
+
             departure = m_list_of_airport[choice]->get_AirportName();
             ok = true;
         } else {
             ok = false;
         }
-    } while (!ok);
+    } while (!ok);*/
 
 
     //Random between Airport List for choose an Arrival
     do {
         choice = rand() % m_list_of_airport.size();
         if ( m_list_of_airport[choice]->get_AirportName() != departure  ) {//condition pour l'aterrissage d'un vol
+            //FAUDRA REGARDER SI L'AÉROPORT D'ARIVÉE ET DE DEPART SONT CONNECTÉS
             arrival = m_list_of_airport[choice]->get_AirportName();
             ok = true;
         } else {

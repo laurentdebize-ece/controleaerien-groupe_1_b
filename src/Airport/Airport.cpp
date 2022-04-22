@@ -2,14 +2,14 @@
 
 
 Airport::Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &Xcentre, int &Ymin, int &Ymax,
-                 int &Ycentre,int &NbrRunways,int &Ground_seats, double &Ground_waiting_time,
-                 double &acces_runway_time, double &anticollision_time,double &landing_time,double &takeoff_time,
+                 int &Ycentre, int &NbrRunways, int &Ground_seats, double &Ground_waiting_time,
+                 double &acces_runway_time, double &anticollision_time, double &landing_time, double &takeoff_time,
                  double &in_flight_loop) :
-                 m_id{id}, m_AirportName{AirportName}, m_Xmin{Xmin},m_Xmax{Xmax}, m_Xcentre{Xcentre}, m_Ymin{Ymin},
-                 m_Ymax{Ymax}, m_Ycentre{Ycentre},m_NbrRunways{NbrRunways}, m_Ground_seats{Ground_seats},
-                 m_Ground_waiting_time{Ground_waiting_time},m_acces_runway_time{acces_runway_time},
-                 m_anticollision_time{anticollision_time},m_landing_time{landing_time},
-                 m_takeoff_time{takeoff_time},m_in_flight_loop{in_flight_loop} {}
+        m_id{id}, m_AirportName{AirportName}, m_Xmin{Xmin}, m_Xmax{Xmax}, m_Xcentre{Xcentre}, m_Ymin{Ymin},
+        m_Ymax{Ymax}, m_Ycentre{Ycentre}, m_NbrRunways{NbrRunways}, m_Ground_seats{Ground_seats},
+        m_Ground_waiting_time{Ground_waiting_time}, m_acces_runway_time{acces_runway_time},
+        m_anticollision_time{anticollision_time}, m_landing_time{landing_time},
+        m_takeoff_time{takeoff_time}, m_in_flight_loop{in_flight_loop} {}
 
 void Airport::afficher() const {
     std::cout << "                   Id : " << m_id << std::endl
@@ -52,7 +52,8 @@ std::string Airport::get_AirportName() const {
     return m_AirportName;
 }
 
-void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, std::vector<Airport*> &m_airport) {
+void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite,
+                            std::vector<Airport *> &m_airport) {
     sf::Texture Sydney;
     sf::Texture Pekin;
     sf::Texture Moscou;
@@ -65,17 +66,17 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     sf::Texture Rio_De_Janeiro;
     sf::Texture Martinique;
 
-    Sydney.loadFromFile("Graphic_content/Map/Sydney.png");
-    Pekin.loadFromFile("Graphic_content/Map/Sydney.png");
-    Moscou.loadFromFile("Graphic_content/Map/Sydney.png");
-    Dubai.loadFromFile("Graphic_content/Map/Sydney.png");
-    Londres.loadFromFile("Graphic_content/Map/Sydney.png");
-    Pretoria.loadFromFile("Graphic_content/Map/Sydney.png");
-    Algeria.loadFromFile("Graphic_content/Map/Sydney.png");
-    Los_Angeles.loadFromFile("Graphic_content/Map/Sydney.png");
-    New_York.loadFromFile("Graphic_content/Map/Sydney.png");
-    Rio_De_Janeiro.loadFromFile("Graphic_content/Map/Sydney.png");
-    Martinique.loadFromFile("Graphic_content/Map/Sydney.png");
+    Sydney.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Pekin.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Moscou.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Dubai.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Londres.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Pretoria.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Algeria.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Los_Angeles.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    New_York.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Rio_De_Janeiro.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Martinique.loadFromFile("../Graphic_Content/Map/Sydney.png");
 
     sf::Sprite Sprite_Sydney(Sydney);
     sf::Sprite Sprite_Pekin(Pekin);
@@ -89,48 +90,52 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     sf::Sprite Sprite_Rio_De_Janeiro(Rio_De_Janeiro);
     sf::Sprite Sprite_Martinique(Martinique);
 
-    Sprite_Sydney.setPosition(sf::Vector2f(952, 18));
+    Sprite_Sydney.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Pekin.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Moscou.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Dubai.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Londres.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Pretoria.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Algeria.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Los_Angeles.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_New_York.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Rio_De_Janeiro.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Martinique.setPosition(sf::Vector2f(POS_X, POS_Y));
     window.clear(sf::Color::Black);
     window.draw(Sprite);
+    window.display();
     while (window.pollEvent(event)) {
         for (int i(0); i < m_airport.size(); i++) {
-                if (event.mouseMove.x >= m_airport[0]->getXmin() && event.mouseMove.x <= m_airport[0]->getXmax() &&
-                    event.mouseMove.y >= m_airport[0]->getYmin() && event.mouseMove.y <= m_airport[0]->getYmax()) {
+            if (event.mouseMove.x >= m_airport[i]->getXmin() && event.mouseMove.x <= m_airport[i]->getXmax() &&
+                event.mouseMove.y >= m_airport[i]->getYmin() && event.mouseMove.y <= m_airport[i]->getYmax()) {
+                if (i == 0) {
                     window.draw(Sprite_Sydney);
-                } else if (event.mouseMove.x >= m_airport[1]->getXmin() && event.mouseMove.x <= m_airport[1]->getXmax() &&
-                           event.mouseMove.y >= m_airport[1]->getYmin() && event.mouseMove.y <= m_airport[1]->getYmax()) {
+                } else if (i == 1) {
                     window.draw(Sprite_Pekin);
-                } else if (event.mouseMove.x >= m_airport[2]->getXmin() && event.mouseMove.x <= m_airport[2]->getXmax() &&
-                           event.mouseMove.y >= m_airport[2]->getYmin() && event.mouseMove.y <= m_airport[2]->getYmax()) {
+                } else if (i == 2) {
                     window.draw(Sprite_Moscou);
-                } else if (event.mouseMove.x >= m_airport[3]->getXmin() && event.mouseMove.x <= m_airport[3]->getXmax() &&
-                           event.mouseMove.y >= m_airport[3]->getYmin() && event.mouseMove.y <= m_airport[3]->getYmax()) {
+                } else if (i == 3) {
                     window.draw(Sprite_Dubai);
-                } else if (event.mouseMove.x >= m_airport[4]->getXmin() && event.mouseMove.x <= m_airport[4]->getXmax() &&
-                           event.mouseMove.y >= m_airport[4]->getYmin() && event.mouseMove.y <= m_airport[4]->getYmax()) {
+                } else if (i == 4) {
                     window.draw(Sprite_Londres);
-                } else if (event.mouseMove.x >= m_airport[5]->getXmin() && event.mouseMove.x <= m_airport[5]->getXmax() &&
-                           event.mouseMove.y >= m_airport[5]->getYmin() && event.mouseMove.y <= m_airport[5]->getYmax()) {
+                } else if (i == 5) {
                     window.draw(Sprite_Pretoria);
-                } else if (event.mouseMove.x >= m_airport[6]->getXmin() && event.mouseMove.x <= m_airport[6]->getXmax() &&
-                           event.mouseMove.y >= m_airport[6]->getYmin() && event.mouseMove.y <= m_airport[6]->getYmax()) {
+                } else if (i == 6) {
                     window.draw(Sprite_Algeria);
-                } else if (event.mouseMove.x >= m_airport[7]->getXmin() && event.mouseMove.x <= m_airport[7]->getXmax() &&
-                           event.mouseMove.y >= m_airport[7]->getYmin() && event.mouseMove.y <= m_airport[7]->getYmax()) {
+                } else if (i == 7) {
                     window.draw(Sprite_Los_Angeles);
-                } else if (event.mouseMove.x >= m_airport[8]->getXmin() && event.mouseMove.x <= m_airport[8]->getXmax() &&
-                           event.mouseMove.y >= m_airport[8]->getYmin() && event.mouseMove.y <= m_airport[8]->getYmax()) {
+                } else if (i == 8) {
                     window.draw(Sprite_New_York);
-                } else if (event.mouseMove.x >= m_airport[9]->getXmin() && event.mouseMove.x <= m_airport[9]->getXmax() &&
-                           event.mouseMove.y >= m_airport[9]->getYmin() && event.mouseMove.y <= m_airport[9]->getYmax()) {
+                } else if (i == 9) {
                     window.draw(Sprite_Rio_De_Janeiro);
-                } else if(event.mouseMove.x >= m_airport[10]->getXmin() && event.mouseMove.x <= m_airport[10]->getXmax() &&
-                          event.mouseMove.y >= m_airport[10]->getYmin() && event.mouseMove.y <= m_airport[10]->getYmax()) {
+                } else if (i == 10) {
                     window.draw(Sprite_Martinique);
                 }
+                window.display();
+            }
         }
-        window.display();
     }
+
 }
 
 

@@ -2,6 +2,8 @@
 #define CONTROLEAERIEN_GROUPE_1_B_AIRPORT_H
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#define POS_X 952
+#define POS_Y 18
 
 class Airport {
 private:
