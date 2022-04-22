@@ -85,7 +85,7 @@ void Flight::put_departure() {
                     //list airport
                     break;
                 case 2:
-                    /*do {
+                    do {
                         std::cout << "\n";
                         for (int i = 0; i < 20; ++i) {
                             std::cout << "*";
@@ -97,18 +97,18 @@ void Flight::put_departure() {
                         std::cout << "\n"
                                      "ENTER THE AIRPORT OF DEPARTURE OF YOUR CHOICE : ";
                         std::cin >> airport;
-                        for(int j(0);j<airport.size;j++) {
-                            if(airport!=airport[j].name && j==airport.size){
+                        for(int j(0);j<airport.size();j++) {
+                            if(airport!=m_airport[j].get_AirportName() && j==list_of_airport.size()){
                                 std::cout << "UNKNOWN CHOICE\n"
                                              "PLEASE RE-TYPE\n";
                                 find= false;
                             }
                             else{
                                 find=true;
-                                j=airport.size;
+                                j=list_of_airport.size();
                             }
                         }
-                    } while (!find);*/
+                    } while (!find);
                     choice = 0;
                     break;
                 default:
@@ -120,7 +120,69 @@ void Flight::put_departure() {
 }
 
 void Flight::put_arrival() {
+    bool find(false), ok(false);
+    int choice(0);
+    std::string airport;
 
+    do {
+        std::cout << "\n";
+        for (int i = 0; i < 20; ++i) {
+            std::cout << "*";
+        }
+        std::cout << " ARRIVAL SETUP ";
+        for (int i = 0; i < 25; ++i) {
+            std::cout << "*";
+        }
+        std::cout << "\n";
+        std::cout << "                   1. SHOW AIRPORTS \n"
+                     "                   2. GO TO THE CHOICE OF THE AIRPORT OF ARRIVAL \n";
+        for (int i = 0; i < 67; ++i) {
+            std::cout << "*";
+        }
+        std::cin >> choice;
+        if (choice != 1 && choice != 2) {
+            std::cout << "UNKNOWN CHOICE\n"
+                            "PLEASE RE-TYPE\n";
+            ok= false;
+        } else {
+            ok = true;
+            switch (choice) {
+                case 1:
+                    //list airport
+                    break;
+                case 2:
+                    do {
+                        std::cout << "\n";
+                        for (int i = 0; i < 20; ++i) {
+                            std::cout << "*";
+                        }
+                        std::cout << " ARRIVAL SETUP ";
+                        for (int i = 0; i < 25; ++i) {
+                            std::cout << "*";
+                        }
+                        std::cout << "\n"
+                                     "ENTER THE AIRPORT OF ARRIVAL OF YOUR CHOICE : ";
+                        std::cin >> airport;
+                        for(int j(0);j<airport.size();j++) {
+                            if(airport!=m_airport[j].get_AirportName() && j==list_of_airport.size()){
+                                std::cout << "UNKNOWN CHOICE\n"
+                                             "PLEASE RE-TYPE\n";
+                                find= false;
+                            }
+                            else{
+                                find=true;
+                                j=list_of_airport.size();
+                            }
+                        }
+                    } while (!find);
+                    choice = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+    } while (!ok);
+    arrival=airport;
 }
 
 void Flight::Flight_manual() {
@@ -151,4 +213,8 @@ void Flight::Flight_manual() {
 
     put_departure();
     put_arrival();
+}
+
+Flight::~Flight() {
+
 }

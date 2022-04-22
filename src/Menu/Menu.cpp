@@ -60,4 +60,39 @@ void airplane_information(unsigned int &choix, Plane &p) {
     } while (choix != 2);
 }
 
+void airport_information(unsigned int &choix, Aiport_network &a) {
+    do {
+        std::cout << "\n";
+        for (int i = 0; i < 21; ++i) {
+            std::cout << "*";
+        }
+        std::cout << " AIRPORT INFORMATION ";
+        for (int i = 0; i < 25; ++i) {
+            std::cout << "*";
+        }
+        std::cout << "\n";
+        std::cout << "                   1. SHOW AIRPORTS \n"
+                     "                   2. BACK TO PRINCIPAL MENU \n";
+        for (int i = 0; i < 67; ++i) {
+            std::cout << "*";
+        }
+        std::cout << "\n"
+                     "ENTER YOUR CHOICE : ";
+        std::cin >> choix;
+
+        switch (choix) {
+            case 1 :
+                a.afficher();
+                choix = 0;
+                break;
+            case 2:
+                break;
+            default:
+                std::cout << "UNKNOWN CHOICE\n"
+                             "PLEASE RE-TYPE\n";
+                choix = 0;
+                break;
+        }
+    } while (choix != 2);
+}
 

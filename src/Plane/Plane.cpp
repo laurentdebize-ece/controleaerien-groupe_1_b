@@ -46,8 +46,8 @@ Plane::Plane(std::string cheminFichierGraphe) {
 }
 
 Plane::~Plane() {
-    for (auto addrSommet: m_airplane) {
-        delete addrSommet;
+    for (auto addrPlane: m_airplane) {
+        delete addrPlane;
     }
 }
 

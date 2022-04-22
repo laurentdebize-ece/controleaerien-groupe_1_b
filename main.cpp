@@ -1,6 +1,4 @@
-#include "src/Airport/Airport.h"
-
-
+#include "src/Menu/Menu.h"
 
  int main() {
      unsigned int choix(0);
@@ -16,6 +14,9 @@
      sf::Vector2f targetSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
 
      Plane p{"../Text_files/Airplane"};
+     Aiport_network a{"../Text_files/Airport_network"};
+     std::vector<Airport*> airport{};
+     //Flight f{};
      do {
          Game_Menu(choix);
 
@@ -32,7 +33,8 @@
                      while (!fin) {
                          sf::Event event{};
                          while (window.pollEvent(event)) {
-                             show_airport_on_screen( event, window, Sprite);
+                             show_airport_on_screen( event, window, Sprite, airport);
+                             //f.Flight_manual();
                              if (event.type == sf::Event::Closed ||
                                  (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)){
                                  fin = true;
@@ -45,7 +47,8 @@
                      //toutes les fonctions du simulateur
                      break;
                  case 2 :
-                     //toutes les fonctions du simulateur
+                     //toutes les fonctions affichage aeroport
+                     airport_information(choix,a);
                      break;
                  case 3:
                      //toutes les fonctions affichage avion

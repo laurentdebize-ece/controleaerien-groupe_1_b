@@ -1,0 +1,48 @@
+10
+
+Sydney 1140 1185 1160 570 600 592 1 10 2.5 2.6 2.7 2.8 2.9 3
+Pekin 1005 1065 1033 300 330 323 3 20 3.5 3.6 3.7 3.8 3.9 4
+Moscou 780 840 809 195 241 231 3 20 2.5 2.6 2.7 2.8 2.9 3
+Dubai 765 840 800 360 390 386 4 30 3.5 3.6 3.7 3.8 3.9 4
+Londres 555 615 584 225 255 249 2 15 3.5 3.6 3.7 3.8 3.9 4
+Pretoria 675 720 688 540 570 564 2 20 3.5 3.6 3.7 3.8 3.9 4
+Algerie 586 630 606 315 345 338 1 5 3.5 3.6 3.7 3.8 3.9 4
+LosAngeles 120 180 149 285 330 322 4 30 3.5 3.6 3.7 3.8 3.9 4
+NewYork 300 375 337 270 300 294 4 30 3.5 3.6 3.7 3.8 3.9 4
+RioDeJaneiro 405 465 435 510 540 534 2 15 3.5 3.6 3.7 3.8 3.9 4
+Martinique 330 375 351 375 405 400 1 5 3.5 3.6 3.7 3.8 3.9 4
+
+22
+
+Sydney Londres
+Sydney NewYork
+Sydney Martinique
+
+Pekin RioDeJaneiro
+
+Moscou Dubai
+Moscou Pretoria
+Moscou Algerie
+
+
+Dubai NewYork
+
+Londres Pretoria
+Londres LosAngeles
+Londres Martinique
+
+Pretoria RioDeJaneiro
+
+Algerie LosAngeles
+Algerie NewYork
+Algerie RioDeJaneiro
+Algerie Martinique
+
+LosAngeles NewYork
+LosAngeles RioDeJaneiro
+LosAngeles Martinique
+
+NewYork RioDeJaneiro
+NewYork Martinique
+
+RioDeJaneiro Martinique
