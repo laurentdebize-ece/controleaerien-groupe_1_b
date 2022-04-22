@@ -27,7 +27,7 @@ Aiport_network::Aiport_network(std::string FichieraiportNetwork) {
             throw std::runtime_error("Probleme de lecture des donnees d'un aeroport.");
         }
 
-        m_Airport.push_back(
+        m_airport.push_back(
                 new Airport(i, AirportName, Xmin, Xmax, Xcentre, Ymin, Ymax, Ycentre,
                             NbrRunways, Ground_seats,Ground_waiting_time,acces_runway_time,
                             anticollision_time, landing_time, takeoff_time, in_flight_loop));
@@ -87,7 +87,7 @@ void Aiport_network::afficher() const {
         std::cout << "*";
     }
     std::cout << "\n";
-    for (auto addrAirport: m_Airport) {
+    for (auto addrAirport: m_airport) {
         addrAirport->afficher();
     }
 
@@ -106,9 +106,97 @@ void Aiport_network::afficher() const {
 }
 
 Aiport_network::~Aiport_network() {
-    for (auto addrAirport_network: m_Airport) {
+    for (auto addrAirport_network: m_airport) {
         delete addrAirport_network;
     }
+}
+
+std::vector<Airport *> Aiport_network::getListAirport() const {
+    return m_airport;
+}
+
+void Aiport_network::show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite) {
+
+
+    sf::Texture Sydney;
+    sf::Texture Pekin;
+    sf::Texture Moscou;
+    sf::Texture Dubai;
+    sf::Texture Londres;
+    sf::Texture Pretoria;
+    sf::Texture Algeria;
+    sf::Texture Los_Angeles;
+    sf::Texture New_York;
+    sf::Texture Rio_De_Janeiro;
+    sf::Texture Martinique;
+
+    Sydney.loadFromFile("Graphic_content/Map/Sydney.png");
+    Pekin.loadFromFile("Graphic_content/Map/Sydney.png");
+    Moscou.loadFromFile("Graphic_content/Map/Sydney.png");
+    Dubai.loadFromFile("Graphic_content/Map/Sydney.png");
+    Londres.loadFromFile("Graphic_content/Map/Sydney.png");
+    Pretoria.loadFromFile("Graphic_content/Map/Sydney.png");
+    Algeria.loadFromFile("Graphic_content/Map/Sydney.png");
+    Los_Angeles.loadFromFile("Graphic_content/Map/Sydney.png");
+    New_York.loadFromFile("Graphic_content/Map/Sydney.png");
+    Rio_De_Janeiro.loadFromFile("Graphic_content/Map/Sydney.png");
+    Martinique.loadFromFile("Graphic_content/Map/Sydney.png");
+
+    sf::Sprite Sprite_Sydney(Sydney);
+    sf::Sprite Sprite_Pekin(Pekin);
+    sf::Sprite Sprite_Moscou(Moscou);
+    sf::Sprite Sprite_Dubai(Dubai);
+    sf::Sprite Sprite_Londres(Londres);
+    sf::Sprite Sprite_Pretoria(Pretoria);
+    sf::Sprite Sprite_Algeria(Algeria);
+    sf::Sprite Sprite_Los_Angeles(Los_Angeles);
+    sf::Sprite Sprite_New_York(New_York);
+    sf::Sprite Sprite_Rio_De_Janeiro(Rio_De_Janeiro);
+    sf::Sprite Sprite_Martinique(Martinique);
+
+    Sprite_Sydney.setPosition(sf::Vector2f(952, 18));
+    window.clear(sf::Color::Black);
+    window.draw(Sprite);
+    while (window.pollEvent(event)) {
+        for (int i(0); i < m_airport.size(); i++) {
+            if (event.mouseMove.x >= m_airport[0]->getXmin() && event.mouseMove.x <= m_airport[0]->getXmax() &&
+                event.mouseMove.y >= m_airport[0]->getYmin() && event.mouseMove.y <= m_airport[0]->getYmax()) {
+                window.draw(Sprite_Sydney);
+            } else if (event.mouseMove.x >= m_airport[1]->getXmin() && event.mouseMove.x <= m_airport[1]->getXmax() &&
+                       event.mouseMove.y >= m_airport[1]->getYmin() && event.mouseMove.y <= m_airport[1]->getYmax()) {
+                window.draw(Sprite_Pekin);
+            } else if (event.mouseMove.x >= m_airport[2]->getXmin() && event.mouseMove.x <= m_airport[2]->getXmax() &&
+                       event.mouseMove.y >= m_airport[2]->getYmin() && event.mouseMove.y <= m_airport[2]->getYmax()) {
+                window.draw(Sprite_Moscou);
+            } else if (event.mouseMove.x >= m_airport[3]->getXmin() && event.mouseMove.x <= m_airport[3]->getXmax() &&
+                       event.mouseMove.y >= m_airport[3]->getYmin() && event.mouseMove.y <= m_airport[3]->getYmax()) {
+                window.draw(Sprite_Dubai);
+            } else if (event.mouseMove.x >= m_airport[4]->getXmin() && event.mouseMove.x <= m_airport[4]->getXmax() &&
+                       event.mouseMove.y >= m_airport[4]->getYmin() && event.mouseMove.y <= m_airport[4]->getYmax()) {
+                window.draw(Sprite_Londres);
+            } else if (event.mouseMove.x >= m_airport[5]->getXmin() && event.mouseMove.x <= m_airport[5]->getXmax() &&
+                       event.mouseMove.y >= m_airport[5]->getYmin() && event.mouseMove.y <= m_airport[5]->getYmax()) {
+                window.draw(Sprite_Pretoria);
+            } else if (event.mouseMove.x >= m_airport[6]->getXmin() && event.mouseMove.x <= m_airport[6]->getXmax() &&
+                       event.mouseMove.y >= m_airport[6]->getYmin() && event.mouseMove.y <= m_airport[6]->getYmax()) {
+                window.draw(Sprite_Algeria);
+            } else if (event.mouseMove.x >= m_airport[7]->getXmin() && event.mouseMove.x <= m_airport[7]->getXmax() &&
+                       event.mouseMove.y >= m_airport[7]->getYmin() && event.mouseMove.y <= m_airport[7]->getYmax()) {
+                window.draw(Sprite_Los_Angeles);
+            } else if (event.mouseMove.x >= m_airport[8]->getXmin() && event.mouseMove.x <= m_airport[8]->getXmax() &&
+                       event.mouseMove.y >= m_airport[8]->getYmin() && event.mouseMove.y <= m_airport[8]->getYmax()) {
+                window.draw(Sprite_New_York);
+            } else if (event.mouseMove.x >= m_airport[9]->getXmin() && event.mouseMove.x <= m_airport[9]->getXmax() &&
+                       event.mouseMove.y >= m_airport[9]->getYmin() && event.mouseMove.y <= m_airport[9]->getYmax()) {
+                window.draw(Sprite_Rio_De_Janeiro);
+            } else if(event.mouseMove.x >= m_airport[10]->getXmin() && event.mouseMove.x <= m_airport[10]->getXmax() &&
+                      event.mouseMove.y >= m_airport[10]->getYmin() && event.mouseMove.y <= m_airport[10]->getYmax()) {
+                window.draw(Sprite_Martinique);
+            }
+        }
+        window.display();
+    }
+
 }
 
 

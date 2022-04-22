@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+//#include "../Plane/Plane.h"
 
 class Airplane {
 private :
@@ -37,6 +38,8 @@ public:
     void put_state(bool plane_state);
 
     void afficher() const;
+
+    //Airplane GetPlane(Plane plane) const;//obligation d'appler la fonction dans le main
 };
 
 

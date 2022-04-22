@@ -10,7 +10,7 @@ Plane::Plane(std::string cheminFichierGraphe) {
     }
     std::string ligne;
     while (std::getline(ifs, ligne)) {
-        std::srand(std::time(nullptr));
+       // std::srand(std::time(nullptr));
         int number = rand() % 10 + 1;
         std::stringstream ss;
         size_t posit = ligne.find(" ");
@@ -68,6 +68,14 @@ void Plane::afficher() const {
     }
     std::cout << "\n";
 }
+
+std::vector<Airplane *> Plane::getListPlane() const {
+    return m_airplane;
+}
+
+
+
+
 
 
 

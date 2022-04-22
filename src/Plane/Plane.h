@@ -1,16 +1,17 @@
 #ifndef CONTROLEAERIEN_GROUPE_1_B_PLANE_H
 #define CONTROLEAERIEN_GROUPE_1_B_PLANE_H
-#include "Airplane.h"
+#include "../Plane/Airplane.h"
 #include <fstream>
 #include <queue>
 #include <sstream>
 
 class Plane {
 private:
-    std::vector<Airplane *> m_airplane;
+    std::vector<Airplane*> m_airplane;
 public:
     Plane(std::string cheminFichierGraphe);
     ~Plane();
+    std::vector<Airplane*> getListPlane() const;
     void afficher() const;
 };
 

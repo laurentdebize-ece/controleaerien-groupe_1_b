@@ -1,6 +1,7 @@
 #include "Flight.h"
 
-Flight::Flight() {
+Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list_of_airport) : m_list_of_plane{list_of_plane}, m_list_of_airport{list_of_airport} {
+//on recup direct les vecteur qu'on aura creer dans le main
     std::srand(std::time(nullptr));
     int choice(0), number(0);
     bool ok(false);
@@ -20,10 +21,9 @@ Flight::Flight() {
 
     //Pick a plane
     do {
-        choice = rand() % list_of_plane.size();
-        if (!airplane_flight[choice].get_state()) {
-            airplane_flight = list_of_plane[choice];
-            airplane_flight[choice].put_state(true);
+        choice = rand() % m_list_of_plane.size();
+        if (!m_list_of_plane[choice]->get_state()) {
+            m_list_of_plane[choice]->put_state(true);
             ok = true;
         } else {
             ok = false;
@@ -32,9 +32,27 @@ Flight::Flight() {
 
 
     //Random between Airport List for choose a Departure
+    do {
+        choice = rand() % m_list_of_airport.size();
+        if () {//condition pour le départ d'un vol flemme d'aller rdg le sujet d'ailleurs on devrait faire une fonction directement dans aiport qui renvoie directement un bool en fonction des conditions julia peut faire ça carre
+            departure = m_list_of_airport[choice]->get_AirportName();
+            ok = true;
+        } else {
+            ok = false;
+        }
+    } while (!ok);
 
 
     //Random between Airport List for choose an Arrival
+    do {
+        choice = rand() % m_list_of_airport.size();
+        if ( m_list_of_airport[choice]->get_AirportName() != departure  ) {//condition pour l'aterrissage d'un vol
+            arrival = m_list_of_airport[choice]->get_AirportName();
+            ok = true;
+        } else {
+            ok = false;
+        }
+    } while (!ok);
 }
 
 std::string Flight::get_flight_id() const {
@@ -98,14 +116,14 @@ void Flight::put_departure() {
                                      "ENTER THE AIRPORT OF DEPARTURE OF YOUR CHOICE : ";
                         std::cin >> airport;
                         for(int j(0);j<airport.size();j++) {
-                            if(airport!=m_airport[j].get_AirportName() && j==list_of_airport.size()){
+                            if(airport!=m_list_of_airport[j]->get_AirportName() && j==m_list_of_airport.size()){
                                 std::cout << "UNKNOWN CHOICE\n"
                                              "PLEASE RE-TYPE\n";
                                 find= false;
                             }
                             else{
                                 find=true;
-                                j=list_of_airport.size();
+                                j = m_list_of_airport.size();
                             }
                         }
                     } while (!find);
@@ -164,14 +182,14 @@ void Flight::put_arrival() {
                                      "ENTER THE AIRPORT OF ARRIVAL OF YOUR CHOICE : ";
                         std::cin >> airport;
                         for(int j(0);j<airport.size();j++) {
-                            if(airport!=m_airport[j].get_AirportName() && j==list_of_airport.size()){
+                            if(airport!=m_list_of_airport[j]->get_AirportName() && j==m_list_of_airport.size()){
                                 std::cout << "UNKNOWN CHOICE\n"
                                              "PLEASE RE-TYPE\n";
                                 find= false;
                             }
                             else{
                                 find=true;
-                                j=list_of_airport.size();
+                                j = m_list_of_airport.size();
                             }
                         }
                     } while (!find);

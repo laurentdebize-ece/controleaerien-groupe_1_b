@@ -65,17 +65,17 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     sf::Texture Rio_De_Janeiro;
     sf::Texture Martinique;
 
-    Sydney.loadFromFile("../Graphic_content/Map/Sydney.png");
-    Pekin.loadFromFile("../Graphic_content/Map/Sydney.png");
-    Moscou.loadFromFile("../Graphic_content/Map/Sydney.png");
-    Dubai.loadFromFile("../Graphic_content/Map/Sydney.png");
-    Londres.loadFromFile("../Graphic_content/Map/Sydney.png");
-    Pretoria.loadFromFile("../Graphic_content/Map/Sydney.png");
-    Algeria.loadFromFile("../Graphic_content/Map/Sydney.png");
-    Los_Angeles.loadFromFile("../Graphic_content/Map/Sydney.png");
-    New_York.loadFromFile("../Graphic_content/Map/Sydney.png");
-    Rio_De_Janeiro.loadFromFile("../Graphic_content/Map/Sydney.png");
-    Martinique.loadFromFile("../Graphic_content/Map/Sydney.png");
+    Sydney.loadFromFile("Graphic_content/Map/Sydney.png");
+    Pekin.loadFromFile("Graphic_content/Map/Sydney.png");
+    Moscou.loadFromFile("Graphic_content/Map/Sydney.png");
+    Dubai.loadFromFile("Graphic_content/Map/Sydney.png");
+    Londres.loadFromFile("Graphic_content/Map/Sydney.png");
+    Pretoria.loadFromFile("Graphic_content/Map/Sydney.png");
+    Algeria.loadFromFile("Graphic_content/Map/Sydney.png");
+    Los_Angeles.loadFromFile("Graphic_content/Map/Sydney.png");
+    New_York.loadFromFile("Graphic_content/Map/Sydney.png");
+    Rio_De_Janeiro.loadFromFile("Graphic_content/Map/Sydney.png");
+    Martinique.loadFromFile("Graphic_content/Map/Sydney.png");
 
     sf::Sprite Sprite_Sydney(Sydney);
     sf::Sprite Sprite_Pekin(Pekin);

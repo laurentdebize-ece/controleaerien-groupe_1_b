@@ -61,3 +61,8 @@ void Airplane::afficher() const {
 void Airplane::put_state(bool plane_state) {
     state=plane_state;
 }
+
+/*Airplane Airplane::GetPlane(Plane plane) const {
+    return Airplane(__cxx11::basic_string(), <#initializer#>, __cxx11::basic_string(), <#initializer#>, <#initializer#>,
+                    <#initializer#>, <#initializer#>, <#initializer#>, <#initializer#>);
+}*/

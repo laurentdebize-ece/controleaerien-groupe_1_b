@@ -7,7 +7,7 @@
      //Initialisation Cartes Map
      sf::Texture Menu_principal;
 
-     Menu_principal.loadFromFile("../Graphic_content/Map/Sim_Map.png");
+     Menu_principal.loadFromFile("Graphic_content/map/Sim_Map.png");
 
      sf::Sprite Sprite(Menu_principal);
 
@@ -15,13 +15,14 @@
 
      Plane p{"../Text_files/Airplane"};
      Aiport_network a{"../Text_files/Airport_network"};
-     std::vector<Airport*> airport{};
+     std::vector<Airport*> airport = a.getListAirport();
      //Flight f{};
      do {
          Game_Menu(choix);
 
          //Initialisation  Fenetre
          sf::RenderWindow window(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "AIRPORT CONTROL SIMULATOR");
+         window.setPosition(sf::Vector2i(0,10));
 
          switch (choix) {
                  case 1 :
@@ -33,7 +34,8 @@
                      while (!fin) {
                          sf::Event event{};
                          while (window.pollEvent(event)) {
-                             show_airport_on_screen( event, window, Sprite, airport);
+                             show_airport_on_screen( event, window, Sprite,airport);
+                             //a.show_airport_on_screen(event, window, Sprite);
                              //f.Flight_manual();
                              if (event.type == sf::Event::Closed ||
                                  (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)){
