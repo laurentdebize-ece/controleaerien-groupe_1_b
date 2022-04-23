@@ -2,9 +2,11 @@
 #define CONTROLEAERIEN_GROUPE_1_B_AIRPORT_H
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "../Airport_network/Aiport_network.h"
+
 #define POS_X 952
 #define POS_Y 18
-
+class Aiport_network;
 class Airport {
 private:
     int m_id, m_Xmin, m_Xmax,m_Xcentre, m_Ymin, m_Ymax,m_Ycentre ;
@@ -20,13 +22,12 @@ public:
     void afficher() const;
     int getXmin() const;
     int getXmax() const;
-    int getXcentre() const;
+    double getXcentre() const;
     int getYmin() const;
     int getYmax() const;
     int getYcentre() const;
     std::string get_AirportName() const;
 };
 
-void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, std::vector<Airport*> &m_airport);
-
+void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, std::vector<Airport*> &m_airport, Aiport_network &a, sf::Font &font);
 #endif //CONTROLEAERIEN_GROUPE_1_B_AIRPORT_H

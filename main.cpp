@@ -4,6 +4,8 @@
      unsigned int choix(0);
      bool fin(false), back_menu(true);
 
+     sf::Font font;
+     font.loadFromFile("../Font/Pixeled.ttf");
      //Initialisation Cartes Map
      sf::Texture Menu_principal;
 
@@ -34,9 +36,10 @@
                      while (!fin) {
                          sf::Event event{};
                          while (window.pollEvent(event)) {
-                             show_airport_on_screen( event, window, Sprite,airport);
+                             show_airport_on_screen( event, window, Sprite,airport,a, font);
                              //a.show_airport_on_screen(event, window, Sprite);
                              //f.Flight_manual();
+
                              if (event.type == sf::Event::Closed ||
                                  (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)){
                                  fin = true;
@@ -66,8 +69,8 @@
                      std::cout <<"Good bye HAVE A NICE DAY";
                      break;
                  default:
-                     std::cout<<"Choix inconnu\n"
-                                "Veuillez retaper\n";
+                     std::cout<<"UNKNOWN CHOICE\n"
+                                "PLEASE RE-TYPE\n";
                      choix=0;
                      break;
              }

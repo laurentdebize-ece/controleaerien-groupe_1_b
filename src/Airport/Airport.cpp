@@ -32,7 +32,7 @@ int Airport::getXmax() const {
     return m_Xmax;
 }
 
-int Airport::getXcentre() const {
+double Airport::getXcentre() const {
     return m_Xcentre;
 }
 
@@ -53,7 +53,7 @@ std::string Airport::get_AirportName() const {
 }
 
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite,
-                            std::vector<Airport *> &m_airport) {
+                            std::vector<Airport *> &m_airport, Aiport_network &a, sf::Font &font) {
     sf::Texture Sydney;
     sf::Texture Pekin;
     sf::Texture Moscou;
@@ -101,8 +101,10 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     Sprite_New_York.setPosition(sf::Vector2f(POS_X, POS_Y));
     Sprite_Rio_De_Janeiro.setPosition(sf::Vector2f(POS_X, POS_Y));
     Sprite_Martinique.setPosition(sf::Vector2f(POS_X, POS_Y));
+
     window.clear(sf::Color::Black);
     window.draw(Sprite);
+    a.show_network_airport_line_on_screen(event, window, Sprite, font);
     window.display();
     while (window.pollEvent(event)) {
         for (int i(0); i < m_airport.size(); i++) {
@@ -137,5 +139,6 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     }
 
 }
+
 
 

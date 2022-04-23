@@ -1,4 +1,4 @@
-10
+11
 
 Sydney 1140 1185 1160 570 600 592 1 10 2.5 2.6 2.7 2.8 2.9 3
 Pekin 1005 1065 1033 300 330 323 3 20 3.5 3.6 3.7 3.8 3.9 4
@@ -12,37 +12,34 @@ NewYork 300 375 337 270 300 294 4 30 3.5 3.6 3.7 3.8 3.9 4
 RioDeJaneiro 405 465 435 510 540 534 2 15 3.5 3.6 3.7 3.8 3.9 4
 Martinique 330 375 351 375 405 400 1 5 3.5 3.6 3.7 3.8 3.9 4
 
-22
+20
 
-Sydney Londres
-Sydney NewYork
-Sydney Martinique
+Sydney Londres 1300
+Sydney NewYork 4300
+Sydney Pretoria 1300
+Sydney Pekin 1300
+Sydney Moscou 1300
 
-Pekin RioDeJaneiro
+Pekin RioDeJaneiro 1300
 
-Moscou Dubai
-Moscou Pretoria
-Moscou Algerie
+Moscou Dubai 1300
+Moscou Pretoria 1300
+Moscou Algerie 1300
 
+Dubai NewYork 1300
+Dubai Pekin 1300
 
-Dubai NewYork
+Londres Martinique 1300
 
-Londres Pretoria
-Londres LosAngeles
-Londres Martinique
+Algerie Londres 1300
+Algerie RioDeJaneiro 1300
 
-Pretoria RioDeJaneiro
+LosAngeles NewYork 1300
+LosAngeles RioDeJaneiro 1300
+LosAngeles Martinique 1300
 
-Algerie LosAngeles
-Algerie NewYork
-Algerie RioDeJaneiro
-Algerie Martinique
+NewYork RioDeJaneiro 1300
+NewYork Martinique 1300
+NewYork Londres 1300
 
-LosAngeles NewYork
-LosAngeles RioDeJaneiro
-LosAngeles Martinique
-
-NewYork RioDeJaneiro
-NewYork Martinique
-
-RioDeJaneiro Martinique
+RioDeJaneiro Martinique 1300
