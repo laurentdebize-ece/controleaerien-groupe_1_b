@@ -52,8 +52,7 @@ std::string Airport::get_AirportName() const {
     return m_AirportName;
 }
 
-void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite,
-                            std::vector<Airport *> &m_airport, Aiport_network &a, sf::Font &font) {
+void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a, sf::Font &font) {
     sf::Texture Sydney;
     sf::Texture Pekin;
     sf::Texture Moscou;
@@ -66,17 +65,17 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     sf::Texture Rio_De_Janeiro;
     sf::Texture Martinique;
 
-    Sydney.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Pekin.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Moscou.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Dubai.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Londres.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Pretoria.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Algeria.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Los_Angeles.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    New_York.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Rio_De_Janeiro.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Martinique.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Sydney.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Pekin.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Moscou.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Dubai.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Londres.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Pretoria.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Algeria.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Los_Angeles.loadFromFile("Graphic_Content/Map/Sydney.png");
+    New_York.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Rio_De_Janeiro.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Martinique.loadFromFile("Graphic_Content/Map/Sydney.png");
 
     sf::Sprite Sprite_Sydney(Sydney);
     sf::Sprite Sprite_Pekin(Pekin);
@@ -106,10 +105,11 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     window.draw(Sprite);
     a.show_network_airport_line_on_screen(event, window, Sprite, font);
     window.display();
+   // a.getListAirport()[3];
     while (window.pollEvent(event)) {
-        for (int i(0); i < m_airport.size(); i++) {
-            if (event.mouseMove.x >= m_airport[i]->getXmin() && event.mouseMove.x <= m_airport[i]->getXmax() &&
-                event.mouseMove.y >= m_airport[i]->getYmin() && event.mouseMove.y <= m_airport[i]->getYmax()) {
+        for (int i(0); i < a.getListAirport().size(); i++) {
+            if (event.mouseMove.x >= a.getListAirport()[i]->getXmin() && event.mouseMove.x <= a.getListAirport()[i]->getXmax() &&
+                event.mouseMove.y >= a.getListAirport()[i]->getYmin() && event.mouseMove.y <= a.getListAirport()[i]->getYmax()) {
                 if (i == 0) {
                     window.draw(Sprite_Sydney);
                 } else if (i == 1) {

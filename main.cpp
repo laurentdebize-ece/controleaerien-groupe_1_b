@@ -5,11 +5,11 @@
      bool fin(false), back_menu(true);
 
      sf::Font font;
-     font.loadFromFile("../Font/Pixeled.ttf");
+     font.loadFromFile("Font/Pixeled.ttf");
      //Initialisation Cartes Map
      sf::Texture Menu_principal;
 
-     Menu_principal.loadFromFile("../Graphic_Content/Map/Sim_Map.png");
+     Menu_principal.loadFromFile("Graphic_Content/Map/Sim_Map.png");
 
      sf::Sprite Sprite(Menu_principal);
 
@@ -17,7 +17,7 @@
 
      Plane p{"../Text_files/Airplane"};
      Aiport_network a{"../Text_files/Airport_network"};
-     std::vector<Airport*> airport = a.getListAirport();
+     //std::vector<Airport*> airport = a.getListAirport();
      //Flight f{};
      do {
          Game_Menu(choix);
@@ -36,7 +36,7 @@
                      while (!fin) {
                          sf::Event event{};
                          while (window.pollEvent(event)) {
-                             show_airport_on_screen( event, window, Sprite,airport,a, font);
+                             show_airport_on_screen( event, window, Sprite,a, font);
                              //a.show_airport_on_screen(event, window, Sprite);
                              //f.Flight_manual();
 

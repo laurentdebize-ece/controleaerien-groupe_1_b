@@ -29,5 +29,5 @@ public:
     std::string get_AirportName() const;
 };
 
-void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, std::vector<Airport*> &m_airport, Aiport_network &a, sf::Font &font);
+void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a, sf::Font &font);
 #endif //CONTROLEAERIEN_GROUPE_1_B_AIRPORT_H
