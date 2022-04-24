@@ -46,26 +46,21 @@ Aiport_network::Aiport_network(std::string FichieraiportNetwork) {
         if (ifs.fail()) {
             throw std::runtime_error("Probleme de lecture d'un.e arc/arete.");
         }
-        addVol(airport1, airport2, poids);
+        //addConnexion(airport1, airport2, poids);
+        int num1(0), num2(0);
+        for (int j(0); j < m_airport.size(); j++) {
+            if (airport1 == m_airport[j]->get_AirportName()) {
+                num1 = j;
+            }
+            if (airport2 == m_airport[j]->get_AirportName()) {
+                num2 = j;
+            }
+        }
+        m_airport[num1]->addSuccesseur(m_airport[num2], poids);
     }
 
 }
 
-void Aiport_network::addVol(std::string &airport1, std::string &airport2, int &poids) {
-    int num1(0), num2(0);
-    for (int i(0); i < m_airport.size(); i++) {
-        if (airport1 == m_airport[i]->get_AirportName()) {
-            num1 = i;
-        }
-        if (airport2 == m_airport[i]->get_AirportName()) {
-            num2 = i;
-        }
-    }
-
-    Connexion *connect = new Connexion(m_airport[num1], m_airport[num2], poids);
-    m_connect.push_back(connect);
-
-}
 
 void Aiport_network::afficher() const {
 
@@ -137,6 +132,78 @@ Aiport_network::draw_line(sf::RenderWindow &window, const double &airport1_x_cen
     //text.setOrigin(line->position.x/2, line->position.y/2);
     //text.setPosition(line->position.x, line->position.y);
     //window.draw(text);
+}
+
+std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
+
+//condtions arrivé départ pour voir si par exemple l'aeroport d'escale est valide
+
+    std::cout << std::endl << std::endl << "LANCEMENT DE AIRPORT_DIJKSTRA :" << std::endl;
+    // INITIALISATION
+    int nbMarques = 0;
+    std::vector<int> couleurs(m_airport.size(), 0); // tous les aéroports sont non marqués
+    std::vector<int> distances(m_airport.size(), std::numeric_limits<int>::max()); // stocké les distances des aéroports remplacer l'infini
+    distances[departure->getId()] = 0; // departure est à une distance de 0 de lui même.
+    std::vector<int> predecesseurs(m_airport.size(), -1); // nous ne connaissons pas encore les prédécesseurs
+    predecesseurs[departure->getId()] = 0; // on pourrait laisser -1, departure n'a pas vraiment de prédécesseur car il s'agit due l'aeroport initial
+
+    do {
+        int s = 0;
+        int distanceMini = std::numeric_limits<int>::max();//recup le max du vecteur de poids
+        std::cout << std::endl << std::endl;
+        for (size_t i = 0; i < distances.size(); i++) {
+            std::cout << couleurs[i] << " "
+                      << ((distances[i] == std::numeric_limits<int>::max()) ? "Inf" : std::to_string(
+                              distances[i])) << " "
+                      << (predecesseurs[i] == -1 ? "?" : std::to_string(
+                              predecesseurs[i])) << "    ";
+            if (couleurs[i] == 0 && distances[i] < distanceMini) {
+                distanceMini = distances[i];
+                s = i;
+            }
+        }
+        std::cout << std::endl << std::endl;
+
+        couleurs[s] = 1;
+        nbMarques++;
+        std::cout << "Sommet choisi : " << s << " (plus petite distance depuis le sommet " << departure->getId() << " (" << distanceMini
+                  << ")"
+                  << "). Ses successeurs non marqués sont :" << std::endl;
+        for (auto successeur: m_airport[s]->getSuccesseurs()) {
+            if (couleurs[successeur.first->getId()] == 0) {
+                std::cout << "    - " << successeur.first->getId() << " : "
+                          << "Si considéré, la distance deviendrait " << distances[s] << " + "
+                          << successeur.second << " = " << distances[s] + successeur.second
+                          << ". Ce qui est "
+                          << ((distances[s] + successeur.second < distances[successeur.first->getId()]) ? "inférieur"
+                                                                                                        : "supérieur")
+                          << " à sa distance actuelle de "
+                          << distances[successeur.first->getId()] << ". Donc : "
+                          << ((distances[s] + successeur.second < distances[successeur.first->getId()]) ? "MAJ"
+                                                                                                        : "NON MAJ")
+                          << std::endl;
+                if (distances[s] + successeur.second < distances[successeur.first->getId()]) {
+                    distances[successeur.first->getId()] = distances[s] + successeur.second;
+                    predecesseurs[successeur.first->getId()] = s;
+                }
+            }
+        }
+    } while (nbMarques < m_airport.size());
+
+    std::cout << std::endl << "FIN DE DIJKSTRA." << std::endl;
+    return predecesseurs;
+
+
+
+
+
+
+
+
+
+
+
+    return std::vector<int>();
 }
 
 
