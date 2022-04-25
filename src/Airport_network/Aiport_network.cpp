@@ -148,25 +148,42 @@ std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
     predecesseurs[departure->getId()] = 0; // on pourrait laisser -1, departure n'a pas vraiment de prédécesseur car il s'agit due l'aeroport initial
 
     do {
-        int s = 0;
-        int distanceMini = std::numeric_limits<int>::max();//recup le max du vecteur de poids
-        std::cout << std::endl << std::endl;
-        for (size_t i = 0; i < distances.size(); i++) {
-            std::cout << couleurs[i] << " "
-                      << ((distances[i] == std::numeric_limits<int>::max()) ? "Inf" : std::to_string(
-                              distances[i])) << " "
-                      << (predecesseurs[i] == -1 ? "?" : std::to_string(
-                              predecesseurs[i])) << "    ";
-            if (couleurs[i] == 0 && distances[i] < distanceMini) {
-                distanceMini = distances[i];
-                s = i;
-            }
-        }
-        std::cout << std::endl << std::endl;
+        int s(0);
+        int distanceMini(0);
 
-        couleurs[s] = 1;
+        do {
+            s = 0;
+            distanceMini = std::numeric_limits<int>::max();
+            std::cout << std::endl << std::endl;
+            for (size_t i = 0; i < distances.size(); i++) {
+                std::cout << couleurs[i] << " "
+                          << ((distances[i] == std::numeric_limits<int>::max()) ? "Inf" : std::to_string(
+                                  distances[i])) << " "
+                          << (predecesseurs[i] == -1 ? "?" : std::to_string(
+                                  predecesseurs[i])) << "    ";
+                if (couleurs[i] == 0 && distances[i] < distanceMini) {
+                    distanceMini = distances[i];
+                    s = int(i);
+                }
+            }
+            std::cout << std::endl << std::endl;
+
+            if (s == arrival->getId()) {
+                nbMarques = int(m_airport.size());//finir le programme jsp si on converti en int
+            } else if (/*gestions arrivé gesiton depart sur s*/) {
+                couleurs[s] = 1;
+            } else {
+                //refaire le calcul de distance mini sans s donc remettre la distance de s à l'infi pour qu'il ne soit plus prit en compte
+                distances[s] = std::numeric_limits<int>::max();
+            }
+
+
+        }while/*condition d'arret si sommet valide trouvé*/(couleurs[s] == 1);
+
+
+        // comparé s et id arrival et vérifier les conditions d'attérissage et de decollage
         nbMarques++;
-        std::cout << "Sommet choisi : " << s << " (plus petite distance depuis le sommet " << departure->getId() << " (" << distanceMini
+        std::cout << "aéroport choisi : " << s << " (plus petite distance depuis le aeroport " << departure->getId() << " (" << distanceMini
                   << ")"
                   << "). Ses successeurs non marqués sont :" << std::endl;
         for (auto successeur: m_airport[s]->getSuccesseurs()) {
@@ -191,19 +208,9 @@ std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
     } while (nbMarques < m_airport.size());
 
     std::cout << std::endl << "FIN DE DIJKSTRA." << std::endl;
+
+
     return predecesseurs;
-
-
-
-
-
-
-
-
-
-
-
-    return std::vector<int>();
 }
 
 
