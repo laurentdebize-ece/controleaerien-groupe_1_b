@@ -136,22 +136,20 @@ Aiport_network::draw_line(sf::RenderWindow &window, const double &airport1_x_cen
 
 std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
 
-//condtions arrivé départ pour voir si par exemple l'aeroport d'escale est valide
-
-    std::cout << std::endl << std::endl << "LANCEMENT DE AIRPORT_DIJKSTRA :" << std::endl;
     // INITIALISATION
     int nbMarques = 0;
     std::vector<int> couleurs(m_airport.size(), 0); // tous les aéroports sont non marqués
-    std::vector<int> distances(m_airport.size(), std::numeric_limits<int>::max()); // stocké les distances des aéroports remplacer l'infini
+    std::vector<int> distances(m_airport.size(), std::numeric_limits<int>::max());
     distances[departure->getId()] = 0; // departure est à une distance de 0 de lui même.
     std::vector<int> predecesseurs(m_airport.size(), -1); // nous ne connaissons pas encore les prédécesseurs
-    predecesseurs[departure->getId()] = 0; // on pourrait laisser -1, departure n'a pas vraiment de prédécesseur car il s'agit due l'aeroport initial
+    predecesseurs[departure->getId()] = 0; // on pourrait laisser -1, departure n'a pas vraiment de prédécesseur car il s'agit de l'aeroport initial
 
     do {
         int s(0);
         int distanceMini(0);
 
         do {
+            //CHOIX SOMMET QUI EST A UNE DISTANCE MINI
             s = 0;
             distanceMini = std::numeric_limits<int>::max();
             std::cout << std::endl << std::endl;
@@ -168,21 +166,21 @@ std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
             }
             std::cout << std::endl << std::endl;
 
+            //VERIFICATION DE LA VIABILITE DE L'AEROPORT QUI SE TROUVE A UNE DISTANCE MINIMALE
             if (s == arrival->getId()) {
-                nbMarques = int(m_airport.size());//finir le programme jsp si on converti en int
+                nbMarques = int(m_airport.size());
             } else if (/*gestions arrivé gesiton depart sur s*/) {
                 couleurs[s] = 1;
+                nbMarques++;
+
             } else {
-                //refaire le calcul de distance mini sans s donc remettre la distance de s à l'infi pour qu'il ne soit plus prit en compte
+                //refaire le calcul de distance mini sans s donc remettre la distance de s à l'infini pour que l'aeroport d'id s ne soit  plus prit en compte
                 distances[s] = std::numeric_limits<int>::max();
             }
 
 
-        }while/*condition d'arret si sommet valide trouvé*/(couleurs[s] == 1);
+        }while(couleurs[s] == 1);//condition d'arret si sommet valide trouvé
 
-
-        // comparé s et id arrival et vérifier les conditions d'attérissage et de decollage
-        nbMarques++;
         std::cout << "aéroport choisi : " << s << " (plus petite distance depuis le aeroport " << departure->getId() << " (" << distanceMini
                   << ")"
                   << "). Ses successeurs non marqués sont :" << std::endl;
@@ -199,6 +197,7 @@ std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
                           << ((distances[s] + successeur.second < distances[successeur.first->getId()]) ? "MAJ"
                                                                                                         : "NON MAJ")
                           << std::endl;
+                //on va pas gardé les affichages j'ai laissé psk je trouve ça peut vous aider a comprendre
                 if (distances[s] + successeur.second < distances[successeur.first->getId()]) {
                     distances[successeur.first->getId()] = distances[s] + successeur.second;
                     predecesseurs[successeur.first->getId()] = s;
