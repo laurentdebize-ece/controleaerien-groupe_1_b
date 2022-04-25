@@ -5,11 +5,11 @@
      bool fin(false), back_menu(true);
 
      sf::Font font;
-     font.loadFromFile("Font/Pixeled.ttf");
+     font.loadFromFile("../Font/Pixeled.ttf");
      //Initialisation Cartes Map
      sf::Texture Menu_principal;
 
-     Menu_principal.loadFromFile("Graphic_Content/Map/Sim_Map.png");
+     Menu_principal.loadFromFile("../Graphic_Content/Map/Sim_Map.png");
 
      sf::Sprite Sprite(Menu_principal);
 

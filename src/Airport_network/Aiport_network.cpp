@@ -123,10 +123,9 @@ Aiport_network::draw_line(sf::RenderWindow &window, const double &airport1_x_cen
     std::string poids;
     poids+=std::to_string(m_connect[i]->getPoids());
     text.setString(poids);
-    text.setCharacterSize(10);
-    text.setColor(sf::Color::White);
-    //text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-
+    text.setCharacterSize(9);
+    text.setColor(sf::Color::Yellow);
+    sf::Vector2f mid = sf::Vector2f((float)( airport1_x_center + airport2_x_center) / 2, (float)(airport1_y_center + airport2_y_center) / 2);
     sf::Vertex line[] =
             {
                     sf::Vertex(sf::Vector2f((float) airport1_x_center, (float) airport1_y_center)),
@@ -134,9 +133,8 @@ Aiport_network::draw_line(sf::RenderWindow &window, const double &airport1_x_cen
             };
 
     window.draw(line, 2, sf::Lines);
-    //text.setOrigin(line->position.x/2, line->position.y/2);
-    //text.setPosition(line->position.x, line->position.y);
-    //window.draw(text);
+    text.setPosition(mid.x,mid.y);
+    window.draw(text);
 }
 
 
