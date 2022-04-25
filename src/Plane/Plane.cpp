@@ -1,12 +1,12 @@
 #include "Plane.h"
 
-Plane::Plane(std::string cheminFichierGraphe) {
+Plane::Plane(std::string FichierPlane) {
 
     int num(0);
     bool ok;
-    std::ifstream ifs{cheminFichierGraphe};
+    std::ifstream ifs{FichierPlane};
     if (!ifs) {
-        throw std::runtime_error("Impossible d'ouvrir " + cheminFichierGraphe);
+        throw std::runtime_error("Impossible d'ouvrir " + FichierPlane);
     }
     std::string ligne;
     while (std::getline(ifs, ligne)) {
