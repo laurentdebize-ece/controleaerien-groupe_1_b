@@ -49,7 +49,7 @@ Flight::Flight(std::vector<Airplane *> &list_of_plane,std::vector<Airport *> &li
     do {
         choice = rand() % m_list_of_airport.size();
         if ( m_list_of_airport[choice]->get_AirportName() != departure  ) {//condition pour l'aterrissage d'un vol
-            //FAUDRA REGARDER SI L'AÉROPORT D'ARIVÉE ET DE DEPART SONT CONNECTÉS
+            //FAUDRA REGARDER SI L'AÉROPORT D'ARIVÉE ET DE DEPART SONT CONNECTÉS //
             arrival = m_list_of_airport[choice]->get_AirportName();
             ok = true;
         } else {

@@ -14,12 +14,17 @@ private:
     int m_NbrRunways, m_Ground_seats;
     double m_Ground_waiting_time, m_acces_runway_time, m_anticollision_time, m_landing_time, m_takeoff_time,m_in_flight_loop;
 
+    std::vector<std::pair<Airport *const, int>> m_successeurs;
+
 public:
     Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &Xcentre, int &Ymin, int &Ymax,
             int &Ycentre,int &NbrRunways,int &Ground_seats, double &Ground_waiting_time,
             double &acces_runway_time, double &anticollision_time,double &landing_time,double &takeoff_time,
             double &in_flight_loop);
+    void addSuccesseur(Airport *successeur, int poids);
+    const std::vector<std::pair<Airport *const, int>> &getSuccesseurs() const;
     void afficher() const;
+    int getId() const;
     int getXmin() const;
     int getXmax() const;
     double getXcentre() const;

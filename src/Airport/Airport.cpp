@@ -11,6 +11,12 @@ Airport::Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &X
         m_anticollision_time{anticollision_time}, m_landing_time{landing_time},
         m_takeoff_time{takeoff_time}, m_in_flight_loop{in_flight_loop} {}
 
+void Airport::addSuccesseur(Airport *successeur, int poids) {
+
+    m_successeurs.emplace_back(successeur, poids);
+
+}
+
 void Airport::afficher() const {
     std::cout << "                   Id : " << m_id << std::endl
               << "                   Name : " << m_AirportName << std::endl
@@ -52,9 +58,16 @@ std::string Airport::get_AirportName() const {
     return m_AirportName;
 }
 
+int Airport::getId() const {
+    return m_id;
+}
+
+const std::vector<std::pair<Airport *const, int>> &Airport::getSuccesseurs() const {
+    return m_successeurs;
+}
+
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a,
                             sf::Font &font) {
-
     sf::Texture Sydney;
     sf::Texture Pekin;
     sf::Texture Moscou;
