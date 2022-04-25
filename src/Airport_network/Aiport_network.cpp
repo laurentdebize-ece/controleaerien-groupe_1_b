@@ -57,9 +57,17 @@ Aiport_network::Aiport_network(std::string FichieraiportNetwork) {
             }
         }
         m_airport[num1]->addSuccesseur(m_airport[num2], poids);
+        addVol(num1,num2,poids);
     }
 
 }
+
+    void Aiport_network::addVol(int &num1, int &num2, int &poids) {
+
+        Connexion *connect = new Connexion(m_airport[num1], m_airport[num2], poids);
+        m_connect.push_back(connect);
+
+    }
 
 
 void Aiport_network::afficher() const {
@@ -165,17 +173,17 @@ std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
             std::cout << std::endl << std::endl;
 
             //VERIFICATION DE LA VIABILITE DE L'AEROPORT QUI SE TROUVE A UNE DISTANCE MINIMALE
-            if (s == arrival->getId()) {
+            /*if (s == arrival->getId()) {
                 couleurs[s] = 1;
                 nbMarques = int(m_airport.size());
-            } else if (/*gestions arrivé gesiton depart sur s*/) {
+            } else if (gestions arrivé gesiton depart sur s) {
                 couleurs[s] = 1;
                 nbMarques++;
 
             } else {
                 //refaire le calcul de distance mini sans s donc remettre la distance de s à l'infini pour que l'aeroport d'id s ne soit  plus prit en compte
                 distances[s] = std::numeric_limits<int>::max();
-            }
+            }*/
 
 
         }while(couleurs[s] == 0);//condition d'arret si sommet valide trouvé
