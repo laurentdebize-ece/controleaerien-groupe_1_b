@@ -168,6 +168,7 @@ std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
 
             //VERIFICATION DE LA VIABILITE DE L'AEROPORT QUI SE TROUVE A UNE DISTANCE MINIMALE
             if (s == arrival->getId()) {
+                couleurs[s] = 1;
                 nbMarques = int(m_airport.size());
             } else if (/*gestions arrivé gesiton depart sur s*/) {
                 couleurs[s] = 1;
@@ -179,7 +180,7 @@ std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
             }
 
 
-        }while(couleurs[s] == 1);//condition d'arret si sommet valide trouvé
+        }while(couleurs[s] == 0);//condition d'arret si sommet valide trouvé
 
         std::cout << "aéroport choisi : " << s << " (plus petite distance depuis le aeroport " << departure->getId() << " (" << distanceMini
                   << ")"
