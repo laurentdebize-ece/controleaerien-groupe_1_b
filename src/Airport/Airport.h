@@ -13,6 +13,8 @@ private:
     std::string m_AirportName;// on met un id pour les aeroport ou on laisse le nom
     int m_NbrRunways, m_Ground_seats;
     double m_Ground_waiting_time, m_acces_runway_time, m_anticollision_time, m_landing_time, m_takeoff_time,m_in_flight_loop;
+    std::vector<int> m_management_NbrRunways(m_NbrRunways, O);
+    std::vector<int> m_management_Ground_seats(m_Ground_seats,0);
 
     std::vector<std::pair<Airport *const, int>> m_successeurs;
 
@@ -21,6 +23,7 @@ public:
             int &Ycentre,int &NbrRunways,int &Ground_seats, double &Ground_waiting_time,
             double &acces_runway_time, double &anticollision_time,double &landing_time,double &takeoff_time,
             double &in_flight_loop);
+
     void addSuccesseur(Airport *successeur, int poids);
     const std::vector<std::pair<Airport *const, int>> &getSuccesseurs() const;
     void afficher() const;
@@ -32,6 +35,9 @@ public:
     int getYmax() const;
     int getYcentre() const;
     std::string get_AirportName() const;
+    void management_Landing();
+    void management_takeoff();
+
 };
 
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a, sf::Font &font);

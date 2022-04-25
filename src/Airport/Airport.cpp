@@ -9,7 +9,14 @@ Airport::Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &X
         m_Ymax{Ymax}, m_Ycentre{Ycentre}, m_NbrRunways{NbrRunways}, m_Ground_seats{Ground_seats},
         m_Ground_waiting_time{Ground_waiting_time}, m_acces_runway_time{acces_runway_time},
         m_anticollision_time{anticollision_time}, m_landing_time{landing_time},
-        m_takeoff_time{takeoff_time}, m_in_flight_loop{in_flight_loop} {}
+        m_takeoff_time{takeoff_time}, m_in_flight_loop{in_flight_loop}
+        {
+
+
+
+
+
+}
 
 void Airport::addSuccesseur(Airport *successeur, int poids) {
 
@@ -64,6 +71,14 @@ int Airport::getId() const {
 
 const std::vector<std::pair<Airport *const, int>> &Airport::getSuccesseurs() const {
     return m_successeurs;
+}
+
+void Airport::management_Landing() {
+
+}
+
+void Airport::management_takeoff() {
+
 }
 
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a, sf::Font &font) {

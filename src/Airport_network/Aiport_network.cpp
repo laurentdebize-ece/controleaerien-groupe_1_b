@@ -57,9 +57,11 @@ Aiport_network::Aiport_network(std::string FichieraiportNetwork) {
             }
         }
         m_airport[num1]->addSuccesseur(m_airport[num2], poids);
+
     }
 
 }
+
 
 
 void Aiport_network::afficher() const {
