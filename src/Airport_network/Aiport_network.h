@@ -23,5 +23,6 @@ public:
     void draw_line(sf::RenderWindow &window, const double &airport1_x_center, const double &airport1_y_center,
                    const double &airport2_x_center, const double &airport2_y_center, sf::Font &font, int i);
     std::vector<int> PCC (Airport* departure, Airport* arrival);
+    void addVol(int &num1, int &num2, int &poids);
 };
 #endif //CONTROLEAERIEN_GROUPE_1_B_AIPORT_NETWORK_H
