@@ -32,7 +32,7 @@
                              targetSize.x / Sprite.getLocalBounds().width,
                              targetSize.y / Sprite.getLocalBounds().height);
 
-                     window.clear(sf::Color::Black);
+                     window.clear(sf::Color::Transparent);
                      while (!fin) {
                          sf::Event event{};
                          while (window.pollEvent(event)) {

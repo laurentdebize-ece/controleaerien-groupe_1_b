@@ -68,6 +68,7 @@ const std::vector<std::pair<Airport *const, int>> &Airport::getSuccesseurs() con
 
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a,
                             sf::Font &font) {
+    bool ok(false);
     sf::Texture Sydney;
     sf::Texture Pekin;
     sf::Texture Moscou;
@@ -118,54 +119,56 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     window.clear(sf::Color::Transparent);
     window.draw(Sprite);
     window.display();
+    if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
+        if (event.key.code == sf::Keyboard::I) {
+            a.show_network_airport_line_on_screen(event, window, Sprite, font);
+            std::cout << "toto" << std::endl;
+            ok = true;
+            window.display();
+        }
+        if (event.key.code == sf::Keyboard::O) {
+            window.draw(Sprite);
+            std::cout << "njdgng" << std::endl;
+            ok=false;
+            window.display();
+        }
+    }
 
-        if (event.type == sf::Event::KeyPressed ||event.type == sf::Event::KeyReleased) {
-            if (event.key.code == sf::Keyboard::I) {
-                    window.draw(Sprite);
-                    a.show_network_airport_line_on_screen(event, window, Sprite, font);
-                    window.display();
+    while (window.pollEvent(event)) {
+        // a.getListAirport()[3];
+        for (int i(0); i < a.getListAirport().size(); i++) {
+            if (event.mouseMove.x >= a.getListAirport()[i]->getXmin() &&
+                event.mouseMove.x <= a.getListAirport()[i]->getXmax() &&
+                event.mouseMove.y >= a.getListAirport()[i]->getYmin() &&
+                event.mouseMove.y <= a.getListAirport()[i]->getYmax()) {
+                if (i == 0) {
+                    window.draw(Sprite_Sydney);
+                } else if (i == 1) {
+                    window.draw(Sprite_Pekin);
+                } else if (i == 2) {
+                    window.draw(Sprite_Moscou);
+                } else if (i == 3) {
+                    window.draw(Sprite_Dubai);
+                } else if (i == 4) {
+                    window.draw(Sprite_Londres);
+                } else if (i == 5) {
+                    window.draw(Sprite_Pretoria);
+                } else if (i == 6) {
+                    window.draw(Sprite_Algeria);
+                } else if (i == 7) {
+                    window.draw(Sprite_Los_Angeles);
+                } else if (i == 8) {
+                    window.draw(Sprite_New_York);
+                } else if (i == 9) {
+                    window.draw(Sprite_Rio_De_Janeiro);
+                } else if (i == 10) {
+                    window.draw(Sprite_Martinique);
                 }
-            if (event.key.code == sf::Keyboard::O) {
-                window.draw(Sprite);
                 window.display();
             }
         }
-        while (window.pollEvent(event)) {
-            // a.getListAirport()[3];
-            for (int i(0); i < a.getListAirport().size(); i++) {
-                if (event.mouseMove.x >= a.getListAirport()[i]->getXmin() &&
-                    event.mouseMove.x <= a.getListAirport()[i]->getXmax() &&
-                    event.mouseMove.y >= a.getListAirport()[i]->getYmin() &&
-                    event.mouseMove.y <= a.getListAirport()[i]->getYmax()) {
-                    if (i == 0) {
-                        window.draw(Sprite_Sydney);
-                    } else if (i == 1) {
-                        window.draw(Sprite_Pekin);
-                    } else if (i == 2) {
-                        window.draw(Sprite_Moscou);
-                    } else if (i == 3) {
-                        window.draw(Sprite_Dubai);
-                    } else if (i == 4) {
-                        window.draw(Sprite_Londres);
-                    } else if (i == 5) {
-                        window.draw(Sprite_Pretoria);
-                    } else if (i == 6) {
-                        window.draw(Sprite_Algeria);
-                    } else if (i == 7) {
-                        window.draw(Sprite_Los_Angeles);
-                    } else if (i == 8) {
-                        window.draw(Sprite_New_York);
-                    } else if (i == 9) {
-                        window.draw(Sprite_Rio_De_Janeiro);
-                    } else if (i == 10) {
-                        window.draw(Sprite_Martinique);
-                    }
-                    window.display();
-                }
-            }
-        }
-
     }
+}
 
 
 
