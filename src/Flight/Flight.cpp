@@ -1,6 +1,6 @@
 #include "Flight.h"
 
-Flight::Flight(std::vector<Airplane *> &list_of_plane,std::vector<Airport *> &list_of_airport) : m_list_of_plane{list_of_plane}, m_list_of_airport{list_of_airport} {
+Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list_of_airport) : m_list_of_plane{list_of_plane}, m_list_of_airport{list_of_airport} {
 //on recup direct les vecteur qu'on aura creer dans le main
     std::srand(std::time(nullptr));
     int choice(0), number(0);
@@ -19,11 +19,13 @@ Flight::Flight(std::vector<Airplane *> &list_of_plane,std::vector<Airport *> &li
     flight_id += tiret;
     flight_id += std::to_string(number);
 
+
     //Pick a random plane
+
     do {
-        choice = rand() % m_list_of_plane.size();
-        if (!m_list_of_plane[choice]->get_state()) {
-            m_list_of_plane[choice]->put_state(true);
+        id = rand() % m_list_of_plane.size();
+        if (!m_list_of_plane[id]->get_state()) {
+            m_list_of_plane[id]->put_state(true);
             ok = true;
         } else {
             ok = false;
@@ -62,12 +64,24 @@ std::string Flight::get_flight_id() const {
     return flight_id;
 }
 
-std::string Flight::get_departure() const {
-    return departure;
+Airport* Flight::get_departure() const {
+    int num1(0);
+    for (int j(0); j < m_list_of_airport.size(); j++) {
+        if (departure == m_list_of_airport[j]->get_AirportName()) {
+            num1 = j;
+        }
+    }
+    return m_list_of_airport[num1];
 }
 
-std::string Flight::get_arrival() const {
-    return arrival;
+Airport* Flight::get_arrival() const {
+    int num2(0);
+    for (int j(0); j < m_list_of_airport.size(); j++) {
+        if (departure == m_list_of_airport[j]->get_AirportName()) {
+            num2 = j;
+        }
+    }
+    return m_list_of_airport[num2];
 }
 
 void Flight::afficher() const {
@@ -238,4 +252,8 @@ void Flight::Flight_manual() {
 
 Flight::~Flight() {
 
+}
+
+Airplane* Flight::get_airplane() const {
+    return m_list_of_plane[id];
 }

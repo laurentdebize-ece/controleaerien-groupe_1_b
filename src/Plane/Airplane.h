@@ -9,6 +9,7 @@ class Airplane {
 private :
     std::string model, type;
     int id;
+    bool takeoff;
     bool state;
     double comsuption, speed, landing_speed, takeoff_speed, fuel_capacity;
 public:
@@ -25,6 +26,8 @@ public:
 
     bool get_state() const;
 
+    bool get_if_takeoff() const;
+
     double get_plane_comsuption() const;
 
     double get_speed() const;
@@ -35,9 +38,14 @@ public:
 
     double get_fuel_capacity() const;
 
+
+
     void put_state(bool plane_state);
 
+    void takeoff_or_not(bool if_takeoff);
+
     void afficher() const;
+
 
     //Airplane GetPlane(Plane plane) const;//obligation d'appler la fonction dans le main
 };

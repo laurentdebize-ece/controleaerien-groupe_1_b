@@ -7,6 +7,7 @@
 #include <fstream>
 #include "../Airport/Airport.h"
 #include "../Airport_Connexion/Connexion.h"
+#include "../Flight/Flight.h"
 
 class Connexion;
 class Airport;
@@ -22,7 +23,7 @@ public:
     void show_network_airport_line_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, sf::Font &font) ;
     void draw_line(sf::RenderWindow &window, const double &airport1_x_center, const double &airport1_y_center,
                    const double &airport2_x_center, const double &airport2_y_center, sf::Font &font, int i);
-    std::vector<int> PCC (Airport* departure, Airport* arrival);
+    std::vector<int> PCC (Flight* f);
     void addVol(int &num1, int &num2, int &poids);
 };
 #endif //CONTROLEAERIEN_GROUPE_1_B_AIPORT_NETWORK_H
