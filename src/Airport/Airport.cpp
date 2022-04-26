@@ -75,7 +75,7 @@ const std::vector<std::pair<Airport *const, int>> &Airport::getSuccesseurs() con
 
 void Airport::management_Landing(Airplane* airplane_which_landing) {
     for(size_t i(0); i<m_management_nbrRunways.size();++i){
-        if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time){
+        if(this->condition_landing()){
             m_management_nbrRunways[i] = true;
 
             m_management_Ground_seats[i] = false;
@@ -94,7 +94,7 @@ void Airport::management_Landing(Airplane* airplane_which_landing) {
 void Airport::management_takeoff(Airplane* airplane_which_takeoff) {
 
     for(size_t i(0); i<m_management_nbrRunways.size();++i){
-        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time){
+        if(this->condition_takeoff()){
             m_management_nbrRunways[i] = true; //pendant 2ut
             airplane_which_takeoff->takeoff_or_not(true);
 
@@ -109,7 +109,7 @@ void Airport::management_takeoff(Airplane* airplane_which_takeoff) {
 }
 
 void Airport::loop_management() {
-    //TRIE DES AVIOSN EN ATTENTES
+    //TRIE DES AVIONS EN ATTENTES
     std::sort(m_waiting_airplane.begin(), m_waiting_airplane.end(), [](Airplane* s1, Airplane* s2)
     {
         return s1->get_fuel_capacity() > s2->get_fuel_capacity();
@@ -134,6 +134,30 @@ void Airport::loop_management() {
 
 }
 
+bool Airport::condition_landing() {
+    for(size_t i(0); i<m_management_nbrRunways.size();++i){
+        if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+}
+
+bool Airport::condition_takeoff() {
+    for(size_t i(0); i<m_management_nbrRunways.size();++i){
+        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+}
 
 
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a,

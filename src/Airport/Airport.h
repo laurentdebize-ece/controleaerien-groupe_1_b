@@ -42,6 +42,8 @@ public:
     int getYmax() const;
     int getYcentre() const;
     std::string get_AirportName() const;
+    bool condition_landing();
+    bool condition_takeoff();
     void management_Landing(Airplane* airplane_which_landing);
     void management_takeoff(Airplane* airplane_which_takeoff);
     void loop_management ();

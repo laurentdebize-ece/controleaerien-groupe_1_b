@@ -3,6 +3,7 @@
 #include "../Plane/Plane.h"
 #include "../Airport_network/Aiport_network.h"
 
+class Airport;
 class Flight {
 private:
     std::string flight_id, departure, arrival;

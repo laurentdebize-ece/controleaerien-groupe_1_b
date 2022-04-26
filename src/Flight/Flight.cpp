@@ -34,9 +34,9 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
 
 
     //Random between Airport List for choose a Departure
-    /*do {
+    do {
         choice = rand() % m_list_of_airport.size();
-        if () {//condition pour le départ d'un vol flemme d'aller rdg le sujet d'ailleurs on devrait faire une fonction
+        if (m_list_of_airport[choice]->condition_landing()) {//condition pour le départ d'un vol flemme d'aller rdg le sujet d'ailleurs on devrait faire une fonction
             // directement dans aiport qui renvoie directement un bool en fonction des conditions julia peut faire ça carre
 
             departure = m_list_of_airport[choice]->get_AirportName();
@@ -44,14 +44,13 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
         } else {
             ok = false;
         }
-    } while (!ok);*/
+    } while (!ok);
 
 
     //Random between Airport List for choose an Arrival
     do {
         choice = rand() % m_list_of_airport.size();
-        if ( m_list_of_airport[choice]->get_AirportName() != departure  ) {//condition pour l'aterrissage d'un vol
-            //FAUDRA REGARDER SI L'AÉROPORT D'ARIVÉE ET DE DEPART SONT CONNECTÉS //
+        if ( m_list_of_airport[choice]->get_AirportName() != departure && m_list_of_airport[choice]->condition_takeoff()   ) {//condition pour l'aterrissage d'un vol
             arrival = m_list_of_airport[choice]->get_AirportName();
             ok = true;
         } else {
