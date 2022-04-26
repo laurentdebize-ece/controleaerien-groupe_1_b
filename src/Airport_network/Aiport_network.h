@@ -11,6 +11,7 @@
 
 class Connexion;
 class Airport;
+class Flight;
 class Aiport_network {
 private:
     std::vector<Airport*> m_airport;
