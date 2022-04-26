@@ -1,6 +1,7 @@
 #include "Airport.h"
 
 
+
 Airport::Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &Xcentre, int &Ymin, int &Ymax,
                  int &Ycentre, int &NbrRunways, int &Ground_seats, double &Ground_waiting_time,
                  double &acces_runway_time, double &anticollision_time, double &landing_time, double &takeoff_time,
@@ -11,11 +12,10 @@ Airport::Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &X
         m_anticollision_time{anticollision_time}, m_landing_time{landing_time},
         m_takeoff_time{takeoff_time}, m_in_flight_loop{in_flight_loop}
         {
-
-
-
-
-
+            std::vector<bool> management_NbrRunways(m_NbrRunways, false);
+            std::vector<bool> management_Ground_seats(m_Ground_seats, true);
+            m_management_nbrRunways = management_NbrRunways;
+            m_management_Ground_seats = management_Ground_seats;
 }
 
 void Airport::addSuccesseur(Airport *successeur, int poids) {
@@ -73,13 +73,68 @@ const std::vector<std::pair<Airport *const, int>> &Airport::getSuccesseurs() con
     return m_successeurs;
 }
 
-void Airport::management_Landing() {
+void Airport::management_Landing(Airplane* airplane_which_landing) {
+    for(size_t i(0); i<m_management_nbrRunways.size();++i){
+        if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time){
+            m_management_nbrRunways[i] = true;
+
+            m_management_Ground_seats[i] = false;
+            airplane_which_landing->put_state(true);
+        }
+        else {
+            m_waiting_airplane.push_back(airplane_which_landing);
+            //ajouter à la boucle d'attente décollage
+        }
+    }
+
+
 
 }
 
-void Airport::management_takeoff() {
+void Airport::management_takeoff(Airplane* airplane_which_takeoff) {
+
+    for(size_t i(0); i<m_management_nbrRunways.size();++i){
+        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time){
+            m_management_nbrRunways[i] = true; //pendant 2ut
+            airplane_which_takeoff->takeoff_or_not(true);
+
+            m_management_Ground_seats[i] = true;
+            airplane_which_takeoff->put_state(false);// plus en vol mais ce sera apres 2ut faudra reflechir a ca pareil pr ground seats pariel pour decollage
+        }
+        else {
+            m_waiting_airplane.push_back(airplane_which_takeoff);
+        }
+    }
 
 }
+
+void Airport::loop_management() {
+    //TRIE DES AVIOSN EN ATTENTES
+    std::sort(m_waiting_airplane.begin(), m_waiting_airplane.end(), [](Airplane* s1, Airplane* s2)
+    {
+        return s1->get_fuel_capacity() > s2->get_fuel_capacity();
+    });
+
+    do {
+        //priorité attérissage
+        for(size_t i(0);i<m_waiting_airplane.size();++i){
+            if(m_waiting_airplane[i]->get_if_takeoff()){
+                management_takeoff(m_waiting_airplane[i]);
+            }
+        }
+        //jsp si on peut simplifier ça en mode tous faire dans une boucle for
+        for(size_t i(0);i<m_waiting_airplane.size();++i){
+            if(!m_waiting_airplane[i]->get_if_takeoff()){
+                management_Landing(m_waiting_airplane[i]);
+            }
+        }
+
+    }while(!m_waiting_airplane.empty());
+
+
+}
+
+
 
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a,
                             sf::Font &font) {

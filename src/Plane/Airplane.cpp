@@ -6,7 +6,8 @@ Airplane::Airplane(std::string &airplane_model, int &airplane_id, std::string &a
                    double &airplane_fuel_capacity) :
         model{airplane_model}, id{airplane_id}, type{airplane_type}, state{airplane_state}, comsuption{airplane_comsuption},
         speed{airplane_speed}, landing_speed{airplane_landing_speed}, takeoff_speed{airplane_takeoff_speed},
-        fuel_capacity{airplane_fuel_capacity} {}
+        fuel_capacity{airplane_fuel_capacity}, takeoff{false} {
+}
 
 std::string Airplane::get_model() const {
     return model;
@@ -21,6 +22,10 @@ std::string Airplane::get_type() const {
 
 bool Airplane::get_state() const {
     return state;
+}
+
+bool Airplane::get_if_takeoff() const {
+    return takeoff;
 }
 
 double Airplane::get_plane_comsuption() const {
@@ -61,6 +66,14 @@ void Airplane::afficher() const {
 void Airplane::put_state(bool plane_state) {
     state=plane_state;
 }
+
+void Airplane::takeoff_or_not(bool if_takeoff) {
+    takeoff=if_takeoff;
+}
+
+
+
+
 
 /*Airplane Airplane::GetPlane(Plane plane) const {
     return Airplane(__cxx11::basic_string(), <#initializer#>, __cxx11::basic_string(), <#initializer#>, <#initializer#>,

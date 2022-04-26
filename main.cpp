@@ -1,4 +1,5 @@
 #include "src/Menu/Menu.h"
+#include "src/Flight/Flight.h"
 
  int main() {
      unsigned int choix(0);
@@ -17,6 +18,7 @@
 
      Plane p{"../Text_files/Airplane"};
      Aiport_network a{"../Text_files/Airport_network"};
+     Flight f{p.getListPlane(),a.getListAirport()};
      //std::vector<Airport*> airport = a.getListAirport();
      //Flight f{};
      do {
@@ -28,7 +30,8 @@
 
          switch (choix) {
                  case 1 :
-                     Sprite.setScale(
+                     a.PCC(&f);// juste pour test pcc mais mon pc a planté wsv je veriffie si ça fonctione demain
+                     /*Sprite.setScale(
                              targetSize.x / Sprite.getLocalBounds().width,
                              targetSize.y / Sprite.getLocalBounds().height);
 
@@ -48,7 +51,7 @@
                              }
                          }
                      }
-                    fin = false;
+                    fin = false;*/
                      //toutes les fonctions du simulateur
                      break;
                  case 2 :

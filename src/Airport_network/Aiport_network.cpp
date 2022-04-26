@@ -140,19 +140,20 @@ Aiport_network::draw_line(sf::RenderWindow &window, const double &airport1_x_cen
     window.draw(text);
 }
 
-std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
+std::vector<int> Aiport_network::PCC(Flight* f) {
 
     // INITIALISATION
     int nbMarques = 0;
     std::vector<int> couleurs(m_airport.size(), 0); // tous les aéroports sont non marqués
     std::vector<int> distances(m_airport.size(), std::numeric_limits<int>::max());
-    distances[departure->getId()] = 0; // departure est à une distance de 0 de lui même.
+    distances[f->get_departure()->getId()] = 0; // departure est à une distance de 0 de lui même.
     std::vector<int> predecesseurs(m_airport.size(), -1); // nous ne connaissons pas encore les prédécesseurs
-    predecesseurs[departure->getId()] = 0; // on pourrait laisser -1, departure n'a pas vraiment de prédécesseur car il s'agit de l'aeroport initial
+    predecesseurs[f->get_departure()->getId()] = 0; // on pourrait laisser -1, departure n'a pas vraiment de prédécesseur car il s'agit de l'aeroport initial
 
     do {
         int s(0);
         int distanceMini(0);
+        int rapport_consommation_carburant;
 
         do {
             //CHOIX SOMMET QUI EST A UNE DISTANCE MINI
@@ -170,25 +171,29 @@ std::vector<int> Aiport_network::PCC(Airport* departure, Airport* arrival) {
                     s = int(i);
                 }
             }
+            //CALCUL RAPPORT CONSOMMATION UT l'unité ce serait l/ut wsv jsp si c bon mais je vois le bail comme as
+            rapport_consommation_carburant = f->get_airplane()->get_plane_comsuption()/double(distances[s]);
+
             std::cout << std::endl << std::endl;
 
             //VERIFICATION DE LA VIABILITE DE L'AEROPORT QUI SE TROUVE A UNE DISTANCE MINIMALE
-            /*if (s == arrival->getId()) {
+            if (s == f->get_arrival()->getId()) {
                 couleurs[s] = 1;
                 nbMarques = int(m_airport.size());
-            } else if (gestions arrivé gesiton depart sur s) {
+            } else if (rapport_consommation_carburant <= distances[s]/*poids de l'aeroport d'id s par rapport a laeroport init*/ ) {//gestions arrivé gesiton depart sur s
                 couleurs[s] = 1;
                 nbMarques++;
 
             } else {
                 //refaire le calcul de distance mini sans s donc remettre la distance de s à l'infini pour que l'aeroport d'id s ne soit  plus prit en compte
                 distances[s] = std::numeric_limits<int>::max();
-            }*/
+            }
+
 
 
         }while(couleurs[s] == 0);//condition d'arret si sommet valide trouvé
 
-        std::cout << "aéroport choisi : " << s << " (plus petite distance depuis le aeroport " << departure->getId() << " (" << distanceMini
+        std::cout << "aéroport choisi : " << s << " (plus petite distance depuis le aeroport " << f->get_departure()->getId() << " (" << distanceMini
                   << ")"
                   << "). Ses successeurs non marqués sont :" << std::endl;
         for (auto successeur: m_airport[s]->getSuccesseurs()) {
