@@ -1,7 +1,6 @@
 #include "Airport.h"
 
 
-
 Airport::Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &Xcentre, int &Ymin, int &Ymax,
                  int &Ycentre, int &NbrRunways, int &Ground_seats, double &Ground_waiting_time,
                  double &acces_runway_time, double &anticollision_time, double &landing_time, double &takeoff_time,
@@ -10,12 +9,11 @@ Airport::Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &X
         m_Ymax{Ymax}, m_Ycentre{Ycentre}, m_NbrRunways{NbrRunways}, m_Ground_seats{Ground_seats},
         m_Ground_waiting_time{Ground_waiting_time}, m_acces_runway_time{acces_runway_time},
         m_anticollision_time{anticollision_time}, m_landing_time{landing_time},
-        m_takeoff_time{takeoff_time}, m_in_flight_loop{in_flight_loop}
-        {
-            std::vector<bool> management_NbrRunways(m_NbrRunways, false);
-            std::vector<bool> management_Ground_seats(m_Ground_seats, true);
-            m_management_nbrRunways = management_NbrRunways;
-            m_management_Ground_seats = management_Ground_seats;
+        m_takeoff_time{takeoff_time}, m_in_flight_loop{in_flight_loop} {
+    std::vector<bool> management_NbrRunways(m_NbrRunways, false);
+    std::vector<bool> management_Ground_seats(m_Ground_seats, true);
+    m_management_nbrRunways = management_NbrRunways;
+    m_management_Ground_seats = management_Ground_seats;
 }
 
 void Airport::addSuccesseur(Airport *successeur, int poids) {
@@ -71,32 +69,32 @@ const std::vector<std::pair<Airport *const, int>> &Airport::getSuccesseurs() con
     return m_successeurs;
 }
 
-void Airport::management_Landing(Airplane* airplane_which_landing) {
-    for(size_t i(0); i<m_management_nbrRunways.size();++i){
-        if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time){
+void Airport::management_Landing(Airplane *airplane_which_landing) {
+    for (size_t i(0); i < m_management_nbrRunways.size(); ++i) {
+        if (!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time) {
             m_management_nbrRunways[i] = true;
 
             m_management_Ground_seats[i] = false;
             airplane_which_landing->put_state(true);
-        }
-        else {
+        } else {
             m_waiting_airplane.push_back(airplane_which_landing);
             //ajouter à la boucle d'attente décollage
         }
     }
 }
 
-void Airport::management_takeoff(Airplane* airplane_which_takeoff) {
+void Airport::management_takeoff(Airplane *airplane_which_takeoff) {
 
-    for(size_t i(0); i<m_management_nbrRunways.size();++i){
-        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time){
+    for (size_t i(0); i < m_management_nbrRunways.size(); ++i) {
+        if (!m_management_nbrRunways[i] && !m_management_Ground_seats[i] &&
+            m_acces_runway_time < m_anticollision_time) {
             m_management_nbrRunways[i] = true; //pendant 2ut
             airplane_which_takeoff->takeoff_or_not(true);
 
             m_management_Ground_seats[i] = true;
-            airplane_which_takeoff->put_state(false);// plus en vol mais ce sera apres 2ut faudra reflechir a ca pareil pr ground seats pariel pour decollage
-        }
-        else {
+            airplane_which_takeoff->put_state(
+                    false);// plus en vol mais ce sera apres 2ut faudra reflechir a ca pareil pr ground seats pariel pour decollage
+        } else {
             m_waiting_airplane.push_back(airplane_which_takeoff);
         }
     }
@@ -105,35 +103,33 @@ void Airport::management_takeoff(Airplane* airplane_which_takeoff) {
 
 void Airport::loop_management() {
     //TRIE DES AVIONS EN ATTENTES
-    std::sort(m_waiting_airplane.begin(), m_waiting_airplane.end(), [](Airplane* s1, Airplane* s2)
-    {
+    std::sort(m_waiting_airplane.begin(), m_waiting_airplane.end(), [](Airplane *s1, Airplane *s2) {
         return s1->get_fuel_capacity() > s2->get_fuel_capacity();
     });
 
     do {
         //priorité attérissage
-        for(size_t i(0);i<m_waiting_airplane.size();++i){
-            if(m_waiting_airplane[i]->get_if_takeoff()){
+        for (size_t i(0); i < m_waiting_airplane.size(); ++i) {
+            if (m_waiting_airplane[i]->get_if_takeoff()) {
                 management_takeoff(m_waiting_airplane[i]);
             }
         }
         //jsp si on peut simplifier ça en mode tous faire dans une boucle for
-        for(size_t i(0);i<m_waiting_airplane.size();++i){
-            if(!m_waiting_airplane[i]->get_if_takeoff()){
+        for (size_t i(0); i < m_waiting_airplane.size(); ++i) {
+            if (!m_waiting_airplane[i]->get_if_takeoff()) {
                 management_Landing(m_waiting_airplane[i]);
             }
         }
 
-    }while(!m_waiting_airplane.empty());
+    } while (!m_waiting_airplane.empty());
 }
 
 void Airport::condition_landing() {
 
-    for(size_t i(0); i<m_management_nbrRunways.size();++i){
-        if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time){
+    for (size_t i(0); i < m_management_nbrRunways.size(); ++i) {
+        if (!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time) {
             landing_viability = true;
-        }
-        else {
+        } else {
             landing_viability = false;
         }
     }//pk je peux pas return viability
@@ -142,11 +138,11 @@ void Airport::condition_landing() {
 
 void Airport::condition_takeoff() {
 
-    for(size_t i(0); i<m_management_nbrRunways.size();++i){
-        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time){
+    for (size_t i(0); i < m_management_nbrRunways.size(); ++i) {
+        if (!m_management_nbrRunways[i] && !m_management_Ground_seats[i] &&
+            m_acces_runway_time < m_anticollision_time) {
             takeoff_viability = true;
-        }
-        else {
+        } else {
             takeoff_viability = false;
         }
     }
@@ -163,65 +159,68 @@ bool Airport::get_viability_landing() const {
 
 
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a,
-                                sf::Font &font) {
-        sf::Texture Sydney;
-        sf::Texture Pekin;
-        sf::Texture Moscou;
-        sf::Texture Dubai;
-        sf::Texture Londres;
-        sf::Texture Pretoria;
-        sf::Texture Algeria;
-        sf::Texture Los_Angeles;
-        sf::Texture New_York;
-        sf::Texture Rio_De_Janeiro;
-        sf::Texture Martinique;
+                            sf::Font &font) {
+    sf::Texture Sydney;
+    sf::Texture Pekin;
+    sf::Texture Moscou;
+    sf::Texture Dubai;
+    sf::Texture Londres;
+    sf::Texture Pretoria;
+    sf::Texture Algeria;
+    sf::Texture Los_Angeles;
+    sf::Texture New_York;
+    sf::Texture Rio_De_Janeiro;
+    sf::Texture Martinique;
 
-        Sydney.loadFromFile("Graphic_Content/Map/Sydney.png");
-        Pekin.loadFromFile("Graphic_Content/Map/Sydney.png");
-        Moscou.loadFromFile("Graphic_Content/Map/Sydney.png");
-        Dubai.loadFromFile("Graphic_Content/Map/Sydney.png");
-        Londres.loadFromFile("Graphic_Content/Map/Sydney.png");
-        Pretoria.loadFromFile("Graphic_Content/Map/Sydney.png");
-        Algeria.loadFromFile("Graphic_Content/Map/Sydney.png");
-        Los_Angeles.loadFromFile("Graphic_Content/Map/Sydney.png");
-        New_York.loadFromFile("Graphic_Content/Map/Sydney.png");
-        Rio_De_Janeiro.loadFromFile("Graphic_Content/Map/Sydney.png");
-        Martinique.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Sydney.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Pekin.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Moscou.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Dubai.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Londres.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Pretoria.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Algeria.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Los_Angeles.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    New_York.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Rio_De_Janeiro.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Martinique.loadFromFile("../Graphic_Content/Map/Sydney.png");
 
-        sf::Sprite Sprite_Sydney(Sydney);
-        sf::Sprite Sprite_Pekin(Pekin);
-        sf::Sprite Sprite_Moscou(Moscou);
-        sf::Sprite Sprite_Dubai(Dubai);
-        sf::Sprite Sprite_Londres(Londres);
-        sf::Sprite Sprite_Pretoria(Pretoria);
-        sf::Sprite Sprite_Algeria(Algeria);
-        sf::Sprite Sprite_Los_Angeles(Los_Angeles);
-        sf::Sprite Sprite_New_York(New_York);
-        sf::Sprite Sprite_Rio_De_Janeiro(Rio_De_Janeiro);
-        sf::Sprite Sprite_Martinique(Martinique);
+    sf::Sprite Sprite_Sydney(Sydney);
+    sf::Sprite Sprite_Pekin(Pekin);
+    sf::Sprite Sprite_Moscou(Moscou);
+    sf::Sprite Sprite_Dubai(Dubai);
+    sf::Sprite Sprite_Londres(Londres);
+    sf::Sprite Sprite_Pretoria(Pretoria);
+    sf::Sprite Sprite_Algeria(Algeria);
+    sf::Sprite Sprite_Los_Angeles(Los_Angeles);
+    sf::Sprite Sprite_New_York(New_York);
+    sf::Sprite Sprite_Rio_De_Janeiro(Rio_De_Janeiro);
+    sf::Sprite Sprite_Martinique(Martinique);
 
-        Sprite_Sydney.setPosition(sf::Vector2f(POS_X, POS_Y));
-        Sprite_Pekin.setPosition(sf::Vector2f(POS_X, POS_Y));
-        Sprite_Moscou.setPosition(sf::Vector2f(POS_X, POS_Y));
-        Sprite_Dubai.setPosition(sf::Vector2f(POS_X, POS_Y));
-        Sprite_Londres.setPosition(sf::Vector2f(POS_X, POS_Y));
-        Sprite_Pretoria.setPosition(sf::Vector2f(POS_X, POS_Y));
-        Sprite_Algeria.setPosition(sf::Vector2f(POS_X, POS_Y));
-        Sprite_Los_Angeles.setPosition(sf::Vector2f(POS_X, POS_Y));
-        Sprite_New_York.setPosition(sf::Vector2f(POS_X, POS_Y));
-        Sprite_Rio_De_Janeiro.setPosition(sf::Vector2f(POS_X, POS_Y));
-        Sprite_Martinique.setPosition(sf::Vector2f(POS_X, POS_Y));
-        window.clear(sf::Color::Transparent);
-        window.draw(Sprite);
-        window.display();
+    Sprite_Sydney.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Pekin.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Moscou.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Dubai.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Londres.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Pretoria.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Algeria.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Los_Angeles.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_New_York.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Rio_De_Janeiro.setPosition(sf::Vector2f(POS_X, POS_Y));
+    Sprite_Martinique.setPosition(sf::Vector2f(POS_X, POS_Y));
+    window.clear(sf::Color::Transparent);
+    window.draw(Sprite);
+    window.display();
 
+    while (window.isOpen()) {
         if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
             if (event.key.code == sf::Keyboard::I) {
+                window.clear();
                 window.draw(Sprite);
                 a.show_network_airport_line_on_screen(event, window, Sprite, font);
                 window.display();
             }
             if (event.key.code == sf::Keyboard::O) {
+                window.clear();
                 window.draw(Sprite);
                 window.display();
             }
@@ -260,7 +259,7 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
                 }
             }
         }
-
     }
+}
 
 

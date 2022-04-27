@@ -38,9 +38,34 @@ Plane::Plane(std::string FichierPlane) {
                         ok = true;
                     }
             } while (!ok);
-            m_airplane.push_back(
-                    new Airplane(nmodel, num, ntype, nstate, ncomsuption, nspeed, nlanding_speed, ntakeoff_speed,
-                                 nfuel_capacity));
+            sf::Texture *ATR;
+            sf::Texture *Boeing;
+            sf::Texture *Airbus;
+
+            ATR=new sf::Texture;
+            Boeing=new sf::Texture;
+            Airbus=new sf::Texture;
+
+            ATR->loadFromFile("../Graphic_Content/Planes/ATR.png");
+            Boeing->loadFromFile("../Graphic_Content/Planes/Boeing.png");
+            Airbus->loadFromFile("../Graphic_Content/Planes/Airbus.png");
+
+            if (nmodel == "ATR72-600") {
+                sf::Sprite Sprite_ATR(*ATR);
+                m_airplane.push_back(
+                        new Airplane(nmodel, num, ntype, nstate, ncomsuption, nspeed, nlanding_speed, ntakeoff_speed,
+                                     nfuel_capacity,Sprite_ATR));
+            } else if (nmodel == "BOEING-777") {
+                sf::Sprite Sprite_Boeing(*Boeing);
+                m_airplane.push_back(
+                        new Airplane(nmodel, num, ntype, nstate, ncomsuption, nspeed, nlanding_speed, ntakeoff_speed,
+                                     nfuel_capacity,Sprite_Boeing));
+            } else if (nmodel == "AIRBUS-A380") {
+                sf::Sprite Sprite_Airbus(*Airbus);
+                m_airplane.push_back(
+                        new Airplane(nmodel, num, ntype, nstate, ncomsuption, nspeed, nlanding_speed, ntakeoff_speed,
+                                     nfuel_capacity,Sprite_Airbus));
+            }
         }
     }
 }
