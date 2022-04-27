@@ -13,9 +13,19 @@ Airport::Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &X
         m_takeoff_time{takeoff_time}, m_in_flight_loop{in_flight_loop}
         {
             std::vector<bool> management_NbrRunways(m_NbrRunways, false);
-            std::vector<bool> management_Ground_seats(m_Ground_seats, true);
+            std::vector<bool> management_Ground_seats(m_Ground_seats, true);// ça c est true et pas false
             m_management_nbrRunways = management_NbrRunways;
             m_management_Ground_seats = management_Ground_seats;
+
+            m_management_nbrRunways[2] = true;
+            m_management_nbrRunways[3] = true;
+
+            m_management_Ground_seats[2] = false;
+            m_management_Ground_seats[3] = false;
+
+
+
+
 }
 
 void Airport::addSuccesseur(Airport *successeur, int poids) {
@@ -76,7 +86,7 @@ void Airport::management_Landing(Airplane* airplane_which_landing) {
         if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time){
             m_management_nbrRunways[i] = true;
 
-            m_management_Ground_seats[i] = false;
+            //m_management_Ground_seats[i] = false;
             airplane_which_landing->put_state(true);
         }
         else {
@@ -89,11 +99,11 @@ void Airport::management_Landing(Airplane* airplane_which_landing) {
 void Airport::management_takeoff(Airplane* airplane_which_takeoff) {
 
     for(size_t i(0); i<m_management_nbrRunways.size();++i){
-        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time){
+        if(!m_management_nbrRunways[i] && /*!m_management_Ground_seats[i]*/  m_acces_runway_time < m_anticollision_time){
             m_management_nbrRunways[i] = true; //pendant 2ut
             airplane_which_takeoff->takeoff_or_not(true);
 
-            m_management_Ground_seats[i] = true;
+            //m_management_Ground_seats[i] = true;
             airplane_which_takeoff->put_state(false);// plus en vol mais ce sera apres 2ut faudra reflechir a ca pareil pr ground seats pariel pour decollage
         }
         else {
@@ -127,39 +137,53 @@ void Airport::loop_management() {
     }while(!m_waiting_airplane.empty());
 }
 
-void Airport::condition_landing() {
+bool Airport::condition_landing() {
+    int landing_compteur(0);
+    bool landing_viability(false);
 
     for(size_t i(0); i<m_management_nbrRunways.size();++i){
         if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time){
-            landing_viability = true;
+            landing_compteur++;
         }
-        else {
-            landing_viability = false;
-        }
-    }//pk je peux pas return viability
+    }
+    if(landing_compteur > 0){
+        landing_viability = true;
+    }
+    else{landing_viability = false;}
 
+    return landing_viability;
 }
 
-void Airport::condition_takeoff() {
+bool Airport::condition_takeoff() {
+    int runways_available (0);
+    int groundseats_available(0);
+    bool takeoff_viability(false);
 
-    for(size_t i(0); i<m_management_nbrRunways.size();++i){
-        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time){
-            takeoff_viability = true;
-        }
-        else {
-            takeoff_viability = false;
+   for(size_t i(0); i<m_management_nbrRunways.size();++i){
+        if( m_acces_runway_time < m_anticollision_time && !m_management_nbrRunways[i]){
+            runways_available++;
         }
     }
 
-}
+    for(size_t i(0); i<m_management_Ground_seats.size();++i){
+        if( m_acces_runway_time < m_anticollision_time && !m_management_Ground_seats[i]){
+            groundseats_available++ ;
+        }
+        else{}
+    }
 
-bool Airport::get_viability_takeoff() const {
+
+    if(runways_available > 0 && groundseats_available > 0 ){
+         takeoff_viability = true;
+    }
+    else {
+         takeoff_viability = false;
+    }
+
     return takeoff_viability;
+
 }
 
-bool Airport::get_viability_landing() const {
-    return landing_viability;
-}
 
 
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a,

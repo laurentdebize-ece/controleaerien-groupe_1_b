@@ -5,6 +5,7 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
     std::srand(std::time(nullptr));
     int choice(0), number(0);
     bool ok(false);
+    int compteur;
     std::string tiret = "-";
     int letter1, letter2;
 
@@ -36,8 +37,8 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
     //Random between Airport List for choose a Departure
     do {
         choice = rand() % m_list_of_airport.size();
-        m_list_of_airport[choice]->condition_landing();
-        if (m_list_of_airport[choice]->get_viability_landing()) {//condition pour le départ d'un vol
+
+        if (m_list_of_airport[choice]->condition_landing()) {//condition pour le départ d'un vol
             departure = m_list_of_airport[choice]->get_AirportName();
             ok = true;
         } else {
@@ -48,15 +49,17 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
 
     //Random between Airport List for choose an Arrival
     do {
+
         choice = rand() % m_list_of_airport.size();
-        m_list_of_airport[choice]->condition_takeoff();
-        if (m_list_of_airport[choice]->get_AirportName() != departure /*&& m_list_of_airport[choice]->get_viability_takeoff()*/) {//condition pour l'aterrissage d'un vol
+        if (m_list_of_airport[choice]->get_AirportName() != departure && m_list_of_airport[choice]->condition_takeoff()) {//condition pour l'aterrissage d'un vol
             arrival = m_list_of_airport[choice]->get_AirportName();
             ok = true;
         } else {
             ok = false;
+            //copie du vecteur qui sera egale a ma liste d'aeroport²
+            compteur++;
         }
-    } while (!ok);
+    } while (!ok );
 }
 
 std::string Flight::get_flight_id() const {
