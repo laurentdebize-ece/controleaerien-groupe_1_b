@@ -7,12 +7,9 @@ class Airport;
 class Flight {
 private:
     std::string flight_id, departure, arrival;
-    int id;
-    //Airplane* airplane_flight;
+    int id_flight_int;
     std::vector<Airplane *> m_list_of_plane;
-    //Airport* m_airport;
     std::vector<Airport *> m_list_of_airport;
-    //vector of Airport
 public:
     Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list_of_airport);
     ~Flight();

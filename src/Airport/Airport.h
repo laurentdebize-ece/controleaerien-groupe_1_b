@@ -13,16 +13,14 @@ class Aiport_network;
 class Airport {
 private:
     int m_id, m_Xmin, m_Xmax,m_Xcentre, m_Ymin, m_Ymax,m_Ycentre;
-    std::string m_AirportName;// on met un id pour les aeroport ou on laisse le nom
+    std::string m_AirportName;
+    bool landing_viability;
+    bool takeoff_viability;
     int m_NbrRunways, m_Ground_seats;
     double m_Ground_waiting_time, m_acces_runway_time, m_anticollision_time, m_landing_time, m_takeoff_time,m_in_flight_loop;
-    //std::vector<int> m_management_NbrRunways(m_NbrRunways, O);
-  //  std::vector<int> m_management_Ground_seats(m_Ground_seats,0);
     std::vector<bool> m_management_nbrRunways;
     std::vector<bool> m_management_Ground_seats;
     std::vector<Airplane*> m_waiting_airplane;
-
-
     std::vector<std::pair<Airport *const, int>> m_successeurs;
 
 public:
@@ -34,6 +32,8 @@ public:
     void addSuccesseur(Airport *successeur, int poids);
     const std::vector<std::pair<Airport *const, int>> &getSuccesseurs() const;
     void afficher() const;
+    bool get_viability_landing() const;
+    bool get_viability_takeoff() const;
     int getId() const;
     int getXmin() const;
     int getXmax() const;
@@ -42,8 +42,8 @@ public:
     int getYmax() const;
     int getYcentre() const;
     std::string get_AirportName() const;
-    bool condition_landing();
-    bool condition_takeoff();
+    void condition_landing();
+    void condition_takeoff();
     void management_Landing(Airplane* airplane_which_landing);
     void management_takeoff(Airplane* airplane_which_takeoff);
     void loop_management ();

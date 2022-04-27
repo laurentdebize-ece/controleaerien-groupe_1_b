@@ -19,9 +19,7 @@ Airport::Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &X
 }
 
 void Airport::addSuccesseur(Airport *successeur, int poids) {
-
     m_successeurs.emplace_back(successeur, poids);
-
 }
 
 void Airport::afficher() const {
@@ -75,7 +73,7 @@ const std::vector<std::pair<Airport *const, int>> &Airport::getSuccesseurs() con
 
 void Airport::management_Landing(Airplane* airplane_which_landing) {
     for(size_t i(0); i<m_management_nbrRunways.size();++i){
-        if(condition_landing()){
+        if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time){
             m_management_nbrRunways[i] = true;
 
             m_management_Ground_seats[i] = false;
@@ -86,15 +84,12 @@ void Airport::management_Landing(Airplane* airplane_which_landing) {
             //ajouter à la boucle d'attente décollage
         }
     }
-
-
-
 }
 
 void Airport::management_takeoff(Airplane* airplane_which_takeoff) {
 
     for(size_t i(0); i<m_management_nbrRunways.size();++i){
-        if(condition_takeoff()){
+        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time){
             m_management_nbrRunways[i] = true; //pendant 2ut
             airplane_which_takeoff->takeoff_or_not(true);
 
@@ -130,38 +125,41 @@ void Airport::loop_management() {
         }
 
     }while(!m_waiting_airplane.empty());
+}
 
+void Airport::condition_landing() {
+
+    for(size_t i(0); i<m_management_nbrRunways.size();++i){
+        if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time){
+            landing_viability = true;
+        }
+        else {
+            landing_viability = false;
+        }
+    }//pk je peux pas return viability
 
 }
 
-bool Airport::condition_landing() {
+void Airport::condition_takeoff() {
 
-    return true;
+    for(size_t i(0); i<m_management_nbrRunways.size();++i){
+        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time){
+            takeoff_viability = true;
+        }
+        else {
+            takeoff_viability = false;
+        }
+    }
+
 }
 
-bool Airport::condition_takeoff() {
-
-    return true;
+bool Airport::get_viability_takeoff() const {
+    return takeoff_viability;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+bool Airport::get_viability_landing() const {
+    return landing_viability;
+}
 
 
 void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprite &Sprite, Aiport_network &a,

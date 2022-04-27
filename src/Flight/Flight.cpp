@@ -23,9 +23,9 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
     //Pick a random plane
 
     do {
-        id = rand() % m_list_of_plane.size();
-        if (!m_list_of_plane[id]->get_state()) {
-            m_list_of_plane[id]->put_state(true);
+        id_flight_int = rand() % m_list_of_plane.size();
+        if (!m_list_of_plane[id_flight_int]->get_state()) {
+            m_list_of_plane[id_flight_int]->put_state(true);
             ok = true;
         } else {
             ok = false;
@@ -34,23 +34,23 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
 
 
     //Random between Airport List for choose a Departure
-   /* do {
+    do {
         choice = rand() % m_list_of_airport.size();
-        if (m_list_of_airport[choice]->condition_landing()) {//condition pour le départ d'un vol flemme d'aller rdg le sujet d'ailleurs on devrait faire une fonction
-            // directement dans aiport qui renvoie directement un bool en fonction des conditions julia peut faire ça carre
-
+        m_list_of_airport[choice]->condition_landing();
+        if (m_list_of_airport[choice]->get_viability_landing()) {//condition pour le départ d'un vol
             departure = m_list_of_airport[choice]->get_AirportName();
             ok = true;
         } else {
             ok = false;
         }
-    } while (!ok);*/
+    } while (!ok);
 
 
     //Random between Airport List for choose an Arrival
     do {
         choice = rand() % m_list_of_airport.size();
-        if (m_list_of_airport[choice]->get_AirportName() != departure && m_list_of_airport[choice]->condition_takeoff()) {//condition pour l'aterrissage d'un vol
+        m_list_of_airport[choice]->condition_takeoff();
+        if (m_list_of_airport[choice]->get_AirportName() != departure /*&& m_list_of_airport[choice]->get_viability_takeoff()*/) {//condition pour l'aterrissage d'un vol
             arrival = m_list_of_airport[choice]->get_AirportName();
             ok = true;
         } else {
@@ -254,5 +254,5 @@ Flight::~Flight() {
 }
 
 Airplane* Flight::get_airplane() const {
-    return m_list_of_plane[id];
+    return m_list_of_plane[id_flight_int];
 }
