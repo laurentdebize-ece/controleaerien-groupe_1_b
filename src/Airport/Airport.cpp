@@ -69,32 +69,35 @@ const std::vector<std::pair<Airport *const, int>> &Airport::getSuccesseurs() con
     return m_successeurs;
 }
 
-void Airport::management_Landing(Airplane *airplane_which_landing) {
-    for (size_t i(0); i < m_management_nbrRunways.size(); ++i) {
-        if (!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time) {
+void Airport::management_Landing(Airplane* airplane_which_landing) {
+    for(size_t i(0); i<m_management_nbrRunways.size();++i){
+        if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time){
             m_management_nbrRunways[i] = true;
 
             m_management_Ground_seats[i] = false;
             airplane_which_landing->put_state(true);
-        } else {
+        }
+        else {
             m_waiting_airplane.push_back(airplane_which_landing);
             //ajouter à la boucle d'attente décollage
         }
     }
+
+
+
 }
 
-void Airport::management_takeoff(Airplane *airplane_which_takeoff) {
+void Airport::management_takeoff(Airplane* airplane_which_takeoff) {
 
-    for (size_t i(0); i < m_management_nbrRunways.size(); ++i) {
-        if (!m_management_nbrRunways[i] && !m_management_Ground_seats[i] &&
-            m_acces_runway_time < m_anticollision_time) {
+    for(size_t i(0); i<m_management_nbrRunways.size();++i){
+        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time ){
             m_management_nbrRunways[i] = true; //pendant 2ut
             airplane_which_takeoff->takeoff_or_not(true);
 
             m_management_Ground_seats[i] = true;
-            airplane_which_takeoff->put_state(
-                    false);// plus en vol mais ce sera apres 2ut faudra reflechir a ca pareil pr ground seats pariel pour decollage
-        } else {
+            airplane_which_takeoff->put_state(false);// plus en vol mais ce sera apres 2ut faudra reflechir a ca pareil pr ground seats pariel pour decollage
+        }
+        else {
             m_waiting_airplane.push_back(airplane_which_takeoff);
         }
     }
@@ -103,58 +106,53 @@ void Airport::management_takeoff(Airplane *airplane_which_takeoff) {
 
 void Airport::loop_management() {
     //TRIE DES AVIONS EN ATTENTES
-    std::sort(m_waiting_airplane.begin(), m_waiting_airplane.end(), [](Airplane *s1, Airplane *s2) {
+    std::sort(m_waiting_airplane.begin(), m_waiting_airplane.end(), [](Airplane* s1, Airplane* s2)
+    {
         return s1->get_fuel_capacity() > s2->get_fuel_capacity();
     });
 
     do {
         //priorité attérissage
-        for (size_t i(0); i < m_waiting_airplane.size(); ++i) {
-            if (m_waiting_airplane[i]->get_if_takeoff()) {
+        for(size_t i(0);i<m_waiting_airplane.size();++i){
+            if(m_waiting_airplane[i]->get_if_takeoff()){
                 management_takeoff(m_waiting_airplane[i]);
             }
         }
         //jsp si on peut simplifier ça en mode tous faire dans une boucle for
-        for (size_t i(0); i < m_waiting_airplane.size(); ++i) {
-            if (!m_waiting_airplane[i]->get_if_takeoff()) {
+        for(size_t i(0);i<m_waiting_airplane.size();++i){
+            if(!m_waiting_airplane[i]->get_if_takeoff()){
                 management_Landing(m_waiting_airplane[i]);
             }
         }
 
-    } while (!m_waiting_airplane.empty());
-}
+    }while(!m_waiting_airplane.empty());
 
-void Airport::condition_landing() {
-
-    for (size_t i(0); i < m_management_nbrRunways.size(); ++i) {
-        if (!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time) {
-            landing_viability = true;
-        } else {
-            landing_viability = false;
-        }
-    }//pk je peux pas return viability
 
 }
 
-void Airport::condition_takeoff() {
+bool Airport::condition_landing() {
+    bool r;
+    for(int i = 0; i < 10 ;++i){
+        if(!m_management_nbrRunways[i] && m_acces_runway_time < m_anticollision_time ){
 
-    for (size_t i(0); i < m_management_nbrRunways.size(); ++i) {
-        if (!m_management_nbrRunways[i] && !m_management_Ground_seats[i] &&
-            m_acces_runway_time < m_anticollision_time) {
-            takeoff_viability = true;
-        } else {
-            takeoff_viability = false;
+            r = true;
+
         }
+        else{r =  false;}
     }
-
+    return r;
 }
 
-bool Airport::get_viability_takeoff() const {
-    return takeoff_viability;
-}
+bool Airport::condition_takeoff() {
+    bool s;
+    for(int i(0);i<48;++i){//la boucle doit s'arreter pour le max entre ground seats et nbr runways
+        if(!m_management_nbrRunways[i] && !m_management_Ground_seats[i] && m_acces_runway_time < m_anticollision_time ){
+            s = true;
 
-bool Airport::get_viability_landing() const {
-    return landing_viability;
+        }
+        else{s = false;}
+    }
+    return s;
 }
 
 
@@ -172,17 +170,17 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     sf::Texture Rio_De_Janeiro;
     sf::Texture Martinique;
 
-    Sydney.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Pekin.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Moscou.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Dubai.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Londres.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Pretoria.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Algeria.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Los_Angeles.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    New_York.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Rio_De_Janeiro.loadFromFile("../Graphic_Content/Map/Sydney.png");
-    Martinique.loadFromFile("../Graphic_Content/Map/Sydney.png");
+    Sydney.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Pekin.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Moscou.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Dubai.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Londres.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Pretoria.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Algeria.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Los_Angeles.loadFromFile("Graphic_Content/Map/Sydney.png");
+    New_York.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Rio_De_Janeiro.loadFromFile("Graphic_Content/Map/Sydney.png");
+    Martinique.loadFromFile("Graphic_Content/Map/Sydney.png");
 
     sf::Sprite Sprite_Sydney(Sydney);
     sf::Sprite Sprite_Pekin(Pekin);
