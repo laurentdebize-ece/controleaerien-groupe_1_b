@@ -30,7 +30,7 @@
          switch (choix) {
                  case 1 :
                      a.PCC(&f);// juste pour test pcc mais mon pc a planté wsv je veriffie si ça fonctione demain
-                     /*Sprite.setScale(
+                    /* Sprite.setScale(
                              targetSize.x / Sprite.getLocalBounds().width,
                              targetSize.y / Sprite.getLocalBounds().height);
 
