@@ -10,7 +10,7 @@
      //Initialisation Cartes Map
      sf::Texture Menu_principal;
 
-     Menu_principal.loadFromFile("Graphic_Content/Map/Sim_Map.png");
+     Menu_principal.loadFromFile("../Graphic_Content/Map/Sim_Map.png");
 
      sf::Sprite Sprite(Menu_principal);
 
@@ -19,7 +19,8 @@
      Plane p{"../Text_files/Airplane"};
      Aiport_network a{"../Text_files/Airport_network"};
      Flight f{p.getListPlane(),a.getListAirport()};
-
+     //std::vector<Airport*> airport = a.getListAirport();
+     //Flight f{};
      do {
          Game_Menu(choix);
 
@@ -29,7 +30,7 @@
 
          switch (choix) {
                  case 1 :
-                    // a.PCC(&f);// juste pour test pcc mais mon pc a planté wsv je veriffie si ça fonctione demain
+                     //a.PCC(&f);// juste pour test pcc mais mon pc a planté wsv je veriffie si ça fonctione demain
                      Sprite.setScale(
                              targetSize.x / Sprite.getLocalBounds().width,
                              targetSize.y / Sprite.getLocalBounds().height);
@@ -38,9 +39,9 @@
                      while (!fin) {
                          sf::Event event{};
                          while (window.pollEvent(event)) {
-                            // Plane_Movement(event, window, p, a, Sprite);
-                             show_airport_on_screen( event, window, Sprite,a, font);
 
+                             //show_airport_on_screen( event, window, Sprite,a, font);
+                             Plane_Movement(event, window, p, a, Sprite);
                              //a.show_airport_on_screen(event, window, Sprite);
                              //f.Flight_manual();
                              if (event.type == sf::Event::Closed ||
