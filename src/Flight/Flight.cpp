@@ -35,8 +35,7 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
 
 
     //Random between Airport List for choose a Departure
-    departure = "RioDeJaneiro" ;
-   /* do {
+    do {
         choice = rand() % m_list_of_airport.size();
 
         if (m_list_of_airport[choice]->condition_landing()) {//condition pour le départ d'un vol
@@ -45,24 +44,22 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
         } else {
             ok = false;
         }
-    } while (!ok);*/
+    } while (!ok);
 
 
     //Random between Airport List for choose an Arrival
+    do {
 
-    arrival = "Martinique";
-    /*  do {
-
-          choice = rand() % m_list_of_airport.size();
-          if (m_list_of_airport[choice]->get_AirportName() != departure && m_list_of_airport[choice]->condition_takeoff()) {//condition pour l'aterrissage d'un vol
-              arrival = m_list_of_airport[choice]->get_AirportName();
-              ok = true;
-          } else {
-              ok = false;
-              //copie du vecteur qui sera egale a ma liste d'aeroport²
-              compteur++;
-          }
-      } while (!ok );*/
+        choice = rand() % m_list_of_airport.size();
+        if (m_list_of_airport[choice]->get_AirportName() != departure && m_list_of_airport[choice]->condition_takeoff()) {//condition pour l'aterrissage d'un vol
+            arrival = m_list_of_airport[choice]->get_AirportName();
+            ok = true;
+        } else {
+            ok = false;
+            //copie du vecteur qui sera egale a ma liste d'aeroport²
+            compteur++;
+        }
+    } while (!ok );
 }
 
 std::string Flight::get_flight_id() const {
@@ -82,7 +79,7 @@ Airport* Flight::get_departure() const {
 Airport* Flight::get_arrival() const {
     int num2(0);
     for (int j(0); j < m_list_of_airport.size(); j++) {
-        if (arrival == m_list_of_airport[j]->get_AirportName()) {
+        if (departure == m_list_of_airport[j]->get_AirportName()) {
             num2 = j;
         }
     }

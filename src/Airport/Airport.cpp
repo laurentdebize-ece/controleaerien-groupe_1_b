@@ -94,7 +94,7 @@ void Airport::management_takeoff(Airplane* airplane_which_takeoff) {
             m_management_nbrRunways[i] = true; //pendant 2ut
             airplane_which_takeoff->takeoff_or_not(true);
 
-            m_management_Ground_seats[i] = true;
+            //m_management_Ground_seats[i] = true;
             airplane_which_takeoff->put_state(false);// plus en vol mais ce sera apres 2ut faudra reflechir a ca pareil pr ground seats pariel pour decollage
         }
         else {
