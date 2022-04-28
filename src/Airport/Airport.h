@@ -9,6 +9,7 @@
 #define POS_X 952
 #define POS_Y 18
 class Aiport_network;
+class Airplane;
 
 class Airport {
 private:

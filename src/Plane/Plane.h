@@ -4,7 +4,7 @@
 #include <fstream>
 #include <queue>
 #include <sstream>
-
+class Airplane;
 class Plane {
 private:
     std::vector<Airplane*> m_airplane;
