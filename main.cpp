@@ -39,9 +39,9 @@
                      while (!fin) {
                          sf::Event event{};
                          while (window.pollEvent(event)) {
-                             Plane_Movement(event, window, p, a, Sprite);
-                             //show_airport_on_screen( event, window, Sprite,a, font);
 
+                             //show_airport_on_screen( event, window, Sprite,a, font);
+                             Plane_Movement(event, window, p, a, Sprite);
                              //a.show_airport_on_screen(event, window, Sprite);
                              //f.Flight_manual();
                              if (event.type == sf::Event::Closed ||

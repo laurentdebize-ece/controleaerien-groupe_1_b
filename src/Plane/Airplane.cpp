@@ -123,7 +123,6 @@ void Plane_Movement(sf::Event event, sf::RenderWindow &window, Plane &airplane, 
     sf::Clock clock;
     do{
         progression += clock.getElapsedTime().asSeconds()*vitesse;
-        std::cout<<progression<<"\n";
         clock.restart();
 
         airplane.getListPlane()[num_airplane]->set_plane_x(Interpolate(Airport1,Airport2,progression).x);
