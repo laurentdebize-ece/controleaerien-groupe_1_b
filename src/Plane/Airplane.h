@@ -57,9 +57,9 @@ public:
 
     void takeoff_or_not(bool if_takeoff);
 
-    void set_plane_x(float plane_x);
+    void set_plane_x( float plane);
 
-    void set_plane_y(float plane_y);
+    void set_plane_y(float plane);
 
     void set_Coord_plane(float plane_x, float plane_y);
 
@@ -69,7 +69,8 @@ public:
     //Airplane GetPlane(Plane plane) const;//obligation d'appler la fonction dans le main
 };
 
-void Plane_Movement(sf::Event event, sf::RenderWindow &window,  Plane &airplane, Aiport_network &a, sf::Sprite &Sprite);
 
-float linear(float passed_time, float start_value, float Long, float total_time);
+void Plane_Movement(sf::Event event, sf::RenderWindow &window,  Plane &airplane, Aiport_network &a, sf::Sprite &Sprite);
+sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&pointB), float factor));
+
 #endif //CONTROLEAERIEN_GROUPE_1_B_AIRPLANE_H
