@@ -36,22 +36,23 @@
                              targetSize.y / Sprite.getLocalBounds().height);
 
                      window.clear(sf::Color::Transparent);
+
                      while (!fin) {
                          sf::Event event{};
                          while (window.pollEvent(event)) {
 
-                             //show_airport_on_screen( event, window, Sprite,a, font);
+                             //show_airport_on_screen(event, window, Sprite, a, font);
                              Plane_Movement(event, window, p, a, Sprite);
                              //a.show_airport_on_screen(event, window, Sprite);
                              //f.Flight_manual();
                              if (event.type == sf::Event::Closed ||
-                                 (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)){
+                                 (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
                                  fin = true;
                                  window.close();
                                  choix = 0;
-                             }
                          }
                      }
+                 }
                     fin = false;
                      //toutes les fonctions du simulateur
                      break;

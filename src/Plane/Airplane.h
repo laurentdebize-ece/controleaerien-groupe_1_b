@@ -63,6 +63,8 @@ public:
 
     void set_Coord_plane(float plane_x, float plane_y);
 
+    void set_Angle(float angle);
+
     void afficher() const;
 
 
@@ -72,5 +74,5 @@ public:
 
 void Plane_Movement(sf::Event event, sf::RenderWindow &window,  Plane &airplane, Aiport_network &a, sf::Sprite &Sprite);
 sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&pointB), float factor));
-
+float angle(float airport1X, float airport1Y,float airport2X, float airport2Y );
 #endif //CONTROLEAERIEN_GROUPE_1_B_AIRPLANE_H
