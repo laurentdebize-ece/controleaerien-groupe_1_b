@@ -143,7 +143,7 @@ void Plane_Movement(sf::Event event, sf::RenderWindow &window, Plane &airplane, 
         } else {
             window.clear();
             window.draw(Sprite);
-            //airplane.getListPlane()[num_airplane]->set_Angle(angle(Airport1.x, Airport1.y, Airport2.x, Airport2.x));
+            airplane.getListPlane()[num_airplane]->set_Angle(angle(Airport1.x, Airport1.y, Airport2.x, Airport2.x));
             window.draw(airplane.getListPlane()[num_airplane]->get_Sprite());
             fin=false;
         }

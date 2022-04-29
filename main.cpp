@@ -10,7 +10,7 @@
      //Initialisation Cartes Map
      sf::Texture Menu_principal;
 
-     Menu_principal.loadFromFile("Graphic_Content/Map/Sim_Map.png");
+     Menu_principal.loadFromFile("../Graphic_Content/Map/Sim_Map.png");
 
      sf::Sprite Sprite(Menu_principal);
 
@@ -29,17 +29,19 @@
 
          switch (choix) {
                  case 1 :
-                     a.PCC(&f);// juste pour test pcc mais mon pc a planté wsv je veriffie si ça fonctione demain
-                    /*Sprite.setScale(
+                     //a.PCC(&f);// juste pour test pcc mais mon pc a planté wsv je veriffie si ça fonctione demain
+                     Sprite.setScale(
                              targetSize.x / Sprite.getLocalBounds().width,
                              targetSize.y / Sprite.getLocalBounds().height);
 
                      window.clear(sf::Color::Transparent);
+
                      while (!fin) {
                          sf::Event event{};
                          while (window.pollEvent(event)) {
-                            // Plane_Movement(event, window, p, a, Sprite);
-                             show_airport_on_screen( event, window, Sprite,a, font);
+
+                             Plane_Movement(event, window, p, a, Sprite);
+                             show_airport_on_screen(event, window, Sprite, a, font);
 
                              //a.show_airport_on_screen(event, window, Sprite);
                              //f.Flight_manual();
@@ -48,10 +50,10 @@
                                  fin = true;
                                  window.close();
                                  choix = 0;
-                             }
                          }
                      }
-                    fin = false;*/
+                 }
+                    fin = false;
                      //toutes les fonctions du simulateur
                      break;
                  case 2 :
