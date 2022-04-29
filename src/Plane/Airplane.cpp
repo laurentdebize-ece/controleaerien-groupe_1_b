@@ -94,6 +94,10 @@ sf::Sprite Airplane::get_Sprite() const {
     return airplane_pic;
 }
 
+void Airplane::set_Angle(float angle){
+        airplane_pic.setRotation(angle);
+}
+
 void Airplane::set_Coord_plane(float plane_x, float plane_y) {
     airplane_pic.setPosition(plane_x, plane_y);
 }
@@ -101,11 +105,11 @@ void Airplane::set_Coord_plane(float plane_x, float plane_y) {
 
 void Plane_Movement(sf::Event event, sf::RenderWindow &window, Plane &airplane, Aiport_network &a, sf::Sprite &Sprite) {
     window.setFramerateLimit(60);
-    int num_arrival_airport=5, num_departure_airport=0, num_airplane=10;
+    int num_arrival_airport=9, num_departure_airport=1, num_airplane=1;
     bool fin(false);
 
     float vitesse = 0.05f;
-    sf::Vector2f (Airport1), (Airport2), (vec);
+    sf::Vector2f (Airport1), (Airport2);
 
     airplane.getListPlane()[num_airplane]->set_plane_x( (float)a.getListAirport()[num_departure_airport]->getXcentre());
     airplane.getListPlane()[num_airplane]->set_plane_y((float)a.getListAirport()[num_departure_airport]->getYcentre());
@@ -139,6 +143,7 @@ void Plane_Movement(sf::Event event, sf::RenderWindow &window, Plane &airplane, 
         } else {
             window.clear();
             window.draw(Sprite);
+            //airplane.getListPlane()[num_airplane]->set_Angle(angle(Airport1.x, Airport1.y, Airport2.x, Airport2.x));
             window.draw(airplane.getListPlane()[num_airplane]->get_Sprite());
             fin=false;
         }
@@ -158,7 +163,14 @@ sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&poi
     return pointA + (pointB - pointA) * factor;
 }
 
+float angle(float airport1X, float airport1Y,float airport2X, float airport2Y ){
+    float angle;
 
+    float oposite_long = sqrt( airport1X  * airport1X  +  airport1Y * airport2Y  );
+    float hypo= sqrt( airport1X  * airport2X  +  airport1Y * airport2Y  );
+    angle = asin(oposite_long/hypo);
+    return angle;
+}
 
 /*Airplane Airplane::GetPlane(Plane plane) const {
     return Airplane(__cxx11::basic_string(), <#initializer#>, __cxx11::basic_string(), <#initializer#>, <#initializer#>,
