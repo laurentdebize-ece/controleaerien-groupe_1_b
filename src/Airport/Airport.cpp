@@ -22,8 +22,7 @@ Airport::Airport(int &id, std::string &AirportName, int &Xmin, int &Xmax, int &X
 
             m_management_Ground_seats[2] = false;
             m_management_Ground_seats[3] = false;
-
-
+            
 
 
 }
