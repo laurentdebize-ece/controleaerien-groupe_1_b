@@ -19,8 +19,7 @@
      Plane p{"../Text_files/Airplane"};
      Aiport_network a{"../Text_files/Airport_network"};
      Flight f{p.getListPlane(),a.getListAirport()};
-     //std::vector<Airport*> airport = a.getListAirport();
-     //Flight f{};
+
      do {
          Game_Menu(choix);
 
@@ -47,7 +46,7 @@
                              //a.show_airport_on_screen(event, window, Sprite);
                              //f.Flight_manual();
                              if (event.type == sf::Event::Closed ||
-                                 (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
+                                 (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)){
                                  fin = true;
                                  window.close();
                                  choix = 0;
