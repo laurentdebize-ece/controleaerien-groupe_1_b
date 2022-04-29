@@ -29,8 +29,8 @@
 
          switch (choix) {
                  case 1 :
-                    // a.PCC(&f);// juste pour test pcc mais mon pc a planté wsv je veriffie si ça fonctione demain
-                     Sprite.setScale(
+                     a.PCC(&f);// juste pour test pcc mais mon pc a planté wsv je veriffie si ça fonctione demain
+                    /*Sprite.setScale(
                              targetSize.x / Sprite.getLocalBounds().width,
                              targetSize.y / Sprite.getLocalBounds().height);
 
@@ -51,7 +51,7 @@
                              }
                          }
                      }
-                    fin = false;
+                    fin = false;*/
                      //toutes les fonctions du simulateur
                      break;
                  case 2 :

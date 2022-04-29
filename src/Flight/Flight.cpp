@@ -35,7 +35,7 @@ Flight::Flight(std::vector<Airplane *> list_of_plane,std::vector<Airport *> list
 
 
     //Random between Airport List for choose a Departure
-    departure = "RioDeJaneiro" ;
+    departure = "Sydney" ;
    /* do {
         choice = rand() % m_list_of_airport.size();
 

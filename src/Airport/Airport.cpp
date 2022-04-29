@@ -120,20 +120,30 @@ void Airport::loop_management() {
         return s1->get_fuel_capacity() > s2->get_fuel_capacity();
     });
 
+    Airplane* a_transition;
+
+
     do {
         //priorité attérissage
         for(size_t i(0);i<m_waiting_airplane.size();++i){
             if(m_waiting_airplane[i]->get_if_takeoff()){
                 management_takeoff(m_waiting_airplane[i]);
+                m_waiting_airplane[(int)m_waiting_airplane.size()] = a_transition;
+                m_waiting_airplane[(int)m_waiting_airplane.size()] = m_waiting_airplane[i];
+                m_waiting_airplane[i] = a_transition;
+                m_waiting_airplane.pop_back();
             }
         }
         //jsp si on peut simplifier ça en mode tous faire dans une boucle for
         for(size_t i(0);i<m_waiting_airplane.size();++i){
             if(!m_waiting_airplane[i]->get_if_takeoff()){
                 management_Landing(m_waiting_airplane[i]);
+                m_waiting_airplane[(int)m_waiting_airplane.size()] = a_transition;
+                m_waiting_airplane[(int)m_waiting_airplane.size()] = m_waiting_airplane[i];
+                m_waiting_airplane[i] = a_transition;
+                m_waiting_airplane.pop_back();
             }
         }
-
     }while(!m_waiting_airplane.empty());
 }
 
