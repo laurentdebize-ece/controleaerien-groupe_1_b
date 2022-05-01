@@ -105,7 +105,7 @@ void Airplane::set_Coord_plane(float plane_x, float plane_y) {
 
 void Plane_Movement(sf::Event event, sf::RenderWindow &window, Plane &airplane, Aiport_network &a, sf::Sprite &Sprite) {
     window.setFramerateLimit(60);
-    int num_arrival_airport = 3, num_departure_airport = 8, num_airplane = 1;
+    int num_arrival_airport=9, num_departure_airport=1, num_airplane=1;
     bool fin(false);
 
     float vitesse = 0.1f;

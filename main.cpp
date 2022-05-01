@@ -3,7 +3,7 @@
 
  int main() {
      unsigned int choix(0);
-     bool fin(false), back_menu(true);
+     bool fin(false), back_menu(true), end_flight(false);
 
      sf::Font font;
      font.loadFromFile("../Font/Pixeled.ttf");
@@ -42,6 +42,7 @@
 
                              Plane_Movement(event, window, p, a, Sprite);
                              show_airport_on_screen(event, window, Sprite, a, font);
+
                              //a.show_airport_on_screen(event, window, Sprite);
                              //f.Flight_manual();
                              if (event.type == sf::Event::Closed ||
