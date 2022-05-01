@@ -149,8 +149,10 @@ std::vector<int> Aiport_network::PCC(Flight* f) {
     distances[f->get_departure()->getId()] = 0; // departure est à une distance de 0 de lui même.
     std::vector<int> predecesseurs(m_airport.size(), -1); // nous ne connaissons pas encore les prédécesseurs
    // predecesseurs[f->get_departure()->getId()] = 0; // on pourrait laisser -1, departure n'a pas vraiment de prédécesseur car il s'agit de l'aeroport initial
-    double rapport_consommation_carburant(0);
+    double rapport_consommation_carburant(0);// si on définit par exemple 300L/ut
     bool arrive_a_destination(false);
+    std::vector<int> chemin_suivi;
+    chemin_suivi.push_back(f->get_departure()->getId());
 
     do {
         int s = 0;
@@ -169,23 +171,26 @@ std::vector<int> Aiport_network::PCC(Flight* f) {
                           << "       "; /*std::to_string(predecesseurs[i]))*/
                 if (couleurs[i] == 0 && distances[i] < distanceMini) {
                     distanceMini = distances[i];
-                    s = i;
+                    s = (int)i;
                 }
-                rapport_consommation_carburant = f->get_airplane()->get_plane_comsuption() / double(distances[s]);
+               //  rapport_consommation_carburant = f->get_airplane()->get_plane_comsuption() / 300); la on obtient le nbre d'ut que l'on peut faire avec le carburant de l'avion
             }
             std::cout << std::endl << std::endl;
 
             //VERIFICATION DE LA VIABILITE DE L'AEROPORT QUI SE TROUVE A UNE DISTANCE MINIMALE
-            if (s == f->get_arrival()->getId()) {
+            if (s == f->get_arrival()->getId()  /* rapport_consommation_carburant <=
+                       distances[s]*/) {
                 couleurs[s] = 1;
                 nbMarques = int(m_airport.size());
                 choix = true;
+                chemin_suivi.push_back(s);// push back dans le vecteur du chemin
             } else if (m_airport[s]->condition_takeoff() && m_airport[s]->condition_landing()
                       /* rapport_consommation_carburant <=
-                       distances[s]*/) {//gestions arrivé gesiton depart sur s, comparaison poids de l'aeroport d'id s par rapport a laeroport init
+                       distances[s]*/) {// on vérifie si le poids (nbre d'ut entre aéroport), est supérieur au nombre d'ut que peut réaliser l'avion
                 couleurs[s] = 1;
                 nbMarques++;
                 choix = true;
+                chemin_suivi.push_back(s);// push back dans le vecteur du chemin
 
                 //arrive_a_destination = true;
 
@@ -222,7 +227,10 @@ std::vector<int> Aiport_network::PCC(Flight* f) {
     } while (nbMarques < m_airport.size());
 
     std::cout << std::endl << "FIN DE DIJKSTRA." << std::endl;
-    return predecesseurs;
+
+    //RECUPERATION DU CHEMIN JUSQU'A L'AEROPORT D'ARRIVE
+
+    return chemin_suivi;
 }
 
 
