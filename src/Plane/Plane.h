@@ -10,8 +10,11 @@ private:
     std::vector<Airplane*> m_airplane;
 public:
     Plane(std::string FichierPlane);
+
     ~Plane();
+
     std::vector<Airplane*> getListPlane() const;
+
     void afficher() const;
 };
 

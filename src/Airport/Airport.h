@@ -32,22 +32,36 @@ public:
             double &in_flight_loop);
 
     void addSuccesseur(Airport *successeur, int poids);
+
     const std::vector<std::pair<Airport *const, int>> &getSuccesseurs() const;
+
     void afficher() const;
     //bool get_viability_landing() const;
    // bool get_viability_takeoff() const;
     int getId() const;
+
     int getXmin() const;
+
     int getXmax() const;
+
     double getXcentre() const;
+
     int getYmin() const;
+
     int getYmax() const;
+
     int getYcentre() const;
+
     std::string get_AirportName() const;
+
     bool condition_landing();
+
     bool condition_takeoff();
+
     void management_Landing(Airplane* airplane_which_landing);
+
     void management_takeoff(Airplane* airplane_which_takeoff);
+
     void loop_management ();
 
 };
