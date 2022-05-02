@@ -41,9 +41,16 @@ public:
     void Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &enter_manual);
 
     std::vector<int> PCC ();
+
+    std::vector<int> redirection_turbulence_A ();
+
+
+
 };
 
 sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&pointB), float factor));
 double angle(float airport1X, float airport1Y,float airport2X, float airport2Y );
 float module(float x, float y);
+void draw_line_test(sf::RenderWindow &window, const double &airport1_x_center, const double &airport1_y_center,
+                    const double &airport2_x_center, const double &airport2_y_center);
 #endif //CONTROLEAERIEN_GROUPE_1_B_FLIGHT_H

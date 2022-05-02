@@ -1,5 +1,7 @@
 #include "Flight.h"
 
+#include <cmath>
+
 Flight::Flight(std::vector<Airplane *> list_of_plane, std::vector<Airport *> list_of_airport, bool &enter_manual)
         : m_list_of_plane{list_of_plane}, m_list_of_airport{list_of_airport}, id_plane{0} {
 //on recup direct les vecteur qu'on aura creer dans le main
@@ -282,7 +284,7 @@ void Flight::Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &
 
         int num_departure_airport = flight_plan[i], num_arrival_airport = flight_plan[i + 1];
         bool fin(false);
-        float vitesse = 0.1f;
+        float vitesse = 0.19f;
         sf::Vector2f (Airport1), (Airport2);
 
         m_list_of_plane[id_plane]->set_plane_x((float) m_list_of_airport[num_departure_airport]->getXcentre());
@@ -325,24 +327,26 @@ void Flight::Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &
                 window.draw(Sprite);
                 if (m_list_of_airport[num_departure_airport]->getXcentre() >
                     m_list_of_airport[num_arrival_airport]->getXcentre()) {
+                    //draw_line_test(window,Airport1.x,Airport1.y,Airport2.x,Airport2.y);
                     m_list_of_plane[id_plane]->set_Angle(
-                            (float) angle(Airport1.x, Airport1.y, Airport2.x, Airport2.x) + 180.0f);
+                            (float) angle(Airport1.x, Airport1.y, Airport2.x, Airport2.y) + 180.0f);
                 } else {
                     m_list_of_plane[id_plane]->set_Angle(
-                            (float) angle(Airport1.x, Airport1.y, Airport2.x, Airport2.x) + 150.f);
+                            (float) angle(Airport1.x, Airport1.y, Airport2.x, Airport2.y) + 180.f);
                 }
                 window.draw(m_list_of_plane[id_plane]->get_Sprite());
                 fin = false;
                 arrive = false;
             }
-            if (progression >= 0.5) {
+          /*  if (progression >= 0.5) {
                 //std::cout << "Nou adan" << std::endl;
                 Flight d{m_list_of_plane, m_list_of_airport, enter_manual};
                 d.Plane_Movement(window, Sprite, enter_manual);
                 window.display();
             } else {
                 window.display();
-            }
+            }*/
+            window.display();
 
 
         } while (!fin);
@@ -377,8 +381,8 @@ std::vector<int> Flight::PCC() {
     std::vector<int> distances(m_list_of_airport.size(), std::numeric_limits<int>::max());
     distances[get_departure_num()] = 0; // departure est à une distance de 0 de lui même.
     std::vector<int> predecesseurs(m_list_of_airport.size(), -1); // nous ne connaissons pas encore les prédécesseurs
-    // predecesseurs[f->get_departure()->getId()] = 0; // on pourrait laisser -1, departure n'a pas vraiment de prédécesseur car il s'agit de l'aeroport initial
-    double rapport_consommation_carburant(0);// si on définit par exemple 300L/ut
+
+    double rapport_consommation_carburant(0);// si on définit par exemple 300L/ut, pour la turbulence on définit 1000/ut
     std::vector<int> chemin_suivi;
     chemin_suivi.push_back(get_departure_num());
 
@@ -387,16 +391,23 @@ std::vector<int> Flight::PCC() {
         int distanceMini = std::numeric_limits<int>::max();
         bool choix(false);
         do {
+            if(false){//avion dans la zone de turbulence ?
+                  rapport_consommation_carburant = this->get_airplane()->get_plane_comsuption() / 1000;// la on obtient le nbre d'ut que l'on peut faire avec le carburant de l'avion
+            }
+            else{rapport_consommation_carburant = this->get_airplane()->get_plane_comsuption() / 300; }
+
+
+            //CALCUL DU SOMMET 1 LA PLUS COURTE DISTANCE DE L'AVION, distance minimale sera la distance entre l'avion et l'aeroport
+
+
             s = 0;
             for (size_t i = 0; i < distances.size(); i++) {
                 if (couleurs[i] == 0 && distances[i] < distanceMini) {
                     distanceMini = distances[i];
                     s = (int) i;
                 }
-                //  rapport_consommation_carburant = f->get_airplane()->get_plane_comsuption() / 300); la on obtient le nbre d'ut que l'on peut faire avec le carburant de l'avion
-            }
-            //std::cout << std::endl << std::endl;
 
+            }
             //VERIFICATION DE LA VIABILITE DE L'AEROPORT QUI SE TROUVE A UNE DISTANCE MINIMALE
             if (s == get_arrival_num()  /* rapport_consommation_carburant <=
                        distances[s]*/) {
@@ -410,7 +421,7 @@ std::vector<int> Flight::PCC() {
                 couleurs[s] = 1;
                 nbMarques++;
                 choix = true;
-                //chemin_suivi.push_back(s);// push back dans le vecteur du chemin
+                chemin_suivi.push_back(s);// push back dans le vecteur du chemin
 
                 //arrive_a_destination = true;
 
@@ -439,6 +450,99 @@ std::vector<int> Flight::PCC() {
 }
 
 
+
+
+
+
+std::vector<int> Flight::redirection_turbulence_A() {
+    // INITIALISATION
+    int nbMarques = 0;
+    std::vector<int> couleurs(m_list_of_airport.size(), 0); // tous les aéroports sont non marqués
+    std::vector<int> distances(m_list_of_airport.size(), std::numeric_limits<int>::max());
+    distances[get_departure_num()] = 0; // departure est à une distance de 0 de lui même.
+    std::vector<int> predecesseurs(m_list_of_airport.size(), -1); // nous ne connaissons pas encore les prédécesseurs
+    // predecesseurs[f->get_departure()->getId()] = 0; // on pourrait laisser -1, departure n'a pas vraiment de prédécesseur car il s'agit de l'aeroport initial
+    double rapport_consommation_carburant(0);// si on définit par exemple 300L/ut
+    std::vector<int> new_way;
+    new_way.push_back(get_departure_num());
+
+    do {
+        int s = 0;
+        int distanceMini = std::numeric_limits<int>::max();
+        bool choix(false);
+        do {
+            s = 0;
+            for (size_t i = 0; i < distances.size(); i++) {
+                if (couleurs[i] == 0 && distances[i] < distanceMini) {
+                    distanceMini = distances[i];
+                    s = (int) i;
+                }
+                //  rapport_consommation_carburant = f->get_airplane()->get_plane_comsuption() / 300); la on obtient le nbre d'ut que l'on peut faire avec le carburant de l'avion
+            }
+            //std::cout << std::endl << std::endl;
+
+            //VERIFICATION DE LA VIABILITE DE L'AEROPORT QUI SE TROUVE A UNE DISTANCE MINIMALE
+            if (s == get_arrival_num()  /* rapport_consommation_carburant <=
+                       distances[s]*/) {
+                couleurs[s] = 1;
+                nbMarques = int(m_list_of_airport.size());
+                choix = true;
+                new_way.push_back(s);// push back dans le vecteur du chemin
+            } else if (m_list_of_airport[s]->condition_takeoff() && m_list_of_airport[s]->condition_landing()
+                /* rapport_consommation_carburant <=
+                 distances[s]*/) {// on vérifie si le poids (nbre d'ut entre aéroport), est supérieur au nombre d'ut que peut réaliser l'avion
+                couleurs[s] = 1;
+                nbMarques++;
+                choix = true;
+                new_way.push_back(s);// push back dans le vecteur du chemin
+
+                //arrive_a_destination = true;
+
+            } else {
+                //refaire le calcul de distance mini sans s donc remettre la distance de s à l'infini pour que l'aeroport d'id s ne soit  plus prit en compte
+                distances[s] = std::numeric_limits<int>::max();
+            }
+        } while (!choix);
+
+        /*couleurs[s] = 1;
+        nbMarques++;*/
+
+        for (auto successeur: m_list_of_airport[s]->getSuccesseurs()) {
+            if (couleurs[successeur.first->getId()] == 0) {
+                if (distances[s] + successeur.second < distances[successeur.first->getId()]) {
+                    distances[successeur.first->getId()] = distances[s] + successeur.second;
+                    predecesseurs[successeur.first->getId()] = s;
+                }
+            }
+        }
+    } while (nbMarques < m_list_of_airport.size());
+
+    //RECUPERATION DU NOUVEAU CHEMIN JUSQU'A L'AEROPORT D'ARRIVE
+
+    return new_way;
+}
+
+void draw_line_test(sf::RenderWindow &window, const double &airport1_x_center, const double &airport1_y_center,
+                            const double &airport2_x_center, const double &airport2_y_center) {
+    sf::Vector2f mid = sf::Vector2f((float)( airport1_x_center + airport2_x_center) / 2, (float)(airport1_y_center + airport2_y_center) / 2);
+    sf::Vertex line[] =
+            {
+                    sf::Vertex(sf::Vector2f((float) airport1_x_center, (float) airport1_y_center)),
+                    sf::Vertex(sf::Vector2f((float) airport2_x_center, (float) airport2_y_center))
+            };
+
+    window.draw(line, 2, sf::Lines);
+
+}
+
+
+
+
+
+
+
+
+
 sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&pointB), float factor)) {
     if (factor > 1.f) {
         factor = 1.f;
@@ -450,12 +554,23 @@ sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&poi
 
 double angle(float airport1X, float airport1Y, float airport2X, float airport2Y) {
 
-    float oposite_long = module(airport2X - airport1X, airport2Y - airport2Y);
-    float hypo = module(airport2X - airport1X, airport2Y - airport1Y);
+    float opp = std::abs(airport2X) - std::abs(airport1X);//valeur absolue du opposé
+    float adj = std::abs(airport1Y) - std::abs(airport2Y);//valeur absolue du adjacent
+    float angle = std::atan (opp/adj);
 
-    return asin(oposite_long / hypo) * 180.0 / PI;
+    if(airport2Y > airport1Y ){
+
+        return (angle*180)/PI ; //angle en degré
+
+    }else {
+        return (angle * 180) / PI+ 180.0; //angle en degré
+         }
+
 }
 
 float module(float x, float y) {
-    return sqrt(x * x + y * y);
+    return (float)std::sqrt(x * x + y * y);
 }
+
+
+

@@ -2,14 +2,14 @@
 
 int main() {
     unsigned int choix(0);
-    bool fin(false), back_menu(true), end_flight(false), enter_manual(false);
+    bool fin(false), back_menu(true), end_flight(false), enter_manual(true);
 
     sf::Font font;
-    font.loadFromFile("../Font/Pixeled.ttf");
+    font.loadFromFile("Font/Pixeled.ttf");
     //Initialisation Cartes Map
     sf::Texture Menu_principal;
 
-    Menu_principal.loadFromFile("../Graphic_Content/Map/Sim_Map.png");
+    Menu_principal.loadFromFile("Graphic_Content/Map/Sim_Map.png");
 
     sf::Sprite Sprite(Menu_principal);
 
@@ -23,7 +23,7 @@ int main() {
 
         //Initialisation  Fenetre
         sf::RenderWindow window(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "AIRPORT CONTROL SIMULATOR");
-        window.setPosition(sf::Vector2i(0, 10));
+       // window.setPosition(sf::Vector2i(0, 10));
 
         switch (choix) {
             case 1 :
@@ -39,6 +39,7 @@ int main() {
                     while (window.pollEvent(event)) {
                         Flight f{p.getListPlane(), a.getListAirport(), enter_manual};
                         f.Plane_Movement(window, Sprite,enter_manual);
+                        //show_airport_on_screen(event, window, Sprite, a, font);
 
                         if (event.type == sf::Event::Closed ||
                             (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
