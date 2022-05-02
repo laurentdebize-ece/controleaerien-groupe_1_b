@@ -13,7 +13,7 @@ void Game_Menu(unsigned int &choix) {
     std::cout << "\n";
     std::cout << "                   1. START A SIMULATION \n";
     std::cout << "                   2. INFORMATIONS ABOUT AIRPORTS \n";
-    std::cout << "                   3. INFORMATIONS ABOUT AIRPLANE \n";
+    std::cout << "                   3. INFORMATIONS ABOUT AIRPLANES \n";
     std::cout << "                   4. CREDITS \n";
     std::cout << "                   5. QUIT \n";
     for (int i = 0; i < 67; ++i) {

@@ -72,9 +72,4 @@ public:
     //Airplane GetPlane(Plane plane) const;//obligation d'appler la fonction dans le main
 };
 
-
-void Plane_Movement(sf::Event event, sf::RenderWindow &window,  Plane &airplane, Aiport_network &a, sf::Sprite &Sprite);
-sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&pointB), float factor));
-double angle(float airport1X, float airport1Y,float airport2X, float airport2Y );
-float module(float x, float y);
 #endif //CONTROLEAERIEN_GROUPE_1_B_AIRPLANE_H
