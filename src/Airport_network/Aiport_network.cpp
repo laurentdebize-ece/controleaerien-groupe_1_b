@@ -57,17 +57,17 @@ Aiport_network::Aiport_network(std::string FichieraiportNetwork) {
             }
         }
         m_airport[num1]->addSuccesseur(m_airport[num2], poids);
+        m_airport[num2]->addSuccesseur(m_airport[num1],poids);//non orienté
         addVol(num1,num2,poids);
     }
 
 }
 
-    void Aiport_network::addVol(int &num1, int &num2, int &poids) {
-
+void Aiport_network::addVol(int &num1, int &num2, int &poids) {
         Connexion *connect = new Connexion(m_airport[num1], m_airport[num2], poids);
         m_connect.push_back(connect);
 
-    }
+}
 
 
 void Aiport_network::afficher() const {

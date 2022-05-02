@@ -104,116 +104,176 @@ void Airplane::set_Coord_plane(float plane_x, float plane_y) {
 
 
 void Plane_Movement(sf::Event event, sf::RenderWindow &window, Plane &airplane, Aiport_network &a, sf::Sprite &Sprite) {
+    //TURBULENCE
+    sf::Texture animTexture;
+    if (!animTexture.loadFromFile("Graphic_Content/turbulence/Rain_animation.png")) {
+        std::cout << "bullshit";
+    }
+    sf::Vector2i spriteSize(30, 30);
+    std::vector<sf::Sprite> animSprites;//vecteur de sprite
 
-    /*sf::Texture Info_avion;
-    Info_avion.loadFromFile("Graphic_Content/Map/Sydney.png");
-    sf::Sprite Sprite_Info_avion(Info_avion);*/
+    int sheetRow = (int)animTexture.getSize().y / spriteSize.y;
+    int sheetColumn = (int)animTexture.getSize().x / spriteSize.x;
+
+    for (int i = 0; i < sheetRow; i++) {
+        for (int j = 0; j < sheetColumn; j++) {
+            animSprites.emplace_back(animTexture, sf::IntRect(spriteSize.x * j, spriteSize.y * i, spriteSize.x, spriteSize.y));
+        }
+    }
+
+    for (int i = sheetRow - 1; i >= 0; i--) {
+        for (int j = sheetColumn - 1; j >= 0; j--) {
+            animSprites.emplace_back(animTexture, sf::IntRect(spriteSize.x * j, spriteSize.y * i, spriteSize.x, spriteSize.y));
+        }
+    }
+
+    for (int i = 0; i < animSprites.size(); i++) {
+        sf::FloatRect animSpriteRect = animSprites[i].getLocalBounds();
+        animSprites[i].setOrigin(animSpriteRect.width / 2.0f, animSpriteRect.height / 2.0f);
+        animSprites[i].setPosition((float)window.getSize().x / 2.0f, (float)window.getSize().y / 2.0f);
+    }
+
+    int frameIndex = 0;
+    float frameDuration = 0.4f; // Each frame takes aruond 1/10 sec.
 
 
-        window.setFramerateLimit(60);
-        int num_arrival_airport = 9, num_departure_airport = 1, num_airplane = 1;
-        bool fin(false);
 
 
-        float vitesse = 0.19f;
-        sf::Vector2f (Airport1), (Airport2);
 
-        airplane.getListPlane()[num_airplane]->set_plane_x(
-                (float) a.getListAirport()[num_departure_airport]->getXcentre());
-        airplane.getListPlane()[num_airplane]->set_plane_y(
-                (float) a.getListAirport()[num_departure_airport]->getYcentre());
+
+
+    window.setFramerateLimit(60);
+    int num_arrival_airport = 3, num_departure_airport = 8, num_airplane = 1;
+    bool fin(false);
+
+    float vitesse = 0.19f;
+    sf::Vector2f (Airport1), (Airport2);
+
+    airplane.getListPlane()[num_airplane]->set_plane_x((float) a.getListAirport()[num_departure_airport]->getXcentre());
+    airplane.getListPlane()[num_airplane]->set_plane_y((float) a.getListAirport()[num_departure_airport]->getYcentre());
+    airplane.getListPlane()[num_airplane]->set_Coord_plane(airplane.getListPlane()[num_airplane]->get_plane_x(),
+                                                           airplane.getListPlane()[num_airplane]->get_plane_y());
+
+    Airport1.x = (float) a.getListAirport()[num_departure_airport]->getXcentre();
+    Airport1.y = (float) a.getListAirport()[num_departure_airport]->getYcentre();
+
+    Airport2.x = (float) a.getListAirport()[num_arrival_airport]->getXcentre();
+    Airport2.y = (float) a.getListAirport()[num_arrival_airport]->getYcentre();
+
+    float progression = 0.f;
+
+    sf::Clock clock;
+    do {
+        progression += clock.getElapsedTime().asSeconds() * vitesse;
+        clock.restart();
+
+        airplane.getListPlane()[num_airplane]->set_plane_x(Interpolate(Airport1, Airport2, progression).x);
+        airplane.getListPlane()[num_airplane]->set_plane_y(Interpolate(Airport1, Airport2, progression).y);
+
         airplane.getListPlane()[num_airplane]->set_Coord_plane(airplane.getListPlane()[num_airplane]->get_plane_x(),
                                                                airplane.getListPlane()[num_airplane]->get_plane_y());
+        if ((airplane.getListPlane()[num_airplane]->get_plane_x() ==
+             (float) a.getListAirport()[num_arrival_airport]->getXcentre() &&
+             airplane.getListPlane()[num_airplane]->get_plane_y() ==
+             (float) a.getListAirport()[num_arrival_airport]->getYcentre()) || progression > 1) {
+            std::cout << "Arrive";
+            window.clear();
+            window.draw(Sprite);
 
-        Airport1.x = (float) a.getListAirport()[num_departure_airport]->getXcentre();
-        Airport1.y = (float) a.getListAirport()[num_departure_airport]->getYcentre();
+            fin = true;
+        } else {
+            window.clear(sf::Color(0, 0, 0));
+            window.draw(Sprite);
 
-        Airport2.x = (float) a.getListAirport()[num_arrival_airport]->getXcentre();
-        Airport2.y = (float) a.getListAirport()[num_arrival_airport]->getYcentre();
 
-        float progression = 0.f;
 
-        sf::Clock clock;
-        do {
-            progression += clock.getElapsedTime().asSeconds() * vitesse;
-            clock.restart();
-
-            airplane.getListPlane()[num_airplane]->set_plane_x(Interpolate(Airport1, Airport2, progression).x);
-            airplane.getListPlane()[num_airplane]->set_plane_y(Interpolate(Airport1, Airport2, progression).y);
-
-            airplane.getListPlane()[num_airplane]->set_Coord_plane(airplane.getListPlane()[num_airplane]->get_plane_x(),
-                                                                   airplane.getListPlane()[num_airplane]->get_plane_y());
-            if ((airplane.getListPlane()[num_airplane]->get_plane_x() ==
-                 (float) a.getListAirport()[num_airplane]->getXcentre() &&
-                 airplane.getListPlane()[num_airplane]->get_plane_y() ==
-                 (float) a.getListAirport()[num_airplane]->getYcentre()) || progression > 1) {
-                //std::cout << "Arivée";
-                window.clear();
-                window.draw(Sprite);
-              //  window.draw(Sprite_Info_avion);
-                fin = true;
-
-            } else {
-                window.clear();
-                window.draw(Sprite);
-                //airplane.getListPlane()[num_airplane]->set_Angle(angle(Airport1.x, Airport1.y, Airport2.x, Airport2.x));
-                window.draw(airplane.getListPlane()[num_airplane]->get_Sprite());
-               // window.draw(Sprite_Info_avion);
-
-                //if(event.mouseMove.x >= Sprite_Info_avion.getPosition())
-                fin = false;
+            if(a.getListAirport()[num_departure_airport]->getXcentre()>a.getListAirport()[num_arrival_airport]->getXcentre()) {
+                airplane.getListPlane()[num_airplane]->set_Angle( (float) angle(Airport1.x, Airport1.y, Airport2.x, Airport2.x)+180.0f);
             }
-           /* while (window.isOpen()) {
-                while (window.pollEvent(event)) {
-                    // a.getListAirport()[3];
+            else {
+                airplane.getListPlane()[num_airplane]->set_Angle(
+                        (float) angle(Airport1.x, Airport1.y, Airport2.x, Airport2.x)+150.f);
+            }
+            window.draw(airplane.getListPlane()[num_airplane]->get_Sprite());
+            /*if (clock.getElapsedTime().asSeconds() >= frameDuration) {
+                frameIndex++;
+                frameIndex = frameIndex % (int)(animSprites.size());
 
-                    if (event.mouseMove.x >= (int) airplane.getListPlane()[num_airplane]->get_plane_x() &&
-                        event.mouseMove.x <= (int) airplane.getListPlane()[num_airplane]->get_plane_x() + 10 &&
-                        event.mouseMove.x <= (int) airplane.getListPlane()[num_airplane]->get_plane_x() - 10 &&
+                clock.restart();
+            }
+
+            window.clear(sf::Color(0, 0, 0));
+            window.draw(animSprites[frameIndex]);
+            window.display();*/
+            fin = false;
+        }
 
 
-                        event.mouseMove.y >= (int) airplane.getListPlane()[num_airplane]->get_plane_y() &&
-                        event.mouseMove.y <= (int) airplane.getListPlane()[num_airplane]->get_plane_y() + 10 &&
-                        event.mouseMove.y <= (int) airplane.getListPlane()[num_airplane]->get_plane_y() - 10
-                            ) {
-
-                        std::cout << "zaaaaa";
-
-                        window.draw(Sprite_Info_avion);
-
-                         window.display();
-                    }
-
+       /*while (window.isOpen()) {
+           // sf::Event event{};
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
                 }
-            }*/
+            }
 
+            if (clock.getElapsedTime().asSeconds() >= frameDuration) {
+                frameIndex++;
+                frameIndex = frameIndex % (int)(animSprites.size());
+
+                clock.restart();
+            }
+
+            window.clear(sf::Color(0, 0, 0));
+            window.draw(animSprites[frameIndex]);
             window.display();
+        }*/
 
-        } while (!fin);
+        window.display();
 
+    } while (!fin);
 
-
-
-
+    /*std::cout <<" nuage";
+    window.draw(viewmeteo);
+    window.display();*/
+    /*while (window.isOpen()) {
+        if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
+            if (event.key.code == sf::Keyboard::L) {
+                std::cout << " nuage";
+                window.clear();
+                window.draw(viewmeteo);
+                //a.show_network_airport_line_on_screen(event, window, Sprite, font);
+                window.display();
+            }
+            if (event.key.code == sf::Keyboard::J) {
+                std::cout << " nuagedead";
+                window.clear();
+                window.draw(viewmeteo);
+                window.display();
+            }
+        }
+    }*/
 }
 
-sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&pointB), float factor))  {
-    if(factor > 1.f) {
+sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&pointB), float factor)) {
+    if (factor > 1.f) {
         factor = 1.f;
-    }
-    else if(factor < 0.f) {
+    } else if (factor < 0.f) {
         factor = 0.f;
     }
     return pointA + (pointB - pointA) * factor;
 }
 
-float angle(float airport1X, float airport1Y,float airport2X, float airport2Y ){
-    float angle;
+double angle(float airport1X, float airport1Y, float airport2X, float airport2Y) {
 
-    float oposite_long = sqrt( airport1X  * airport1X  +  airport1Y * airport2Y  );
-    float hypo= sqrt( airport1X  * airport2X  +  airport1Y * airport2Y  );
-    angle = asin(oposite_long/hypo);
-    return angle;
+    float oposite_long = module(airport2X - airport1X, airport2Y - airport2Y);
+    float hypo = module(airport2X - airport1X, airport2Y - airport1Y);
+
+    return asin(oposite_long / hypo) * 180.0 / PI;
+}
+
+float module(float x, float y) {
+    return sqrt(x * x + y * y);
 }
 
 /*Airplane Airplane::GetPlane(Plane plane) const {
