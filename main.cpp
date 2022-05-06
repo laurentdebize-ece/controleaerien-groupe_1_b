@@ -18,12 +18,15 @@ int main() {
     Plane p{"../Text_files/Airplane"};
     Aiport_network a{"../Text_files/Airport_network"};
 
+
     do {
         Game_Menu(choix);
 
         //Initialisation  Fenetre
         sf::RenderWindow window(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "AIRPORT CONTROL SIMULATOR");
-       // window.setPosition(sf::Vector2i(0, 10));
+        //window.setFramerateLimit(60);
+        std::vector<Flight *> All_flight;
+        // window.setPosition(sf::Vector2i(0, 10));
 
         switch (choix) {
             case 1 :
@@ -32,14 +35,29 @@ int main() {
                         targetSize.x / Sprite.getLocalBounds().width,
                         targetSize.y / Sprite.getLocalBounds().height);
 
-                window.clear(sf::Color::Transparent);
+                 window.clear(sf::Color::Transparent);
 
                 while (!fin) {
                     sf::Event event{};
                     while (window.pollEvent(event)) {
                         Flight f{p.getListPlane(), a.getListAirport(), enter_manual};
-                        f.Plane_Movement(window, Sprite,enter_manual);
-                        //show_airport_on_screen(event, window, Sprite, a, font);
+
+                        Flight g{p.getListPlane(), a.getListAirport(), enter_manual};
+                        //Flight c{p.getListPlane(), a.getListAirport(), enter_manual};
+                        All_flight.push_back(&f);
+                        All_flight.push_back(&g);
+
+                        a.Plane_Movement(window, Sprite, enter_manual, All_flight);
+
+                        window.display();
+
+
+
+                        // f.Plane_Movement(window, Sprite,enter_manual);
+                        // g.Plane_Movement(window, Sprite,enter_manual);
+                        // show_airport_on_screen(event, window, Sprite, a, font);
+
+
 
                         if (event.type == sf::Event::Closed ||
                             (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
@@ -49,36 +67,37 @@ int main() {
                         }
                     }
                 }
-                fin = false;
+                    fin = false;
 
-                break;
-            case 2 :
-                //affichage info aeroport
-                airport_information(choix, a);
-                choix=0;
-                break;
-            case 3:
-                //affichage info avion
-                airplane_information(choix, p);
-                choix = 0;
-                break;
-            case 4 :
-                back_menu = false;
-                //Credits
-                std::cout << "Credit";
-                break;
-            case 5 :
-                std::cout << "Good bye HAVE A NICE DAY";
-                break;
-            default:
-                std::cout << "UNKNOWN CHOICE\n"
-                             "PLEASE RE-TYPE\n";
-                choix = 0;
-                break;
+                    break;
+                    case 2 :
+                        //affichage info aeroport
+                        airport_information(choix, a);
+                    choix = 0;
+                    break;
+                    case 3:
+                        //affichage info avion
+                        airplane_information(choix, p);
+                    choix = 0;
+                    break;
+                    case 4 :
+                        back_menu = false;
+                    //Credits
+                    std::cout << "Credit";
+                    break;
+                    case 5 :
+                        std::cout << "Good bye HAVE A NICE DAY";
+                    break;
+                    default:
+                        std::cout << "UNKNOWN CHOICE\n"
+                                     "PLEASE RE-TYPE\n";
+                    choix = 0;
+                    break;
+                }
+
         }
-
-    } while (choix < 5 && back_menu);
-    return 0;
-}
+        while (choix < 5 && back_menu);
+        return 0;
+    }
 
 
