@@ -253,8 +253,8 @@ Aiport_network::Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, boo
                         flight_plan.erase(flight_plan.begin() + (int) f);
                     }
                 } else {
-                    if (my_Airport[f][0].x >
-                        my_Airport[f][1].x) {
+                    if (my_Airport[f][flight_plan.size() - 1].x >
+                        my_Airport[f][flight_plan.size()].x) {
                         ALl_flight[f]->get_airplane()->set_Angle(
                                 (float) angle(my_Airport[f][0].x, my_Airport[f][0].y, my_Airport[f][1].x,
                                               my_Airport[f][1].y) + 180.0f);
@@ -322,7 +322,11 @@ double angle(float airport1X, float airport1Y, float airport2X, float airport2Y)
     float oposite_long = std::abs(airport2X) - std::abs(airport1X);
     float hypo = std::abs(airport1Y) - std::abs(airport2Y);
 
-    return std::atan((oposite_long / hypo) * 180.0) / PI;
+    if(airport2Y > airport1Y) {
+        return (std::atan(oposite_long / hypo) * 180.0) / PI;
+    }else {
+        return (std::atan(oposite_long / hypo) * 180.0) / PI + 180.0;
+    }
 }
 
 
