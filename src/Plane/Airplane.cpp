@@ -82,11 +82,11 @@ float Airplane::get_plane_y() const {
     return y;
 }
 
-void Airplane::set_plane_x(int plane_x) {
+void Airplane::set_plane_x(float plane_x) {
     x = (float)plane_x;
 }
 
-void Airplane::set_plane_y(int plane_y) {
+void Airplane::set_plane_y(float plane_y) {
     y = (float)plane_y;
 }
 
