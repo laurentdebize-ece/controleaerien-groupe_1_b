@@ -8,6 +8,8 @@
 #include "../Case/Case.h"
 #include "../Menu/Menu.h"
 #include "../Plane/Plane.h"
+class Airplane;
+class Case;
 
 class map {
 private :

@@ -41,4 +41,9 @@ public:
     void Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &enter_manual, std::vector<Flight *> &ALl_flight, Plane p, Aiport_network a);
 
 };
+
+sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&pointB), float factor));
+
+double angle(float airport1X, float airport1Y, float airport2X, float airport2Y);
+
 #endif //CONTROLEAERIEN_GROUPE_1_B_AIPORT_NETWORK_H
