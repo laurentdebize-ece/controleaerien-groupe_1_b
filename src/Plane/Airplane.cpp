@@ -82,12 +82,12 @@ float Airplane::get_plane_y() const {
     return y;
 }
 
-void Airplane::set_plane_x(float plane) {
-    x = plane;
+void Airplane::set_plane_x(int plane_x) {
+    x = (float)plane_x;
 }
 
-void Airplane::set_plane_y(float plane) {
-    y = plane;
+void Airplane::set_plane_y(int plane_y) {
+    y = (float)plane_y;
 }
 
 sf::Sprite Airplane::get_Sprite() const {

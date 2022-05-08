@@ -378,37 +378,43 @@ void Flight::set_list_airport(std::vector<Airport *> Airport) {
 
 
 void init_flight(std::vector<Flight *> &ALl_flight, size_t i, int &num_departure_airport, int &num_arrival_airport,
-                 sf::Vector2f &(Airport1), sf::Vector2f &(Airport2), std::vector<std::vector<int>> &flight_plan, int &j, bool &ok) {
-    if(ok) {
+                 sf::Vector2f &(Airport1), sf::Vector2f &(Airport2), std::vector<std::vector<int>> &flight_plan, int &j,
+                 bool &ok) {
+    if (ok) {
+        if(i==3){
+            std::cout<<"oui\n";
+        }
         flight_plan.emplace_back(std::vector<int>());
         flight_plan[i] = ALl_flight[i]->PCC();
         flight_plan[i].push_back(j);
     }
 
-    if(j<flight_plan[i].size()-1) {
+    if (j < flight_plan[i].size() - 2) {
         num_departure_airport = flight_plan[i][j];
-        num_arrival_airport = flight_plan[i][j+1];
+        num_arrival_airport = flight_plan[i][j + 1];
 
-
-        ALl_flight[i]->get_airplane()->set_plane_x(
-                (float) ALl_flight[i]->get_list_airport()[num_departure_airport]->getXcentre());
-        ALl_flight[i]->get_airplane()->set_plane_y(
-                (float) ALl_flight[i]->get_list_airport()[num_departure_airport]->getYcentre());
-        ALl_flight[i]->get_airplane()->set_Coord_plane((float) ALl_flight[i]->get_airplane()->get_plane_x(),
-                                                       ALl_flight[i]->get_airplane()->get_plane_y());
-
-
-        /*for (size_t y(0); y < ALl_flight.size(); y++) {
-            std::cout << ALl_flight[y]->get_airplane()->get_plane_x() << ","
+        do {
+            ALl_flight[i]->get_airplane()->set_plane_x(
+                    ALl_flight[i]->get_list_airport()[flight_plan[i][j]]->getXcentre());
+            ALl_flight[i]->get_airplane()->set_plane_y(
+                    ALl_flight[i]->get_list_airport()[flight_plan[i][j]]->getYcentre());
+            ALl_flight[i]->get_airplane()->set_Coord_plane((float) ALl_flight[i]->get_airplane()->get_plane_x(),
+                                                           ALl_flight[i]->get_airplane()->get_plane_y());
+        } while (ALl_flight[i]->get_list_airport()[flight_plan[i][j]]->getXcentre() ==
+                 0 || ALl_flight[i]->get_list_airport()[flight_plan[i][j]]->getYcentre() == 0);
+        for (size_t y(0); y < ALl_flight.size(); y++) {
+            std::cout << "Avion" << y << ":" << ALl_flight[y]->get_list_airport()[flight_plan[y][j]]->getXcentre()
+                      << ","
+                      << ALl_flight[y]->get_list_airport()[flight_plan[y][j]]->getYcentre() << "/"
+                      << ALl_flight[y]->get_airplane()->get_plane_x() << ","
                       << ALl_flight[y]->get_airplane()->get_plane_y() << std::endl;
-        }*/
+        }
 
         Airport1.x = (float) ALl_flight[i]->get_list_airport()[num_departure_airport]->getXcentre();
         Airport1.y = (float) ALl_flight[i]->get_list_airport()[num_departure_airport]->getYcentre();
 
         Airport2.x = (float) ALl_flight[i]->get_list_airport()[num_arrival_airport]->getXcentre();
         Airport2.y = (float) ALl_flight[i]->get_list_airport()[num_arrival_airport]->getYcentre();
-        flight_plan[i][flight_plan.size()+1]++;
 
     }
 
@@ -429,7 +435,7 @@ Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &enter_manual,
         //Get Flight plan vector
         init_flight(ALl_flight, i, num_departure_airport, num_arrival_airport,
                     Airport1, Airport2, flight_plan, j, ok);
-        ok=false;
+        ok = false;
         my_Airport.push_back(std::vector<sf::Vector2f>());
 
         my_Airport[i].push_back(Airport1);
@@ -461,22 +467,38 @@ Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &enter_manual,
                      (float) my_Airport[f][1].y) || progression > 1) {
                     //window.clear();
                     //window.draw(Sprite);
+                    flight_plan[f][flight_plan.size() - 1]++;
+                    if (flight_plan[i][flight_plan[f].size() - 1] < flight_plan[f].size() - 2) {
+                        init_flight(ALl_flight, f, num_departure_airport, num_arrival_airport,
+                                    Airport1, Airport2, flight_plan, flight_plan[f][flight_plan.size() - 1], ok);
+                        if (i == 1) {
+                            std::cout << flight_plan[f][flight_plan.size() - 1] << ";" << flight_plan[f].size() - 2
+                                      << std::endl;
+                        }
+                        flight_plan[f][flight_plan.size() - 1]++;
+                        if (i == 1) {
+                            std::cout << flight_plan[f][flight_plan.size() - 1] << std::endl;
+                        }
+                    }
                     fin = true;
                     arrive = false;
-                    if (flight_plan[i][flight_plan.size()+1] == flight_plan[i].size() - 2) {
+                    if (flight_plan[f][flight_plan[f].size() - 1] == flight_plan[f].size() - 2) {
                         std::cout << "Arivée\n";
                         arrive = true;
+                        ALl_flight.erase(ALl_flight.begin() + (int) f);
+                        my_Airport.erase(my_Airport.begin() + (int) f);
+                        flight_plan.erase(flight_plan.begin() + (int) f);
                     }
                 } else {
                     if (my_Airport[f][0].x >
                         my_Airport[f][1].x) {
                         ALl_flight[f]->get_airplane()->set_Angle(
-                                (float) angle(my_Airport[f][0].x, my_Airport[f][0].x, my_Airport[f][1].y,
-                                              my_Airport[f][1].x) + 180.0f);
+                                (float) angle(my_Airport[f][0].x, my_Airport[f][0].y, my_Airport[f][1].x,
+                                              my_Airport[f][1].y) + 180.0f);
                     } else {
                         ALl_flight[f]->get_airplane()->set_Angle(
-                                (float) angle(my_Airport[f][0].x, my_Airport[f][0].x, my_Airport[f][1].y,
-                                              my_Airport[f][1].x) + 150.f);
+                                (float) angle(my_Airport[f][0].x, my_Airport[f][0].y, my_Airport[f][1].x,
+                                              my_Airport[f][1].y) + 180.f);
                     }
                     window.clear();
                     window.draw(Sprite);
@@ -485,14 +507,14 @@ Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &enter_manual,
                 }
                 time = clock2.getElapsedTime().asSeconds();
                 if (time >= 3) {
-                    ok=true;
-                    j=0;
+                    ok = true;
+                    j = 0;
                     auto *l = new Flight{p.getListPlane(), a.getListAirport(), enter_manual};
                     ALl_flight.push_back(l);
-                    std::cout << ALl_flight.size() << std::endl;
-                    init_flight(ALl_flight, f+1, num_departure_airport, num_arrival_airport,
+                    //std::cout << ALl_flight.size() << std::endl;
+                    init_flight(ALl_flight, f + 1, num_departure_airport, num_arrival_airport,
                                 Airport1, Airport2, flight_plan, j, ok);
-                    ok=false;
+                    ok = false;
                     my_Airport.push_back(std::vector<sf::Vector2f>());
                     my_Airport[f + 1].push_back(Airport1);
                     my_Airport[f + 1].push_back(Airport2);
@@ -509,8 +531,6 @@ Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &enter_manual,
                 }
                 window.clear();
                 window.draw(Sprite);
-                /*init_flight(ALl_flight, f, num_departure_airport, num_arrival_airport,
-                            Airport1, Airport2, flight_plan, flight_plan[f][flight_plan.size()-1], ok);*/
                 for (auto &z: ALl_flight) {
                     window.draw(z->get_airplane()->get_Sprite());
                 }
@@ -536,7 +556,7 @@ double angle(float airport1X, float airport1Y, float airport2X, float airport2Y)
 
     float oposite_long = std::abs(airport2X) - std::abs(airport1X);
     float hypo = std::abs(airport1Y) - std::abs(airport2Y);
-    
+
     return std::atan((oposite_long / hypo) * 180.0) / PI;
 }
 

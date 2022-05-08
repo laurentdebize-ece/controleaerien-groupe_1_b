@@ -59,9 +59,9 @@ public:
 
     void takeoff_or_not(bool if_takeoff);
 
-    void set_plane_x( float plane);
+    void set_plane_x( int plane_x);
 
-    void set_plane_y(float plane);
+    void set_plane_y(int plane_y);
 
     void set_Coord_plane(float plane_x, float plane_y);
 
