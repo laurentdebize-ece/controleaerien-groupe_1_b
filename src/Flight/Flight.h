@@ -6,7 +6,9 @@
 
 class Airport;
 class Airplane;
-//class Aiport_network
+class Plane;
+class Aiport_network;
+
 class Flight {
 private:
     std::string flight_id, departure, arrival;
@@ -20,8 +22,6 @@ public:
 
     std::string get_flight_id() const;
 
-    int get_id_plane() const;
-
     int get_departure_num() const;
 
     int get_arrival_num() const;
@@ -32,26 +32,32 @@ public:
 
     Airplane* get_airplane() const;
 
-    std::vector<Airplane *> get_list_Airplane() const;
+    std::vector<Airport *> get_list_airport() const;
+
+    std::vector<Airplane *> get_list_plane() const;
 
     void Flight_manual();
 
-    void put_departure();
+    void set_departure();
 
-    void put_arrival();
+    void set_arrival();
 
     void afficher() const;
 
+    void set_list_plane(std::vector<Airplane *> plane);
+
+    void set_list_airport(std::vector<Airport *> Airport);
+
     std::vector<int> PCC ();
-
-    std::vector<int> redirection_turbulence_A ();
-
-
 };
+void init_flight(std::vector<Flight *> &ALl_flight, size_t i, int &num_departure_airport, int &num_arrival_airport,
+                 sf::Vector2f &(Airport1), sf::Vector2f &(Airport2),std::vector<std::vector<int>> &flight_plan,  int &j, bool &ok);
+
+void Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &enter_manual, std::vector<Flight *> &ALl_flight, Plane p, Aiport_network a);
 
 sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&pointB), float factor));
+
 double angle(float airport1X, float airport1Y,float airport2X, float airport2Y );
-float perimetre2pts(float x, float y,float x2, float y2);
-void draw_line_test(sf::RenderWindow &window, const double &airport1_x_center, const double &airport1_y_center,
-                    const double &airport2_x_center, const double &airport2_y_center);
+
+float module(float x, float y);
 #endif //CONTROLEAERIEN_GROUPE_1_B_FLIGHT_H

@@ -1,4 +1,4 @@
-<font color="#6495ED">
+<font color="faf07d">
 <center>
 <code>
 PROJET SIMULATION DU CONTRÔLE AÉRIEN
@@ -17,23 +17,37 @@ Le groupe est composé de 3 étudiants ING2 de l'ECE Lyon <br />
     <td style="text-align: center;">NERIS Mathias</td>
   </tr>
   <tr>
-    <td><img src="https://i.ibb.co/FsHVnN5/P1022370-2.jpg" width="300" height="200" /></td>
-    <td><a href="https://ibb.co/kMybvNm"><img src="https://i.ibb.co/1bnyjFz/photo-linkedin-Copie.jpg" alt="photo-linkedin-Copie" border="0" width="300" height="200"></a></td>
+    <td><img src="https://i.ibb.co/FsHVnN5/P1022370-2.jpg" width="400" height="180" /></td>
+    <td><a href="https://ibb.co/r7QZJtj"><img src="https://i.ibb.co/j68LF5N/LeJ.jpg" width="400" height="180"></a></td>
+    <td><a href="https://ibb.co/kMybvNm"><img src="https://i.ibb.co/h73kj5V/LeM.png" width="350" height="180"></a></td>
   </tr>
 </table></center>
 
 ## Bienvenue sur AIRPORT CONTROL SIMULATOR
-<p align="justify">Lol</p>
+
+<p align="justify">L’augmentation du trafic aérien dans les aéroports pose un réel problème puisqu’il faut simultanément gérer un nombre toujours croissant d’avions dans un espace aérien déjà saturé et maintenir un haut niveau de sécurité.</p>
+<p align="justify">Chaque aéroport dispose de son propre contrôle aérien lui permettant de surveiller son propre espace aérien, et éventuellement de le réguler. Le contrôle est effectué « par secteur aérien », c’est-à-dire qu’une paire de contrôleurs contrôle un nombre limité d’avions dans un volume d’espace restreint dont ils ont la charge.</p>
 
 ## Sous-fichiers, dossiers et utilités
+
 Dans ce dossier vous trouverez les sous-dossiers suivants :
+
 * `main.c` :  <br />
-* `Sous-dossier "fonts"` : Contient la police d'ériture    <br />
-* `Sous-dossier "images"` : <p align="justify"> Contient toutes les bitmaps (Sous-dossier(Card_Action(action des joeurs), Card_board(cartes de déplacement), Card_ending(cartes d'arrivé avec les trésors) ,Card_Player(Astonaute/Saboteur), Title_Screen(Menu/Option))) <br />
-* `Sous-dossier "src"` : Contient les sous-fichiers en .c et.h    <br />
+* `Sous-dossier "Font"` : Contient les polices d'ériture <br />
+* `Sous-dossier "Graphic_Content"` : <p align="justify"> Contient toutes les bitmaps (Sous-dossier(Map(carte), Plane(
+  Types d'avion) )<br />
+* `Sous-dossier "src"` : Contient les sous-fichiers en .c et.h <br />
 
 Dans ces sous-dossiers vous trouverez les sous-sous-dossiers suivants :
-* `Sous-sous-dossier "bandeson"` : Contient la musique du jeu  <br />
+
+* `Sous-sous-dossier "Airport"` : Contient les informations relatives aux aéroports <br />
+* `Sous-sous-dossier "Airport_Connexion"` : Contient les informations relatives au réseau d'aéroport <br />
+* `Sous-sous-dossier "Airport_network"` : Contient les informations relatives au réseau d'aéroport <br />
+* `Sous-sous-dossier "Flying_time"` : Contient les informations relatives aux aéroports <br />
+* `Sous-sous-dossier "Menu"` : Contient le menu et les sous-menus <br />
+* `Sous-sous-dossier "Plane"` : Contient les informations relatives aux avions <br />
+* `Sous-sous-dossier "Text_files"` : Contient les fichiers textes permettant d'initialiser les avions, les aéroports et
+  le reseau d'aeroport  <br />
 
 ## Amélioration
 
