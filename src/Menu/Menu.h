@@ -5,6 +5,7 @@
 #include "../Plane/Plane.h"
 #include "../Airport_network/Aiport_network.h"
 #include "../Flight/Flight.h"
+#include "../Airport/Airport.h"
 
 #define LARGEUR_FENETRE 1300
 #define HAUTEUR_FENETRE 700

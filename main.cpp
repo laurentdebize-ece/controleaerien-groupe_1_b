@@ -1,11 +1,14 @@
 #include "src/Menu/Menu.h"
-
+#include <thread>
 int main() {
-    unsigned int choix(0);
-    bool fin(false), back_menu(true), end_flight(false), enter_manual(false);
 
+    unsigned int choix(0);
+    bool fin(false), back_menu(true), end_flight(false), enter_manual(true);
+    float time(0.0f);
     sf::Font font;
+    sf::Font font2;
     font.loadFromFile("../Font/Pixeled.ttf");
+    font2.loadFromFile("../Font/calendar note tfb.ttf");
     //Initialisation Cartes Map
     sf::Texture Menu_principal;
 
@@ -14,6 +17,7 @@ int main() {
     sf::Sprite Sprite(Menu_principal);
 
     sf::Vector2f targetSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
+    std::vector<Flight *> ALl_flight;
 
     Plane p{"../Text_files/Airplane"};
     Aiport_network a{"../Text_files/Airport_network"};
@@ -36,10 +40,13 @@ int main() {
 
                 while (!fin) {
                     sf::Event event{};
-                    while (window.pollEvent(event)) {
-                        Flight f{p.getListPlane(), a.getListAirport(), enter_manual};
-                        f.Plane_Movement(window, Sprite,enter_manual);
 
+                    while (window.pollEvent(event)) {
+
+                        Flight f{p.getListPlane(), a.getListAirport(), enter_manual};
+                        ALl_flight.push_back(&f);
+                        Plane_Movement(window, Sprite, enter_manual, ALl_flight,  p,  a);
+                        //show_airport_on_screen(event, window, Sprite, a, font, font2, ALl_flight, enter_manual, p);
                         if (event.type == sf::Event::Closed ||
                             (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
                             fin = true;
@@ -54,7 +61,7 @@ int main() {
             case 2 :
                 //affichage info aeroport
                 airport_information(choix, a);
-                choix=0;
+                choix = 0;
                 break;
             case 3:
                 //affichage info avion

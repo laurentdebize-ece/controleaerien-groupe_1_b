@@ -12,6 +12,7 @@
 class Airport;
 class Plane;
 class Aiport_network;
+class Flight;
 
 class Airplane {
 private :
