@@ -295,7 +295,7 @@ std::vector<int> Flight::PCC() {
 
     // INITIALISATION
     int nbMarques = 0;
-    std::vector<int> couleurs(m_list_of_airport.size(), 0); // tous les aéroports sont non marqués
+     std::vector<int> couleurs(m_list_of_airport.size(), 0); // tous les aéroports sont non marqués
     std::vector<int> distances(m_list_of_airport.size(), std::numeric_limits<int>::max());
     distances[get_departure_num()] = 0; // departure est à une distance de 0 de lui même.
     std::vector<int> predecesseurs(m_list_of_airport.size(), -1); // nous ne connaissons pas encore les prédécesseurs
@@ -360,6 +360,7 @@ std::vector<int> Flight::PCC() {
     return chemin_suivi;
 }
 
+
 std::vector<Airport *> Flight::get_list_airport() const {
     return m_list_of_airport;
 }
@@ -375,6 +376,8 @@ void Flight::set_list_plane(std::vector<Airplane *> plane) {
 void Flight::set_list_airport(std::vector<Airport *> Airport) {
     m_list_of_airport = Airport;
 }
+
+
 
 
 void init_flight(std::vector<Flight *> &ALl_flight, size_t i, int &num_departure_airport, int &num_arrival_airport,
@@ -476,7 +479,7 @@ Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &enter_manual,
                     } else {
                         ALl_flight[f]->get_airplane()->set_Angle(
                                 (float) angle(my_Airport[f][0].x, my_Airport[f][0].x, my_Airport[f][1].y,
-                                              my_Airport[f][1].x) + 150.f);
+                                              my_Airport[f][1].x) + 180.f);
                     }
                     window.clear();
                     window.draw(Sprite);
@@ -540,6 +543,6 @@ double angle(float airport1X, float airport1Y, float airport2X, float airport2Y)
     return std::atan((oposite_long / hypo) * 180.0) / PI;
 }
 
-float module(float x, float y) {
-    return sqrt(x * x + y * y);
-}
+
+
+

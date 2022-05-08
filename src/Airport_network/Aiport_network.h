@@ -32,6 +32,6 @@ public:
 
     void addVol(int &num1, int &num2, int &poids);
 
-    void Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &enter_manual,std::vector<Flight*> All_flight);
+    //void Plane_Movement(sf::RenderWindow &window, sf::Sprite &Sprite, bool &enter_manual,std::vector<Flight*> All_flight);
 };
 #endif //CONTROLEAERIEN_GROUPE_1_B_AIPORT_NETWORK_H

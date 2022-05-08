@@ -3,6 +3,7 @@
 #include "../Plane/Plane.h"
 #include "../Airport_network/Aiport_network.h"
 #include "../Menu/Menu.h"
+#include "../map/map.h"
 
 class Airport;
 class Airplane;
@@ -49,6 +50,12 @@ public:
     void set_list_airport(std::vector<Airport *> Airport);
 
     std::vector<int> PCC ();
+
+
+
+
+
+
 };
 void init_flight(std::vector<Flight *> &ALl_flight, size_t i, int &num_departure_airport, int &num_arrival_airport,
                  sf::Vector2f &(Airport1), sf::Vector2f &(Airport2),std::vector<std::vector<int>> &flight_plan,  int &j, bool &ok);
@@ -59,5 +66,5 @@ sf::Vector2f (Interpolate(const sf::Vector2f (&pointA), const sf::Vector2f (&poi
 
 double angle(float airport1X, float airport1Y,float airport2X, float airport2Y );
 
-float module(float x, float y);
+
 #endif //CONTROLEAERIEN_GROUPE_1_B_FLIGHT_H

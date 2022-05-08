@@ -248,17 +248,17 @@ void show_airport_on_screen(sf::Event event, sf::RenderWindow &window, sf::Sprit
     Rio_De_Janeiro.loadFromFile("Graphic_Content/Map/Sydney.png");
     Martinique.loadFromFile("Graphic_Content/Map/Sydney.png");
 
-    Sydney_airport.loadFromFile("../Graphic_Content/Map/Info/Sydney_info_airport.png");
-    Pekin_airport.loadFromFile("../Graphic_Content/Map/Info/Pekin_info_airport.png");
-    Moscou_airport.loadFromFile("../Graphic_Content/Map/Info/Moscou_info_airport.png");
-    Dubai_airport.loadFromFile("../Graphic_Content/Map/Info/Dubai_info_airport.png");
-    Londres_airport.loadFromFile("../Graphic_Content/Map/Info/Londres_info_airport.png");
-    Pretoria_airport.loadFromFile("../Graphic_Content/Map/Info/Pretoria_info_airport.png");
-    Algeria_airport.loadFromFile("../Graphic_Content/Map/Info/Algerie_info_airport.png");
-    Los_Angeles_airport.loadFromFile("../Graphic_Content/Map/Info/LosAngeles_info_airport.png");
-    New_York_airport.loadFromFile("../Graphic_Content/Map/Info/NewYork_info_airport.png");
-    Rio_De_Janeiro_airport.loadFromFile("../Graphic_Content/Map/Info/RiodeJaneiro_info_airport.png");
-    Martinique_airport.loadFromFile("../Graphic_Content/Map/Info/Martinique_info_airport.png");
+    Sydney_airport.loadFromFile("Graphic_Content/Map/Info/Sydney_info_airport.png");
+    Pekin_airport.loadFromFile("Graphic_Content/Map/Info/Pekin_info_airport.png");
+    Moscou_airport.loadFromFile("Graphic_Content/Map/Info/Moscou_info_airport.png");
+    Dubai_airport.loadFromFile("Graphic_Content/Map/Info/Dubai_info_airport.png");
+    Londres_airport.loadFromFile("Graphic_Content/Map/Info/Londres_info_airport.png");
+    Pretoria_airport.loadFromFile("Graphic_Content/Map/Info/Pretoria_info_airport.png");
+    Algeria_airport.loadFromFile("Graphic_Content/Map/Info/Algerie_info_airport.png");
+    Los_Angeles_airport.loadFromFile("Graphic_Content/Map/Info/LosAngeles_info_airport.png");
+    New_York_airport.loadFromFile("Graphic_Content/Map/Info/NewYork_info_airport.png");
+    Rio_De_Janeiro_airport.loadFromFile("Graphic_Content/Map/Info/RiodeJaneiro_info_airport.png");
+    Martinique_airport.loadFromFile("Graphic_Content/Map/Info/Martinique_info_airport.png");
 
     sf::Sprite Sprite_Sydney(Sydney);
     sf::Sprite Sprite_Pekin(Pekin);

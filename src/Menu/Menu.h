@@ -7,6 +7,9 @@
 #include "../Flight/Flight.h"
 #include "../Airport/Airport.h"
 
+#define COLUMNS 87
+#define ROWS 47
+
 #define LARGEUR_FENETRE 1300
 #define HAUTEUR_FENETRE 700
 class Plane;
