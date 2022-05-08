@@ -7,12 +7,12 @@ int main() {
     float time(0.0f);
     sf::Font font;
     sf::Font font2;
-    font.loadFromFile("../Font/Pixeled.ttf");
-    font2.loadFromFile("../Font/calendar note tfb.ttf");
+    font.loadFromFile("Font/Pixeled.ttf");
+    font2.loadFromFile("Font/calendar note tfb.ttf");
     //Initialisation Cartes Map
     sf::Texture Menu_principal;
 
-    Menu_principal.loadFromFile("../Graphic_Content/Map/Sim_Map.png");
+    Menu_principal.loadFromFile("Graphic_Content/Map/Sim_Map.png");
 
     sf::Sprite Sprite(Menu_principal);
 

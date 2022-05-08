@@ -95,7 +95,7 @@ sf::Sprite Airplane::get_Sprite() const {
 }
 
 void Airplane::set_Angle(float angle){
-        airplane_pic.setRotation(angle);
+        airplane_pic.setRotation(angle+5);
 }
 
 void Airplane::set_Coord_plane(float plane_x, float plane_y) {

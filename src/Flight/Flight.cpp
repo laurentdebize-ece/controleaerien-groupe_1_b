@@ -295,7 +295,7 @@ std::vector<int> Flight::PCC() {
 
     // INITIALISATION
     int nbMarques = 0;
-    std::vector<int> couleurs(m_list_of_airport.size(), 0); // tous les aéroports sont non marqués
+     std::vector<int> couleurs(m_list_of_airport.size(), 0); // tous les aéroports sont non marqués
     std::vector<int> distances(m_list_of_airport.size(), std::numeric_limits<int>::max());
     distances[get_departure_num()] = 0; // departure est à une distance de 0 de lui même.
     std::vector<int> predecesseurs(m_list_of_airport.size(), -1); // nous ne connaissons pas encore les prédécesseurs
